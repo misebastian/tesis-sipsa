@@ -5,9 +5,13 @@ la base 2018-2025 (unify.py, clean_v2.py, precios_unify.py, precios_normalize.py
   - nombres de central y de producto llevados a la forma canónica de la base histórica (sin distinguir mayúsculas ni tildes);
   - abastecimiento sumado por mes: toneladas, municipios y departamentos de origen distintos, días con registro;
   - precio unido por central, mes y producto de referencia (misma tabla de equivalencias de m_base_unida.py).
+Desde noviembre de 2026 el DANE publica los microdatos de abastecimiento en Excel (una hoja por cuatrimestre, con las
+cantidades como números); también se aceptan. Con --desde y --hasta se conservan solo esos meses (por ejemplo, para
+dejar fuera un mes que el archivo trae incompleto).
 Uso:
   python agregar_meses.py --base base_unida_mensual.parquet --precios_hist sipsa_p_precios_2018_2025.parquet \
-      --abastecimiento a1.dta a2.csv ... --precios anexo_2026.xlsx --salida meses_nuevos.parquet [--informe informe.json]"""
+      --abastecimiento a1.dta a2.csv a3.xlsx ... --precios anexo_2026.xlsx --salida meses_nuevos.parquet [--informe informe.json]
+      [--desde 2026-10] [--hasta 2026-10]"""
 import argparse, json, os, re, unicodedata
 import numpy as np, pandas as pd, openpyxl
 
@@ -46,8 +50,33 @@ def clave(c):
     return None
 
 
+def _excel_abastecimiento(ruta):
+    """Microdatos en Excel: toma cada hoja cuya fila de títulos empieza por la central y la deja con el formato de los CSV
+    (fecha dd/mm/aaaa y cantidades con coma decimal), para que el resto de la lectura sea igual."""
+    wb = openpyxl.load_workbook(ruta, read_only=True, data_only=True); partes = []
+    for ws in wb.worksheets:
+        filas = ws.iter_rows(values_only=True); enc = None
+        for i, r in enumerate(filas):
+            if r and isinstance(r[0], str) and clave(r[0]) == "mercado" and any(isinstance(c, str) and clave(c) == "fecha" for c in r):
+                enc = [str(c).strip() if c is not None else "" for c in r]; break
+            if i > 40: break
+        if enc is None: continue
+        cols = [j for j, c in enumerate(enc) if c]
+        datos = [[r[j] if j < len(r) else None for j in cols] for r in filas if r and r[0] is not None]
+        partes.append(pd.DataFrame(datos, columns=[enc[j] for j in cols]))
+    d = pd.concat(partes, ignore_index=True)
+    for c in d.columns:
+        if clave(c) == "fecha":
+            d[c] = [None if x is None or pd.isna(x) else x.strftime("%d/%m/%Y") if hasattr(x, "strftime") else x for x in d[c]]
+        elif clave(c) == "cant_kg":
+            d[c] = [(("%.6f" % x).rstrip("0").rstrip(".").replace(".", ",")) if isinstance(x, (int, float)) and x == x else x for x in d[c]]
+    return d.astype(object).where(d.notna(), None).astype(str).replace("None", "")
+
+
 def leer_abastecimiento(ruta):
-    if ruta.lower().endswith(".dta"):
+    if ruta.lower().endswith((".xlsx", ".xlsm")):
+        d = _excel_abastecimiento(ruta)
+    elif ruta.lower().endswith(".dta"):
         d = pd.read_stata(ruta, convert_categoricals=False).astype(str)
     else:
         try:
@@ -104,6 +133,7 @@ def main():
     ap.add_argument("--base", required=True); ap.add_argument("--precios_hist", required=True)
     ap.add_argument("--abastecimiento", nargs="+", required=True); ap.add_argument("--precios", required=True)
     ap.add_argument("--salida", required=True); ap.add_argument("--informe")
+    ap.add_argument("--desde", help="primer mes que se conserva, aaaa-mm"); ap.add_argument("--hasta", help="último mes que se conserva, aaaa-mm")
     a = ap.parse_args()
     B = pd.read_parquet(a.base); H = pd.read_parquet(a.precios_hist)
     # --- abastecimiento
@@ -114,6 +144,8 @@ def main():
     canon_m = {fold(m): m for m in B.mercado.unique()}
     A["mercado"] = A.mercado.map(lambda m: canon_m.get(fold(m), m))
     A["mes"] = A.fecha.dt.to_period("M").dt.to_timestamp()
+    if a.desde: A = A[A.mes >= pd.Timestamp(a.desde + "-01")]
+    if a.hasta: A = A[A.mes <= pd.Timestamp(a.hasta + "-01")]
     g = A.groupby(["mercado", "grupo", "alimento", "mes"])
     M = pd.DataFrame(dict(ton=g.cant_kg.sum(min_count=1) / 1000, municipios_origen=g.cod_mpio.nunique(),
                           departamentos_origen=g.cod_depto.nunique(), dias_con_registro=g.fecha.nunique())).reset_index()

@@ -3,12 +3,15 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useDatos, nombreMes, pesos, partesCentral } from '../lib/datos';
 import Grafica from '../components/Grafica';
+import AvisoBoletin from '../components/AvisoBoletin';
+import { useJson } from '../lib/useJson';
 import { TarjetaPrecio, TarjetaAlerta, Razones, Confianza } from '../components/Tarjetas';
 
 const INICIAL = { producto: 'Limón Tahití', central: 'Medellín, Central Mayorista de Antioquia' };
 
 export default function Consultar() {
   const { datos, error } = useDatos();
+  const ev = useJson('evaluacion.json');
   const [producto, setProducto] = useState(INICIAL.producto);
   const [central, setCentral] = useState(INICIAL.central);
 
@@ -38,6 +41,7 @@ export default function Consultar() {
         <h1>¿Qué pasará con el precio el próximo mes?</h1>
         <p>Pronósticos calculados con el último boletín del DANE ({nombreMes(datos.ultimo_mes)}). Elija un producto y una central para ver el precio esperado en {nombreMes(datos.mes_pronostico)} y si hay riesgo de un alza fuerte.</p>
       </section>
+      <AvisoBoletin datos={datos} />
 
       <section className="resumen" aria-label="Resumen del último boletín">
         <div className="tarjeta resumen__item">
@@ -77,6 +81,16 @@ export default function Consultar() {
               Último precio publicado por el DANE: <strong style={{ color: 'var(--texto)' }}>{pesos(serie.precio_actual)} por kilo</strong> ({nombreMes(datos.ultimo_mes)}).
             </p>
           )}
+          {serie && ev.datos?.series?.[`${serie.central}|${serie.producto}`] && (() => {
+            const [, esp, lo, hi, real] = ev.datos.series[`${serie.central}|${serie.producto}`];
+            const dentro = real >= lo && real <= hi;
+            return (
+              <p className="nota-dato">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><path d="M20 6L9 17l-5-5" /></svg>
+                El mes pasado esta página esperaba <strong style={{ color: 'var(--texto)' }}>{pesos(esp)}</strong> para {nombreMes(ev.datos.mes)} (rango de {pesos(lo)} a {pesos(hi)}) y el precio real fue <strong style={{ color: 'var(--texto)' }}>{pesos(real)}</strong>{dentro ? ', dentro del rango.' : ', fuera del rango.'}
+              </p>
+            );
+          })()}
         </form>
       </section>
 

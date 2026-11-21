@@ -32,6 +32,7 @@ DANE (SIPSA) ──► estudio de la tesis (datos, modelos guardados)
 | `public/data/extra.json`, `origen.json` | Calendario por alimento, red de centrales y orígenes del abastecimiento (los genera `generar_panorama.py`) |
 | `scripts/generar_pronosticos.py` | Calcula los pronósticos con los modelos de la tesis |
 | `scripts/generar_panorama.py` | Calcula el calendario, la red de centrales y los orígenes |
+| `scripts/evaluar_mes_pasado.py` | Compara el pronóstico del mes anterior con el precio real (`public/data/evaluacion.json`) |
 
 ## Probarla en el computador
 
@@ -54,30 +55,51 @@ Cada vez que se suba un cambio a la rama principal, Vercel vuelve a publicar la 
 
 ## Actualizar los pronósticos cada mes
 
-Cuando el DANE publique un boletín nuevo:
+La base de la tesis (`estudio/datos/base_unida_mensual.parquet`) llega a septiembre de 2026 y no se modifica, para que la
+tesis siga siendo reproducible. Los meses publicados después se agregan a una copia propia de la página,
+`datos/base_mensual_web.parquet` (hoy llega a octubre de 2026).
 
-1. Agregue los meses nuevos a la base del estudio (`preparacion_datos/agregar_meses.py`).
-2. Desde esta carpeta, con el entorno de Python del estudio:
+Cuando el DANE publique un boletín nuevo (por ejemplo, el de noviembre):
+
+1. Descargue la serie histórica de precios mayoristas del año (`anex-SIPSA-SerieHistoricaMayorista-<año>.xlsx`) y los
+   microdatos de abastecimiento (`anex-Microdato-abastecimiento-<año>.xlsx`) de la página del SIPSA.
+2. Convierta el mes nuevo en filas de la base con las reglas de la tesis (`--desde` y `--hasta` dejan fuera los meses
+   que el archivo trae incompletos) y péguelas a la base de la página:
 
    ```bash
-   ../entorno/bin/python scripts/generar_pronosticos.py ../estudio
+   ../entorno/bin/python ../preparacion_datos/agregar_meses.py --base <base completa con producto_precio> \
+       --precios_hist <sipsa_p_precios_2018_2025.parquet> --abastecimiento anex-Microdato-abastecimiento-2026.xlsx \
+       --precios anex-SIPSA-SerieHistoricaMayorista-2026.xlsx --desde 2026-11 --hasta 2026-11 --salida mes_nuevo.parquet
    ```
 
-3. Actualice el calendario, la red y los orígenes con los microdatos de abastecimiento de los últimos 12 meses:
+   Luego aplique a esas filas la variedad corregida (`preparacion_datos/informe_variedad.json`) y agréguelas al final de
+   `datos/base_mensual_web.parquet` con las mismas columnas.
+3. Antes de reemplazar los pronósticos, guarde los vigentes y compárelos con los precios reales del mes que acaba de
+   publicarse (sección "¿Cómo le fue al pronóstico del mes pasado?" del Panorama y línea de cada producto en Consultar):
 
    ```bash
-   ../entorno/bin/python scripts/generar_panorama.py ../estudio --abastecimiento <archivos SIPSA-A .csv o .dta>
+   cp public/data/pronosticos.json public/data/historial/pronosticos_2026-11.json   # el mes que se había pronosticado
+   ../entorno/bin/python scripts/evaluar_mes_pasado.py datos/base_mensual_web.parquet
    ```
 
-4. Suba los archivos nuevos:
+4. Genere los pronósticos (indique la fecha en que el DANE publicó el boletín) y los datos de las páginas nuevas:
 
    ```bash
-   git add public/data/
+   ../entorno/bin/python scripts/generar_pronosticos.py ../estudio --base datos/base_mensual_web.parquet --publicado 2026-12-10
+   ../entorno/bin/python scripts/generar_panorama.py ../estudio --base datos/base_mensual_web.parquet \
+       --abastecimiento <archivos SIPSA-A que cubran los últimos 12 meses>
+   ```
+
+5. Suba los archivos nuevos:
+
+   ```bash
+   git add datos/ public/data/
    git commit -m "Pronósticos con el boletín de <mes>"
    git push
    ```
 
-Vercel publica la versión nueva en uno o dos minutos.
+Vercel publica la versión nueva en uno o dos minutos. Si el mes pronosticado termina sin que se haya actualizado, la
+página lo avisa sola.
 
 ### Qué hace el script
 

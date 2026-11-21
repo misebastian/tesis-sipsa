@@ -8,14 +8,21 @@ publicado con el mismo código del panel (01_panel.py) y calcula:
   - el precio de los últimos 13 meses de cada serie para la gráfica.
 
 Uso (desde la carpeta web-precios, con el entorno de Python del estudio):
-  ../entorno/bin/python scripts/generar_pronosticos.py ../estudio
+  ../entorno/bin/python scripts/generar_pronosticos.py ../estudio --base datos/base_mensual_web.parquet --publicado 2026-11-10
+  --base       base mensual con los meses publicados después de la tesis (por defecto, la del estudio, que llega a sep-2026);
+               la base del estudio no se modifica, para que la tesis siga siendo reproducible.
+  --publicado  fecha en que el DANE publicó el boletín del último mes (se muestra en la página).
 """
-import sys, os, json, contextlib, io, datetime as dt
+import sys, os, json, contextlib, io, datetime as dt, argparse
 from pathlib import Path
 import numpy as np, pandas as pd, joblib, lightgbm as lgb
 from scipy.special import expit, logit
 
-ESTUDIO = Path(sys.argv[1] if len(sys.argv) > 1 else "../estudio").resolve()
+ap = argparse.ArgumentParser(); ap.add_argument("estudio", nargs="?", default="../estudio")
+ap.add_argument("--base"); ap.add_argument("--publicado")
+ARGS = ap.parse_args()
+ESTUDIO = Path(ARGS.estudio).resolve()
+BASE_WEB = Path(ARGS.base).resolve() if ARGS.base else ESTUDIO / "datos" / "base_unida_mensual.parquet"
 SALIDA = Path(__file__).resolve().parents[1] / "public" / "data" / "pronosticos.json"
 os.chdir(ESTUDIO); sys.path.insert(0, str(ESTUDIO))
 from comun import *                     # noqa: E402  (DATOS, RES, NUCLEOS, SEMILLA, cargar_panel, variables_finales, leer_json)
@@ -29,7 +36,9 @@ ALTO, MEDIO = 0.60, 0.30                # umbrales del semáforo (probabilidad d
 src = (Path("01_panel.py").read_text()
        .replace("(P.mes < meses[-1])", "(P.mes <= meses[-1])")          # conservar el último mes, que aún no tiene objetivo
        .replace("    return P\n", "    return P, sin, fa, em\n")
-       .replace('if __name__ == "__main__":', "if False:"))
+       .replace('if __name__ == "__main__":', "if False:")
+       .replace('pd.read_parquet(DATOS / "base_unida_mensual.parquet")', f"pd.read_parquet({str(BASE_WEB)!r})"))
+assert str(BASE_WEB) in src
 ns = {}
 exec(compile(src, "01_panel_web", "exec"), ns)
 with contextlib.redirect_stdout(io.StringIO()):
@@ -80,7 +89,7 @@ for g in ("P", "N"):
     ln[gn == g] -= qh; hn[gn == g] += qh
 
 # ---------- 4. precios observados ----------
-B = pd.read_parquet(DATOS / "base_unida_mensual.parquet")
+B = pd.read_parquet(BASE_WEB)
 B = B[B.unidad.eq("$/kg") & B.precio.notna()]
 hist_desde = ult - pd.DateOffset(months=12)
 H = B[B.mes >= hist_desde].set_index(["mercado", "alimento"])
@@ -159,6 +168,7 @@ salida = {
     "generado": dt.date.today().isoformat(),
     "ultimo_mes": ult.strftime("%Y-%m"),
     "mes_pronostico": (ult + pd.DateOffset(months=1)).strftime("%Y-%m"),
+    "boletin_publicado": ARGS.publicado,
     "umbrales": {"alto": ALTO, "medio": MEDIO},
     "series": sorted(series, key=lambda s: (s["central"], s["producto"])),
 }

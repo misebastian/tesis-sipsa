@@ -49,6 +49,25 @@ export const HTML_PANORAMA = `<div class="vista">
     </div>
   </section>
 
+  <section class="tarjeta" aria-labelledby="t-eval" id="sec-eval" hidden>
+    <div class="tarjeta__cab">
+      <div><h2 id="t-eval">¿Cómo le fue al pronóstico del mes pasado?</h2><p id="sub-eval"></p></div>
+    </div>
+    <div class="cifras cifras--4" id="cifras-eval"></div>
+    <div class="panel" style="gap:16px">
+      <div class="panel" style="max-width:640px">
+        <h3 style="font-size:16px">Cuánto redujo el error, por grupo de alimentos</h3>
+        <div class="desliza"><svg class="grafica" id="graf-eval" style="min-width:460px" viewBox="0 0 600 230" role="img" aria-label="Reducción del error frente al último precio por grupo de alimentos"></svg></div>
+        <p class="nota">Error: diferencia promedio, en porcentaje, entre el cambio pronosticado y el cambio que de verdad ocurrió. La barra es cuánto menor fue ese error que el de repetir el último precio. Una barra hacia la izquierda indica que ese mes el modelo se equivocó más que el último precio.</p>
+      </div>
+      <div class="panel">
+        <h3 style="font-size:16px">Las alertas de riesgo alto, una por una</h3>
+        <div class="tabla-wrap"><table class="tabla" id="tabla-eval"></table></div>
+      </div>
+    </div>
+    <p class="nota" id="nota-eval"></p>
+  </section>
+
   <section class="tarjeta" aria-labelledby="t-calor">
     <div class="tarjeta__cab">
       <div><h2 id="t-calor">Dónde sube y dónde baja</h2><p>Cada celda es el cambio típico esperado de <span class="mes-u">el último mes</span> a <span class="mes-p">el próximo</span>, en porcentaje, para los alimentos de un grupo en una ciudad. Por ejemplo, +3 quiere decir que el alimento típico de ese grupo subiría 3 %. Un punto (·) indica que hay menos de dos alimentos de ese grupo en la ciudad.</p></div>

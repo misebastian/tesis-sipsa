@@ -4,7 +4,8 @@
   public/data/origen.json  departamento de origen de lo que llega a cada central en los últimos 12 meses, con los
                            microdatos de abastecimiento (SIPSA-A) del DANE.
 Uso (desde esta carpeta, después de generar_pronosticos.py):
-  python scripts/generar_panorama.py ../estudio --abastecimiento <archivos SIPSA-A de los últimos 12 meses (.csv o .dta)>
+  python scripts/generar_panorama.py ../estudio --base datos/base_mensual_web.parquet \
+      --abastecimiento <archivos SIPSA-A que cubran los últimos 12 meses (.csv, .dta o .xlsx)>
 """
 import argparse, json, sys
 from pathlib import Path
@@ -12,6 +13,7 @@ import numpy as np, pandas as pd
 
 ap = argparse.ArgumentParser()
 ap.add_argument('estudio'); ap.add_argument('--abastecimiento', nargs='+', required=True)
+ap.add_argument('--base', help='base mensual (por defecto, la del estudio)')
 ap.add_argument('--preparacion', default='../preparacion_datos'); ap.add_argument('--salida', default='public/data')
 a = ap.parse_args()
 sys.path.insert(0, a.preparacion)
@@ -23,7 +25,7 @@ ser = P['series']; pares = {(s['central'], s['producto']) for s in ser}; ciudad_
 fin = pd.Timestamp(P['ultimo_mes'] + '-01') + pd.offsets.MonthBegin(1); ini = fin - pd.DateOffset(months=12)
 
 # ---------- calendario y red, con la base mensual
-B = pd.read_parquet(Path(a.estudio) / 'datos' / 'base_unida_mensual.parquet')
+B = pd.read_parquet(a.base or Path(a.estudio) / 'datos' / 'base_unida_mensual.parquet')
 B = B[np.array([(m, al) in pares for m, al in zip(B.mercado, B.alimento)]) & B.precio.notna()].sort_values(['mercado', 'alimento', 'mes'])
 g = B.groupby(['mercado', 'alimento'])
 seguido = (B.mes - pd.DateOffset(months=1)) == g.mes.shift()

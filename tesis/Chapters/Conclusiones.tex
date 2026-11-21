@@ -19,6 +19,7 @@ Finalmente, en relación con el cuarto objetivo, el modelo seleccionado detectó
 \item Usar CatBoost (u otro modelo de potenciación) para el pronóstico central y la probabilidad de alza, y el LightGBM cuantílico con calibración conforme para los intervalos, reestimados al menos cada trimestre (la mensual no se evaluó), lo que redujo levemente el error frente al modelo fijo. Como la mediana cuantílica tuvo un error casi igual al de CatBoost, podría usarse un solo modelo, y la calibración conforme podría hacerse por nivel de volatilidad.
 \item Fijar el umbral con la razón de costos del usuario, $u=c_{FP}/(c_{FP}+c_{FN})$, e informarlo con la precisión y la exhaustividad esperadas.
 \item Aplicarlo sobre todo en frutas y verduras; en los demás grupos, usar el último precio.
+\item Publicar los pronósticos y las alertas para que los usen comerciantes y compradores, como en la página web de este trabajo (\url{https://tesis-sipsa.vercel.app}), y automatizar la descarga de los boletines, la reestimación y la elección del modelo.
 \item Como trabajo futuro: usar los boletines semanales, agregar clima regional y transporte, evaluar combinaciones de pronósticos y ampliar la prueba.
 \end{enumerate}
 

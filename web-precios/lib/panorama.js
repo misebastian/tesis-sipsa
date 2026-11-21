@@ -450,8 +450,45 @@ function miCanasta() {
 function todo() { kpis(); mapa(); panel(); dispersion(); }
 
 
-export function montarPanorama(d, x) {
-  D = d; X = x; rellenarMeses();
+/* ================= evaluación del mes pasado ================= */
+const NOMG = { 'FRUTAS': 'Frutas', 'VERDURAS Y HORTALIZAS': 'Verduras', 'TUBERCULOS, RAICES Y PLATANOS': 'Tubérculos y plátano', 'PROCESADOS': 'Procesados', 'GRANOS Y CEREALES': 'Granos', 'LACTEOS Y HUEVOS': 'Lácteos y huevos' };
+const num1 = (v) => v.toLocaleString('es-CO', { maximumFractionDigits: 1, minimumFractionDigits: 1 });
+function evaluacion(E) {
+  if (!E) return;
+  $('#sec-eval').hidden = false;
+  const me = nomMes(E.mes), mh = nomMes(E.pronostico_hecho_con);
+  $('#t-eval').textContent = `¿Cómo le fue al pronóstico de ${me}?`;
+  $('#sub-eval').textContent = `El mes pasado esta página pronosticó ${me} con el boletín de ${mh}. Ahora que el DANE publicó los precios de ${me}, se comparan con lo que se esperaba, en ${fmt.format(E.n)} alimentos y centrales.`;
+  $('#cifras-eval').innerHTML = `
+    <div><b class="num">${num1(E.reduccion)} %</b><span>menos error que repetir el último precio (${num1(E.err_modelo)} % frente a ${num1(E.err_ultimo)} %)</span></div>
+    <div><b class="num">${Math.round(E.cobertura)} %</b><span>de los precios reales quedó dentro del rango del 80 %</span></div>
+    <div><b class="num">${E.alto.aciertos} de ${E.alto.n}</b><span>alertas de riesgo alto terminaron en un alza fuerte (más del 15 %)</span></div>
+    <div><b class="num">${E.alzas_con_alerta} de ${E.alzas}</b><span>alzas fuertes que ocurrieron tenían alerta de riesgo medio o alto</span></div>`;
+  // barras por grupo
+  const svg = $('#graf-eval'); svg.replaceChildren();
+  const W = 600, m = { l: 175, r: 60, t: 6 }, h = 30, g = E.grupos;
+  const mx = Math.max(25, ...g.map((x) => Math.abs(x.reduccion))), mn = Math.min(0, ...g.map((x) => x.reduccion));
+  const x0 = m.l + (W - m.l - m.r) * (-mn / (mx - mn)), esc = (W - m.l - m.r) / (mx - mn);
+  svg.setAttribute('viewBox', `0 0 ${W} ${m.t + g.length * h + 24}`);
+  g.forEach((x, i) => {
+    const y = m.t + i * h, w = Math.abs(x.reduccion) * esc;
+    svg.append(el('text', { x: m.l - 10, y: y + 18, 'text-anchor': 'end', style: 'fill:var(--texto-2);font-size:12.5px' }, `${NOMG[x.grupo] || x.grupo} (${x.n})`));
+    svg.append(el('rect', { x: x.reduccion >= 0 ? x0 : x0 - w, y: y + 5, width: Math.max(1.5, w), height: h - 12, rx: 3, style: `fill:${x.reduccion >= 0 ? 'var(--acento)' : 'var(--alto)'}` }));
+    svg.append(el('text', { x: x.reduccion >= 0 ? x0 + w + 6 : x0 + 6, y: y + 18, style: 'fill:var(--texto);font-size:12.5px;font-weight:600' }, `${x.reduccion > 0 ? '+' : x.reduccion < 0 ? '−' : ''}${num1(Math.abs(x.reduccion))} %`));
+  });
+  svg.append(el('line', { x1: x0, x2: x0, y1: m.t, y2: m.t + g.length * h, class: 'eje', style: 'stroke:var(--texto-4)' }));
+  svg.append(el('text', { x: x0, y: m.t + g.length * h + 16, 'text-anchor': 'middle' }, '0 % (igual que el último precio)'));
+  // alertas altas
+  $('#tabla-eval').innerHTML = `<thead><tr><th>Alimento</th><th class="n">${corto(mh)} $/kg</th><th class="n">${corto(me)} real</th><th class="n">Cambio real</th><th>¿Hubo alza fuerte?</th></tr></thead><tbody>${E.alertas_altas.map((a) => `<tr>
+    <td><b>${a.producto}</b><div class="nota">${a.ciudad} · ${centralCorta(a.central)} · prob. ${Math.round(100 * a.prob)} %</div></td>
+    <td class="n">${pesos(a.antes)}</td><td class="n">${pesos(a.real)}</td>
+    <td class="n ${a.cambio_real > 0 ? 'sube' : 'baja'}">${pct(a.cambio_real)}</td>
+    <td><span class="pill ${a.alza ? 'pill--alto' : 'pill--bajo'}">${a.alza ? 'Sí' : 'No'}</span></td></tr>`).join('')}</tbody>`;
+  $('#nota-eval').textContent = `Es un solo mes, así que estas cifras varían de un mes a otro; en el periodo de prueba de la tesis (enero de 2025 a septiembre de 2026) la reducción del error fue de 12,2 %. Una alerta de riesgo alto no garantiza el alza: según sus probabilidades, se esperaba que se cumplieran unas ${Math.round(E.alertas_altas.reduce((t, a) => t + a.prob, 0))} de ${E.alto.n}, y se cumplieron ${E.alto.aciertos}.`;
+}
+
+export function montarPanorama(d, x, ev) {
+  D = d; X = x; rellenarMeses(); evaluacion(ev);
   $('#cinta').textContent = `Pronóstico para ${nomMes(d.mes_pronostico)} de ${d.mes_pronostico.slice(0, 4)} · datos hasta ${nomMes(d.ultimo_mes)}`;
   $('#m-riesgo').onclick = () => { estado.modo = 'riesgo'; $('#m-riesgo').setAttribute('aria-pressed', 'true'); $('#m-cambio').setAttribute('aria-pressed', 'false'); mapa(); };
   $('#m-cambio').onclick = () => { estado.modo = 'cambio'; $('#m-cambio').setAttribute('aria-pressed', 'true'); $('#m-riesgo').setAttribute('aria-pressed', 'false'); mapa(); };

@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import { useDatos, nombreMes, partesCentral } from '../../lib/datos';
+import AvisoBoletin from '../../components/AvisoBoletin';
 
 export default function Alertas() {
   const { datos, error } = useDatos();
@@ -38,6 +39,8 @@ export default function Alertas() {
           </select>
         </div>
       </section>
+
+      <AvisoBoletin datos={datos} />
 
       <section className="resumen" aria-label="Resumen">
         <div className="tarjeta resumen__item">
