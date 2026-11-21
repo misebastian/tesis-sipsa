@@ -151,6 +151,7 @@ for i, r in X.iterrows():
         "cambio_pct": round(float(np.expm1(r.cambio)) * 100, 1),
         "prob_alza": round(prob, 3), "riesgo": "alto" if prob >= ALTO else "medio" if prob >= MEDIO else "bajo",
         "razones": razones,
+        "unidad": "kg",   # el panel de la tesis solo usa precios por kilo (unidad $/kg en la base)
         "historia": [[d.strftime("%Y-%m"), round(float(v))] for d, v in zip(h.mes, h.precio)],   # [mes, precio por kilo]
     })
 

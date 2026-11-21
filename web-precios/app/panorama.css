@@ -191,3 +191,9 @@
 }
 .pz .tabla th { background: transparent; }
 .pz .tabla { min-width: 0; }
+.pz .glosario { background: var(--tarjeta); border: 1px solid var(--borde); border-radius: 12px; padding: 12px 16px; font-size: 14px; }
+.pz .glosario summary { cursor: pointer; font-weight: 600; color: var(--acento); }
+.pz .glosario dl { display: grid; grid-template-columns: minmax(0, 210px) minmax(0, 1fr); gap: 8px 16px; margin: 12px 0 2px; }
+.pz .glosario dt { font-weight: 600; }
+.pz .glosario dd { margin: 0; color: var(--texto-3); }
+@media (max-width: 560px) { .pz .glosario dl { grid-template-columns: minmax(0, 1fr); } .pz .glosario dd { margin-bottom: 6px; } }

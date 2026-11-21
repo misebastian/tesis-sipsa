@@ -1,6 +1,7 @@
 // Dibujo de las páginas Panorama, Mi ciudad y Mi canasta (SVG y tablas hechos a mano, sin librerías).
 // Cada página llama a su función montar…() cuando ya cargó los datos de public/data.
 import GEO from './geo.json';
+import { LEY_CAMBIO } from './panorama-html';
 
 
 const COORD = {
@@ -33,6 +34,15 @@ const claseCambio = (v) => v <= -8 ? 'd1' : v <= -2 ? 'd2' : v < 2 ? 'd3' : v < 
 const claseRiesgo = (p) => p < 5 ? 's1' : p < 10 ? 's2' : p < 15 ? 's3' : 's4';
 const colRiesgo = { alto: 'var(--alto)', medio: 'var(--medio)', bajo: 'var(--bajo)' };
 const txtRiesgo = { alto: 'Alto', medio: 'Medio', bajo: 'Bajo' };
+const uni = (s) => (s && s.unidad) || 'kg';                     // unidad del precio de cada serie (hoy todas en kilos)
+const pu = (v, s) => `${pesos(v)}/${uni(s)}`;                    // "$3.212/kg"
+const MP = () => nomMes(D.mes_pronostico), MU = () => nomMes(D.ultimo_mes);
+const corto = (m) => m.slice(0, 3) + '.';
+function rellenarMeses() {
+  document.querySelectorAll('.pz .mes-p').forEach((e) => { e.textContent = MP(); });
+  document.querySelectorAll('.pz .mes-u').forEach((e) => { e.textContent = MU(); });
+  const us = [...new Set(D.series.map(uni))]; document.querySelectorAll('.pz .uni').forEach((e) => { e.textContent = us.map((u) => '$/' + u).join(', '); });
+}
 
 function mostrarTip(ev, html) {
   const tip = $('#tip'); if (!tip) return;
@@ -86,10 +96,10 @@ function kpis() {
   const w = (k) => (100 * k / n).toFixed(1) + '%';
   $('#kpis').innerHTML = `
     <div class="kpi"><b class="num">${fmt.format(n)}</b><span>alimentos en ${new Set(s.map((x) => x.central)).size} centrales</span></div>
-    <div class="kpi kpi--alto"><b class="num">${a}</b><span>con riesgo alto de alza fuerte</span></div>
-    <div class="kpi kpi--medio"><b class="num">${m}</b><span>con riesgo medio</span></div>
-    <div class="kpi"><b class="num">${Math.round(100 * baja / n)} % <small style="font-size:15px;color:var(--texto-4);font-weight:600">bajan</small></b>
-      <span>${Math.round(100 * sube / n)} % suben más del 2 % y ${Math.round(100 * igual / n)} % se mantienen</span>
+    <div class="kpi kpi--alto"><b class="num">${a}</b><span>con riesgo alto de alza fuerte (probabilidad de 60 % o más de subir más del 15 %)</span></div>
+    <div class="kpi kpi--medio"><b class="num">${m}</b><span>con riesgo medio (probabilidad entre 30 % y 60 %)</span></div>
+    <div class="kpi"><b class="num">${Math.round(100 * baja / n)} % <small style="font-size:15px;color:var(--texto-4);font-weight:600">bajarían</small></b>
+      <span>más del 2 %; ${Math.round(100 * sube / n)} % subirían más del 2 % y ${Math.round(100 * igual / n)} % quedarían estables (entre −2 % y +2 %)</span>
       <div class="barrita" aria-hidden="true"><i style="width:${w(baja)};background:var(--d1)"></i><i style="width:${w(igual)};background:var(--d3)"></i><i style="width:${w(sube)};background:var(--d5)"></i></div></div>`;
 }
 
@@ -107,7 +117,7 @@ function mapa() {
   for (const n of nodos) {
     const fill = estado.modo === 'riesgo' ? `var(--${claseRiesgo(n.riesgo)})` : `var(--${claseCambio(n.cambio)})`;
     const c = el('circle', { cx: n.x, cy: n.y, r: n.r, class: 'nodo' + (n.ciudad === estado.ciudad ? ' sel' : ''), style: `fill:${fill}`, tabindex: 0, role: 'button', 'aria-label': `${n.ciudad}: ${n.n} alimentos` });
-    c.onmousemove = (ev) => mostrarTip(ev, `<b>${n.ciudad}</b>${n.n} alimentos<br>${n.riesgo.toFixed(0)} % en riesgo medio o alto<br>Cambio típico: ${pct(n.cambio)}`);
+    c.onmousemove = (ev) => mostrarTip(ev, `<b>${n.ciudad}</b>${n.n} alimentos<br>${n.riesgo.toFixed(0)} % de sus alimentos en riesgo medio o alto<br>Cambio típico esperado: ${pct(n.cambio)}`);
     c.onmouseleave = ocultarTip;
     c.onclick = c.onkeydown = (ev) => { if (ev.type === 'keydown' && ev.key !== 'Enter') return; estado.ciudad = n.ciudad; mapa(); panel(); };
     svg.append(c);
@@ -115,8 +125,8 @@ function mapa() {
   for (const n of nodos) { const [dx, dy, an] = ETQ[n.ciudad] || [10, 4, 'start']; svg.append(el('text', { x: n.x + dx, y: n.y + dy, 'text-anchor': an }, n.ciudad)); }
   const ley = $('#leyenda-mapa');
   ley.innerHTML = estado.modo === 'riesgo'
-    ? '<span style="width:100%">Alimentos en riesgo medio o alto</span><span><i style="background:var(--s1)"></i>menos de 5 %</span><span><i style="background:var(--s2)"></i>5 a 10 %</span><span><i style="background:var(--s3)"></i>10 a 15 %</span><span><i style="background:var(--s4)"></i>15 % o más</span>'
-    : '<span style="width:100%">Cambio típico esperado</span><span><i style="background:var(--d1)"></i>baja 8 % o más</span><span><i style="background:var(--d2)"></i>baja 2 a 8 %</span><span><i style="background:var(--d3)"></i>estable</span><span><i style="background:var(--d4)"></i>sube 2 a 8 %</span><span><i style="background:var(--d5)"></i>sube 8 % o más</span>';
+    ? '<span style="width:100%">Parte de los alimentos de la ciudad con riesgo medio o alto (probabilidad de alza fuerte de 30 % o más)</span><span><i style="background:var(--s1)"></i>menos de 5 %</span><span><i style="background:var(--s2)"></i>5 a 10 %</span><span><i style="background:var(--s3)"></i>10 a 15 %</span><span><i style="background:var(--s4)"></i>15 % o más</span>'
+    : `<span style="width:100%">Cambio típico esperado en la ciudad, de ${MU()} a ${MP()}</span>${LEY_CAMBIO}`;
 }
 
 function panel() {
@@ -129,14 +139,14 @@ function panel() {
     <div class="cifras">
       <div><b class="num">${d.n}</b><span>alimentos</span></div>
       <div><b class="num">${d.v.filter((x) => x.riesgo === 'alto').length} / ${d.v.filter((x) => x.riesgo === 'medio').length}</b><span>riesgo alto / medio</span></div>
-      <div><b class="num ${d.cambio > 0 ? 'sube' : d.cambio < 0 ? 'baja' : ''}">${pct(d.cambio)}</b><span>cambio típico</span></div>
+      <div><b class="num ${d.cambio > 0 ? 'sube' : d.cambio < 0 ? 'baja' : ''}">${pct(d.cambio)}</b><span>cambio típico esperado</span></div>
     </div>
-    <span class="nota">Mayor probabilidad de alza fuerte en octubre</span>
+    <span class="nota">Alimentos con mayor probabilidad de alza fuerte en ${MP()} (precio de ${MU()} → esperado)</span>
     <ul class="lista">${top.map((s) => `<li data-p="${s.producto}" title="Ver ${s.producto} en todo el país">
-      <div style="min-width:0"><div class="p">${s.producto}</div><div class="c">${centralCorta(s.central)} · ${pesos(s.precio_actual)} → ${pesos(s.precio_esperado)}</div></div>
+      <div style="min-width:0"><div class="p">${s.producto}</div><div class="c">${centralCorta(s.central)} · ${pu(s.precio_actual, s)} → ${pu(s.precio_esperado, s)}</div></div>
       <span class="num ${s.cambio_pct > 0 ? 'sube' : 'baja'}" style="text-align:right;font-weight:600">${pct(s.cambio_pct)}</span>
       <span class="pill pill--${s.riesgo}">${Math.round(100 * s.prob_alza)} %</span></li>`).join('')}</ul>
-    <p class="nota">El porcentaje de la derecha es la probabilidad de que el precio suba más del 15 %.</p>`;
+    <p class="nota">Primera cifra: cambio esperado del precio. Cifra de color: probabilidad de que el precio suba más del 15 %.</p>`;
   $('#sel-ciudad').onchange = (e) => { estado.ciudad = e.target.value; mapa(); panel(); };
   $('#panel').querySelectorAll('li').forEach((li) => li.onclick = () => irProducto(li.dataset.p));
 }
@@ -157,10 +167,9 @@ function calor() {
   }
   $('#calor').innerHTML = h + '</tbody>';
   $('#calor').querySelectorAll('td[data-m]').forEach((td) => {
-    td.onmousemove = (ev) => mostrarTip(ev, `<b>${td.dataset.t} en ${td.dataset.c}</b>Cambio típico: ${pct(+td.dataset.m)}<br>${td.dataset.n} alimentos`);
+    td.onmousemove = (ev) => mostrarTip(ev, `<b>${td.dataset.t} en ${td.dataset.c}</b>Cambio típico esperado: ${pct(+td.dataset.m)}<br>Mediana de ${td.dataset.n} alimentos`);
     td.onmouseleave = ocultarTip;
   });
-  $('#leyenda-calor').innerHTML = '<span><i style="background:var(--d1);border-radius:3px"></i>baja 8 % o más</span><span><i style="background:var(--d2);border-radius:3px"></i>baja 2 a 8 %</span><span><i style="background:var(--d3);border-radius:3px"></i>estable</span><span><i style="background:var(--d4);border-radius:3px"></i>sube 2 a 8 %</span><span><i style="background:var(--d5);border-radius:3px"></i>sube 8 % o más</span>';
 }
 
 function dispersion() {
@@ -173,12 +182,12 @@ function dispersion() {
   svg.append(el('line', { x1: m.l, x2: W - m.r, y1: y(.3), y2: y(.3), class: 'umbral', style: 'stroke:var(--medio)' }));
   svg.append(el('text', { x: W - m.r - 4, y: y(.6) - 6, 'text-anchor': 'end', style: 'fill:var(--alto-texto);font-weight:600' }, 'riesgo alto'));
   svg.append(el('text', { x: W - m.r - 4, y: y(.3) - 6, 'text-anchor': 'end', style: 'fill:var(--medio-texto);font-weight:600' }, 'riesgo medio'));
-  svg.append(el('text', { x: (m.l + W - m.r) / 2, y: H - 6, 'text-anchor': 'middle' }, 'Cambio esperado de septiembre a octubre'));
+  svg.append(el('text', { x: (m.l + W - m.r) / 2, y: H - 6, 'text-anchor': 'middle' }, `Cambio esperado del precio, de ${MU()} a ${MP()}`));
   svg.append(el('text', { x: 14, y: (H - m.b + m.t) / 2, transform: `rotate(-90 14 ${(H - m.b + m.t) / 2})`, 'text-anchor': 'middle' }, 'Probabilidad de alza fuerte'));
   const s = [...serie()].sort((a, b) => (a.riesgo === 'bajo' ? 0 : 1) - (b.riesgo === 'bajo' ? 0 : 1));
   for (const d of s) {
     const c = el('circle', { cx: x(Math.max(-35, Math.min(35, d.cambio_pct))), cy: y(d.prob_alza), r: d.riesgo === 'bajo' ? 3.2 : 4.6, class: 'pz-punto', style: `fill:${colRiesgo[d.riesgo]};fill-opacity:${d.riesgo === 'bajo' ? .45 : .9}` });
-    c.onmousemove = (ev) => mostrarTip(ev, `<b>${d.producto}</b>${d.ciudad}, ${centralCorta(d.central)}<br>${pesos(d.precio_actual)} → ${pesos(d.precio_esperado)} (${pct(d.cambio_pct)})<br>Probabilidad de alza fuerte: ${Math.round(100 * d.prob_alza)} %`);
+    c.onmousemove = (ev) => mostrarTip(ev, `<b>${d.producto}</b>${d.ciudad}, ${centralCorta(d.central)}<br>${pu(d.precio_actual, d)} → ${pu(d.precio_esperado, d)} (${pct(d.cambio_pct)})<br>Probabilidad de alza fuerte: ${Math.round(100 * d.prob_alza)} %`);
     c.onmouseleave = ocultarTip; c.onclick = () => irProducto(d.producto);
     svg.append(c);
   }
@@ -201,6 +210,7 @@ function producto() {
   const paso = Math.pow(10, Math.floor(Math.log10((hi - lo) / 4))); const st = [1, 2, 2.5, 5, 10].map((k) => k * paso).find((k) => (hi - lo) / k <= 5);
   const x = (i) => m.l + i / (meses.length - 1) * (W - m.l - m.r), y = (p) => H - m.b - (p - lo) / (hi - lo) * (H - m.t - m.b);
   for (let t = Math.ceil(lo / st) * st; t <= hi; t += st) { svg.append(el('line', { x1: m.l, x2: W - m.r, y1: y(t), y2: y(t), class: 'rej' })); svg.append(el('text', { x: m.l - 8, y: y(t) + 4, 'text-anchor': 'end' }, pesos(t))); }
+  svg.append(el('text', { x: m.l - 8, y: m.t - 2, 'text-anchor': 'end', style: 'font-weight:600' }, `$/${uni(v[0])}`));
   meses.forEach((mm, i) => { if (i % 2 === 0 || i === meses.length - 1) svg.append(el('text', { x: x(i), y: H - m.b + 18, 'text-anchor': 'middle', style: i === meses.length - 1 ? 'font-weight:700;fill:var(--acento)' : '' }, MC[+mm.slice(5, 7) - 1] + (mm.endsWith('-01') || i === 0 ? ' ' + mm.slice(2, 4) : ''))); });
   svg.append(el('rect', { x: x(meses.length - 2), y: m.t, width: x(meses.length - 1) - x(meses.length - 2) + 8, height: H - m.t - m.b, style: 'fill:var(--acento-suave)', rx: 6 }));
   svg.append(el('text', { x: x(meses.length - 1) - 4, y: m.t + 14, 'text-anchor': 'end', style: 'fill:var(--acento);font-weight:600' }, 'pronóstico'));
@@ -218,7 +228,7 @@ function producto() {
   const resaltar = (central) => {
     grupos.forEach((g) => { const on = g.s.central === central; g.querySelectorAll('path').forEach((p) => p.classList.toggle('on', on)); g.fin.style.fill = on ? 'var(--acento)' : 'var(--linea)'; g.fin.setAttribute('r', on ? 5 : 3.5); if (on) svg.append(g); });
     svg.append(lbl);
-    const s = v.find((q) => q.central === central); lbl.textContent = s ? `${s.ciudad} · ${centralCorta(s.central)}: ${pesos(s.precio_actual)} → ${pesos(s.precio_esperado)}` : '';
+    const s = v.find((q) => q.central === central); lbl.textContent = s ? `${s.ciudad} · ${centralCorta(s.central)}: ${pu(s.precio_actual, s)} en ${corto(MU())} → ${pu(s.precio_esperado, s)} en ${corto(MP())}` : '';
     $('#ranking').querySelectorAll('li').forEach((li) => li.classList.toggle('on', li.dataset.c === central));
     if (s) calendario(central, estado.producto);
   };
@@ -227,7 +237,7 @@ function producto() {
   $('#ranking').innerHTML = orden.map((s) => `<li data-c="${s.central.replace(/"/g, '&quot;')}"><span class="nom" title="${s.central.replace(/"/g, '&quot;')}">${s.ciudad}${v.filter((q) => q.ciudad === s.ciudad).length > 1 ? ' · ' + centralCorta(s.central) : ''}</span><span class="pista"><i style="width:${(100 * s.precio_esperado / max).toFixed(1)}%"></i></span><span class="v">${pesos(s.precio_esperado)}</span></li>`).join('');
   $('#ranking').querySelectorAll('li').forEach((li) => { li.onmouseenter = li.onclick = () => resaltar(li.dataset.c); });
   const barato = orden[0], caro = orden[orden.length - 1];
-  $('#nota-lineas').textContent = `Precio mensual por kilo en ${v.length} centrales. En octubre, ${barato.ciudad} sería la más barata (${pesos(barato.precio_esperado)}) y ${caro.ciudad} la más cara (${pesos(caro.precio_esperado)}). Pase el cursor por una línea o por la lista.`;
+  $('#nota-lineas').textContent = `Precio mayorista mensual en pesos por ${uni(v[0]) === 'kg' ? 'kilo' : uni(v[0])}, en ${v.length} centrales. En ${MP()}, ${barato.ciudad} sería la más barata (${pu(barato.precio_esperado, barato)}) y ${caro.ciudad} la más cara (${pu(caro.precio_esperado, caro)}). Pase el cursor por una línea o por la lista.`;
   resaltar(orden[0].central);
 }
 
@@ -290,7 +300,8 @@ function red() {
     c.onmousemove = (ev) => mostrarTip(ev, `<b>${n.c}</b>${NOMREG[n.reg]} · ${nSer[n.c]} alimentos`); c.onmouseleave = ocultarTip;
     gN.append(g);
   }
-  $('#ley-red').innerHTML = Object.entries(NOMREG).map(([k, t]) => `<span><i style="background:var(--r${k})"></i>${t}</span>`).join('');
+  $('#ley-red').innerHTML = Object.entries(NOMREG).map(([k, t]) => `<span><i style="background:var(--r${k})"></i>${t}</span>`).join('') + '<span>Tamaño del círculo: número de alimentos de la central</span>';
+  if (X.desde) $('#red-desde').textContent = X.desde.slice(0, 4);
   // resumen dentro y entre regiones
   const dentro = [], entre = [];
   for (const e of aristas) (nodos[e.a].reg === nodos[e.b].reg ? dentro : entre).push(e.w);
@@ -334,12 +345,13 @@ function calendario(central, producto) {
   $('#t-cal').textContent = `Calendario de ${producto} en ${nombreCentral(central)}`;
   if (!c) { $('#cal').innerHTML = ''; $('#nota-cal').textContent = 'Sin historia suficiente.'; return; }
   const [med, fa, n] = c;
-  $('#cal').innerHTML = med.map((v, i) => `<div class="${v == null ? '' : claseCambio(v)} ${i + 1 === mesP ? 'hoy' : ''}" title="${MESES[i]}: cambio típico ${v == null ? 'sin dato' : pct(v)}; alza fuerte en ${fa[i] == null ? 0 : Math.round(fa[i] * n[i])} de ${n[i]} años">
+  if (X.desde) $('#cal-anios').textContent = `${X.desde.slice(0, 4)} a ${X.hasta.slice(0, 4)}`;
+  $('#cal').innerHTML = med.map((v, i) => `<div class="${v == null ? '' : claseCambio(v)} ${i + 1 === mesP ? 'hoy' : ''}" title="${MESES[i]}: cambio típico frente al mes anterior ${v == null ? 'sin dato' : pct(v)}; alza fuerte en ${fa[i] == null ? 0 : Math.round(fa[i] * n[i])} de ${n[i]} años">
      <b>${MC[i]}</b><span>${v == null ? '·' : (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(Math.round(v))}</span><i><em style="width:${Math.round(100 * (fa[i] || 0))}%"></em></i></div>`).join('');
   const ok = med.map((v, i) => [v, i]).filter((p) => p[0] != null);
   const sube = ok.reduce((a, b) => (b[0] > a[0] ? b : a)), baja = ok.reduce((a, b) => (b[0] < a[0] ? b : a));
   const i = mesP - 1;
-  $('#nota-cal').textContent = `Suele subir más en ${MESES[sube[1]]} (${pct(sube[0])}) y bajar más en ${MESES[baja[1]]} (${pct(baja[0])}). En ${MESES[i]} tuvo alza fuerte en ${Math.round((fa[i] || 0) * n[i])} de ${n[i]} años.`;
+  $('#nota-cal').textContent = `Frente al mes anterior, suele subir más en ${MESES[sube[1]]} (${pct(sube[0])}) y bajar más en ${MESES[baja[1]]} (${pct(baja[0])}). En ${MESES[i]} tuvo alza fuerte en ${Math.round((fa[i] || 0) * n[i])} de ${n[i]} años.`;
 }
 
 /* ================= mi ciudad ================= */
@@ -349,6 +361,7 @@ function miCiudad() {
   if (!sel.options.length) { sel.innerHTML = Object.keys(O.ciudad).sort((a, b) => a.localeCompare(b, 'es')).map((c) => `<option>${c}</option>`).join(''); sel.onchange = () => { CIU = { ciudad: sel.value, origen: null }; miCiudad(); }; $('#limpiar-origen').onclick = () => { CIU.origen = null; miCiudad(); }; }
   sel.value = CIU.ciudad;
   const c = CIU.ciudad, info = O.ciudad[c];
+  const [p0, p1] = O.periodo || []; if (p0) $('#cinta-ciudad').textContent = `Mi ciudad · abastecimiento de ${nomMes(p0)} de ${p0.slice(0, 4)} a ${nomMes(p1)} de ${p1.slice(0, 4)}`;
   const ser = D.series.filter((s) => s.ciudad === c).map((s) => ({ ...s, org: O.serie[`${s.central}|${s.producto}`] }));
   const local = info.origenes.filter(([o]) => (LOCAL[c] || []).includes(o)).reduce((a, [, v]) => a + v, 0);
   const imp = info.origenes.find(([o]) => o === 'Importado')?.[1] || 0;
@@ -356,10 +369,10 @@ function miCiudad() {
   const depend = ser.filter((s) => s.org && s.org.o[0][1] >= 0.7).length;
   const top = info.origenes.filter(([o]) => !(LOCAL[c] || []).includes(o) && o !== 'Importado')[0];
   $('#kpis-ciudad').innerHTML = `
-    <div class="kpi"><b class="num">${fmt.format(info.ton)}</b><span>toneladas llegaron en 12 meses</span></div>
-    <div class="kpi"><b class="num">${Math.round(100 * local)} %</b><span>viene de ${(LOCAL[c] || []).join(' y ')}</span></div>
-    <div class="kpi"><b class="num">${nDep}</b><span>departamentos la abastecen${imp ? `, y ${Math.round(100 * imp)} % es importado` : ''}</span></div>
-    <div class="kpi kpi--medio"><b class="num">${depend}</b><span>de ${ser.length} alimentos dependen de un solo origen (70 % o más)</span></div>`;
+    <div class="kpi"><b class="num">${fmt.format(info.ton)}</b><span>toneladas de estos alimentos llegaron a sus centrales en 12 meses</span></div>
+    <div class="kpi"><b class="num">${Math.round(100 * local)} %</b><span>de esas toneladas viene de ${(LOCAL[c] || []).join(' y ')}</span></div>
+    <div class="kpi"><b class="num">${nDep}</b><span>departamentos aportan carga${imp ? `; además, ${Math.round(100 * imp)} % es importado` : ''}</span></div>
+    <div class="kpi kpi--medio"><b class="num">${depend}</b><span>de ${ser.length} alimentos reciben 70 % o más de un solo departamento</span></div>`;
   // mapa de flujos
   const svg = $('#mapa-flujo'); dibujarBase(svg);
   const [cx, cy] = proj(COORD[c]);
@@ -387,7 +400,7 @@ function miCiudad() {
   const variasCentrales = new Set(ser.map((s) => s.central)).size > 1;
   $('#limpiar-origen').hidden = !CIU.origen;
   $('#sub-tabla-ciudad').textContent = CIU.origen ? `${filas.length} alimentos que ${CIU.origen === 'Importado' ? 'son principalmente importados' : 'llegan principalmente de ' + CIU.origen}, ordenados por probabilidad de alza fuerte.` : `${filas.length} alimentos, ordenados por probabilidad de alza fuerte.`;
-  $('#tabla-ciudad').innerHTML = `<thead><tr><th>Alimento</th><th>Llega de</th><th class="n">Septiembre</th><th class="n">Octubre esperado</th><th class="n">Cambio</th><th>Alza fuerte</th></tr></thead><tbody>${filas.slice(0, 40).map((s) => `<tr>
+  $('#tabla-ciudad').innerHTML = `<thead><tr><th>Alimento</th><th>Llega de</th><th class="n">${MU()[0].toUpperCase() + MU().slice(1)} ($/kg)</th><th class="n">${MP()[0].toUpperCase() + MP().slice(1)} esperado ($/kg)</th><th class="n">Cambio esperado</th><th>Riesgo · prob. de alza fuerte</th></tr></thead><tbody>${filas.slice(0, 40).map((s) => `<tr>
       <td><b>${s.producto}</b>${variasCentrales ? `<div class="nota">${centralCorta(s.central)}</div>` : ''}</td>
       <td><div class="chips-o">${s.org ? s.org.o.filter(([, v]) => v >= 0.01).slice(0, 2).map(([o, v]) => `<span class="chip-o">${o} ${Math.round(100 * v)} %</span>`).join('') : ''}</div></td>
       <td class="n">${pesos(s.precio_actual)}</td><td class="n"><b>${pesos(s.precio_esperado)}</b></td>
@@ -416,18 +429,18 @@ function miCanasta() {
     const s = disp[it.p]; const cS = s.precio_actual * it.k, cO = s.precio_esperado * it.k;
     tS += cS; tO += cO; tLo += s.rango[0] * it.k; tHi += s.rango[1] * it.k;
     if (!mayor || cO - cS > mayor.d) mayor = { p: it.p, d: cO - cS };
-    return `<tr><td><b>${it.p}</b></td><td class="n"><input class="kg" type="number" min="0" step="0.5" value="${it.k}" data-i="${CAN.items.indexOf(it)}" aria-label="Kilos de ${it.p}" id="kg-${i}"></td>
+    return `<tr><td><b>${it.p}</b></td><td class="n"><input class="kg" type="number" min="0" step="0.5" value="${it.k}" data-i="${CAN.items.indexOf(it)}" aria-label="Cantidad en ${uni(s)} de ${it.p}" id="kg-${i}"></td>
       <td class="n">${pesos(s.precio_actual)}</td><td class="n">${pesos(s.precio_esperado)}</td><td class="n">${pesos(cS)}</td><td class="n"><b>${pesos(cO)}</b></td>
       <td class="n ${cO > cS ? 'sube' : 'baja'}">${pct(s.cambio_pct)}</td><td><span class="pill pill--${s.riesgo}">${txtRiesgo[s.riesgo]}</span></td>
       <td><button type="button" class="quitar" data-i="${CAN.items.indexOf(it)}" aria-label="Quitar ${it.p}">×</button></td></tr>`;
   });
   const dif = tO - tS, dpct = tS ? 100 * dif / tS : 0;
   $('#canasta-total').innerHTML = `
-    <div><b class="num">${pesos(tS)}</b><span>costo con precios de septiembre</span></div>
-    <div><b class="num ${dif > 0 ? 'sube' : 'baja'}">${pesos(tO)}</b><span>costo esperado en octubre (${pct(dpct)}, ${dif >= 0 ? '+' : '−'}${pesos(Math.abs(dif))})</span></div>
-    <div><b class="num" style="font-size:20px">${pesos(tLo)} a ${pesos(tHi)}</b><span>rango probable en octubre</span></div>`;
+    <div><b class="num">${pesos(tS)}</b><span>costo con los precios de ${MU()}</span></div>
+    <div><b class="num ${dif > 0 ? 'sube' : 'baja'}">${pesos(tO)}</b><span>costo esperado en ${MP()} (${pct(dpct)}, ${dif >= 0 ? '+' : '−'}${pesos(Math.abs(dif))})</span></div>
+    <div><b class="num" style="font-size:20px">${pesos(tLo)} a ${pesos(tHi)}</b><span>rango probable en ${MP()} (80 % de probabilidad, aproximado)</span></div>`;
   $('#sub-canasta').textContent = (CAN.ejemplo ? 'Canasta de ejemplo; cámbiela a su gusto. ' : '') + (mayor && mayor.d > 0 ? `Lo que más encarece la compra es ${mayor.p} (+${pesos(mayor.d)}).` : 'Ningún alimento de la lista sube.') + (fuera.length ? ` No disponible en esta central: ${fuera.join(', ')}.` : '');
-  $('#tabla-canasta').innerHTML = `<thead><tr><th>Alimento</th><th class="n">Kilos</th><th class="n">Sept. $/kg</th><th class="n">Oct. $/kg</th><th class="n">Costo sept.</th><th class="n">Costo oct.</th><th class="n">Cambio</th><th>Riesgo</th><th></th></tr></thead><tbody>${filas.join('')}</tbody>`;
+  $('#tabla-canasta').innerHTML = `<thead><tr><th>Alimento</th><th class="n">Cantidad (kg)</th><th class="n">${corto(MU())} $/kg</th><th class="n">${corto(MP())} $/kg esperado</th><th class="n">Costo ${corto(MU())}</th><th class="n">Costo ${corto(MP())}</th><th class="n">Cambio</th><th>Riesgo</th><th></th></tr></thead><tbody>${filas.join('')}</tbody>`;
   $('#tabla-canasta').querySelectorAll('.kg').forEach((inp) => inp.onchange = () => { CAN.items[+inp.dataset.i].k = Math.max(0, +inp.value || 0); CAN.ejemplo = false; guardar(); miCanasta(); });
   $('#tabla-canasta').querySelectorAll('.quitar').forEach((b) => b.onclick = () => { CAN.items.splice(+b.dataset.i, 1); CAN.ejemplo = false; guardar(); miCanasta(); });
   const yaEsta = new Set(CAN.items.map((it) => it.p));
@@ -438,17 +451,17 @@ function todo() { kpis(); mapa(); panel(); dispersion(); }
 
 
 export function montarPanorama(d, x) {
-  D = d; X = x;
+  D = d; X = x; rellenarMeses();
   $('#cinta').textContent = `Pronóstico para ${nomMes(d.mes_pronostico)} de ${d.mes_pronostico.slice(0, 4)} · datos hasta ${nomMes(d.ultimo_mes)}`;
   $('#m-riesgo').onclick = () => { estado.modo = 'riesgo'; $('#m-riesgo').setAttribute('aria-pressed', 'true'); $('#m-cambio').setAttribute('aria-pressed', 'false'); mapa(); };
   $('#m-cambio').onclick = () => { estado.modo = 'cambio'; $('#m-cambio').setAttribute('aria-pressed', 'true'); $('#m-riesgo').setAttribute('aria-pressed', 'false'); mapa(); };
   filtros(); calor(); productos(); producto(); todo(); red();
 }
 
-export function montarCiudad(d, o) { D = d; O = o; miCiudad(); }
+export function montarCiudad(d, o) { D = d; O = o; rellenarMeses(); miCiudad(); }
 
 export function montarCanasta(d) {
-  D = d;
+  D = d; rellenarMeses();
   try { const g = JSON.parse(localStorage.getItem('canasta') || 'null'); if (g && g.central && Array.isArray(g.items)) CAN = { ...g, ejemplo: false }; } catch (e) {}
   miCanasta();
 }
