@@ -7,6 +7,10 @@ mensual de los precios mayoristas de alimentos en Colombia y anticipar sus alzas
 Incluye también una página web que muestra, para cada producto y central de abasto, el pronóstico del mes siguiente
 y la alerta de alza fuerte calculados con el modelo final (CatBoost).
 
+## Página web
+
+La página se publica en Vercel desde la carpeta `web-precios` (en Vercel, **Root Directory** = `web-precios`).
+
 ## Contenido
 
 | Carpeta | Qué hay |

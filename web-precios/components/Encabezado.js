@@ -5,6 +5,9 @@ import { usePathname } from 'next/navigation';
 
 const ENLACES = [
   { href: '/', texto: 'Consultar' },
+  { href: '/panorama', texto: 'Panorama' },
+  { href: '/mi-ciudad', texto: 'Mi ciudad' },
+  { href: '/mi-canasta', texto: 'Mi canasta' },
   { href: '/alertas', texto: 'Alertas del mes' },
   { href: '/como-funciona', texto: 'Cómo funciona' },
   { href: '/arquitectura', texto: 'Arquitectura MLOps' },
