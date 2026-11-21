@@ -1,0 +1,16 @@
+\begin{table}[htbp]\centering\small
+\caption{Reducción del error frente al último precio (\%) por grupo de alimentos y modelo en la prueba. Valores negativos: más error que el último precio. $^\ast$Modelo elegido.}\label{tab:grupos_modelos}
+\begin{adjustbox}{max width=\textwidth}\begin{tabular}{lrrrrrrr}\toprule
+Modelo & Frutas & Verduras & Tubérc. & Proces. & Granos & Lácteos & Pescados\\ \midrule
+AR estacional & 8{,}7 & 2{,}1 & 4{,}7 & 1{,}8 & \ensuremath{-}4{,}0 & 8{,}3 & 13{,}4 \\
+SARIMA & 8{,}6 & 2{,}8 & 1{,}5 & \ensuremath{-}3{,}5 & \ensuremath{-}3{,}8 & 0{,}1 & \ensuremath{-}17{,}4 \\
+\midrule
+Regresión cuantílica & 17{,}6 & 6{,}4 & \ensuremath{-}7{,}9 & \ensuremath{-}19{,}8 & \ensuremath{-}20{,}5 & 6{,}4 & \ensuremath{-}7{,}5 \\
+MLP & 18{,}5 & 9{,}5 & 0{,}2 & 0{,}7 & \ensuremath{-}2{,}8 & 3{,}9 & \ensuremath{-}2{,}3 \\
+Random Forest & 17{,}9 & 9{,}6 & 0{,}0 & 3{,}6 & \ensuremath{-}0{,}5 & 11{,}0 & \ensuremath{-}4{,}3 \\
+XGBoost & 18{,}6 & 10{,}4 & 1{,}3 & 1{,}1 & \ensuremath{-}3{,}7 & 9{,}1 & \ensuremath{-}5{,}0 \\
+LightGBM & 18{,}5 & 10{,}5 & 1{,}3 & 4{,}4 & \ensuremath{-}0{,}5 & 10{,}4 & \ensuremath{-}4{,}8 \\
+CatBoost$^\ast$ & 18{,}2 & 10{,}4 & 3{,}0 & 4{,}2 & \ensuremath{-}0{,}8 & 6{,}0 & \ensuremath{-}3{,}3 \\
+\midrule
+Pronósticos & 9.321 & 8.128 & 2.839 & 1.852 & 1.359 & 285 & 37 \\
+\bottomrule\end{tabular}\end{adjustbox}\end{table}

@@ -1,0 +1,16 @@
+\begin{table}[htbp]\centering\small
+\caption{Pronóstico del cambio del mes siguiente. Error absoluto medio (MAE, en puntos porcentuales) en validación (2022--2024) y en prueba (enero de 2025 a septiembre de 2026), reducción del error frente al último precio y diferencia de MAE con CatBoost (positiva: peor que CatBoost). Entre corchetes, intervalos al 95\,\%; los de la última columna están ajustados por comparaciones múltiples. $^\ast$Modelo elegido.}\label{tab:reg}
+\begin{adjustbox}{max width=\textwidth}\begin{tabular}{lrrrr}\toprule
+& \multicolumn{2}{c}{MAE} & Reducción del & Diferencia \\ \cmidrule(lr){2-3}
+Modelo & Validación & Prueba & error (\%) & con CatBoost\\ \midrule
+Paseo aleatorio & 13{,}31 & 12{,}06 & -- & 1{,}48 [0{,}72; 2{,}32] \\
+AR estacional & 12{,}34 & 11{,}47 & 4{,}9 [3{,}5; 7{,}0] & 0{,}88 [0{,}35; 1{,}42] \\
+SARIMA & 13{,}51 & 11{,}50 & 4{,}7 [1{,}5; 7{,}7] & 0{,}91 [0{,}54; 1{,}47] \\
+\midrule
+Regresión cuantílica & 11{,}92 & 11{,}07 & 8{,}2 [5{,}0; 12{,}5] & 0{,}48 [0{,}28; 0{,}68] \\
+MLP & 11{,}44 & 10{,}67 & 11{,}5 [8{,}0; 15{,}8] & 0{,}09 [0{,}00; 0{,}20] \\
+Random Forest & 11{,}56 & 10{,}69 & 11{,}4 [8{,}7; 14{,}8] & 0{,}10 [\ensuremath{-}0{,}14; 0{,}38] \\
+XGBoost & 11{,}38 & 10{,}60 & 12{,}2 [8{,}4; 16{,}6] & 0{,}01 [\ensuremath{-}0{,}04; 0{,}08] \\
+LightGBM & 11{,}40 & 10{,}59 & 12{,}2 [8{,}3; 16{,}8] & 0{,}00 [\ensuremath{-}0{,}04; 0{,}06] \\
+CatBoost$^\ast$ & 11{,}33 & 10{,}59 & 12{,}2 [8{,}3; 16{,}9] & -- \\
+\bottomrule\end{tabular}\end{adjustbox}\end{table}

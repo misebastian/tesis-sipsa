@@ -1,0 +1,39 @@
+\chapter{Discusión}
+\label{cap:discusion}
+
+En este capítulo se discuten los resultados de cada objetivo específico en relación con la literatura.
+
+
+\section{Objetivo 1: análisis exploratorio}
+
+Los perecederos presentan cambios grandes y alzas frecuentes, mientras que los granos y procesados casi no varían, lo que es consistente con la teoría del almacenamiento \citep{working1949,deaton1992}. La selección de variables confirmó lo que anticipó el análisis exploratorio: ninguna variable sola se relaciona fuertemente con el cambio, y el abastecimiento local y el ONI no aportan.
+
+\section{Objetivo 2: modelo clásico}
+
+Los resultados del SARIMA por año muestran que una validación con un solo año habría conducido a conclusiones distintas: en 2022 el SARIMA fue un \rvsaraabs\pct\ peor que el último precio, mientras que en 2023 y 2024 fue mejor. La ausencia de autocorrelación en los residuos de la mayoría de las series indica que el modelo aprovecha la estructura lineal de cada serie; el límite está en la información que contiene una sola serie y en la baja precisión con que se estiman los componentes estacionales con seis años de datos. Residuos sin autocorrelación no garantizan, sin embargo, una buena especificación: el SARIMA no capta relaciones no lineales, cambios de varianza ni la información de las demás centrales, y en cerca de una de cada seis series queda autocorrelación sin capturar.
+
+\section{Objetivo 3: modelos de aprendizaje automático}
+
+La mejora de CatBoost se repite en 20 de los 21 meses y en 20 de las 21 ciudades, pero su magnitud es incierta (intervalo del \cmejloe\pct\ al \cmejhie\pct).
+
+Dado que los modelos de aprendizaje automático y el AR estacional se estimaron con la misma pérdida, y los primeros con la misma regla de búsqueda de hiperparámetros, es posible separar de forma aproximada el aporte de las variables y el de la flexibilidad del modelo. Al pasar del AR estacional a un modelo lineal con las \cnfinal\ variables seleccionadas, la reducción del error aumenta del \cmejar\pct\ al \cmejlin\pct. Los modelos no lineales alcanzan el 12\pct, con la mayor diferencia fuera del grupo de frutas. Esta diferencia no se explica por la codificación de las variables categóricas ni por haber seleccionado las variables con LightGBM: con indicadores de producto, central y ciudad, o con las 52 candidatas, el modelo lineal no supera el \cmejlin\pct\ (tabla~\ref{tab:lineales}). Los valores de Shapley sugieren que los modelos combinan la señal de las demás centrales \citep{gafaro2020}, la estacionalidad propia de cada serie y la tendencia de los precios extremos a corregirse, con una importancia relativa que varía según el producto. Un modelo lineal aditivo no puede representar esa variación, pero un modelo lineal con interacciones sí: con interacciones entre el grupo de alimentos y las variables, la regresión cuantílica llega al \rvlininter\pct, lo que respalda, aunque no prueba, esa interpretación.
+
+El pronóstico a dos meses, que empieza después de publicado el boletín y no se ve afectado por la correlación que induce el promedio mensual \citep{working1960}, conserva una reducción del error del \rvhdosred\pct; la capacidad de pronóstico no es, por tanto, un artefacto del promedio ni del rezago de publicación, aunque ambos inflan algo la ganancia a un mes.
+
+La ventaja corresponde al conjunto de modelos de árboles y no a uno en particular: sus diferencias en la prueba son pequeñas, en clasificación XGBoost supera ligeramente a CatBoost, y el promedio de los tres modelos de potenciación no mejora a CatBoost en regresión. Esto coincide con \citet{anzola2025} para la inflación de alimentos en Colombia, con los estudios de precios mayoristas en India y China \citep{paul2022,zhang2024} y con la competencia M5 \citep{m5,januschowski2022}. La mejora es más modesta que en buena parte de esa literatura porque aquí se compara con el último precio, con validación temporal y con inferencia que tiene en cuenta la dependencia entre series de un mismo mes. En granos y procesados el último precio continúa siendo un pronóstico competitivo, y en tubérculos la mejora fue pequeña a pesar de la frecuencia de alzas.
+
+\section{Objetivo 4: utilidad de las alertas}
+
+Con una AP cercana a 0,5 no es posible obtener simultáneamente una precisión y una exhaustividad altas; detectar dos de cada tres alzas implica que alrededor de seis de cada diez alertas sean falsas. El modelo es útil para razones de costos entre 1:19 y 3:2, de modo que el umbral debe fijarse con los costos de cada usuario y no con el valor por defecto elegido por $F_1$, que supone una razón de cerca de 1:\ccostoe. Que el balanceo de clases no mejorara los resultados coincide con lo reportado por \citet{vandengoorbergh2022}. A diferencia de los indicadores basados en reglas de FAO-GIEWS y FEWS NET \citep{baquedano2015,perakis2018}, aquí la alerta es una probabilidad evaluada según los costos de los errores. Los errores más costosos son cambios de dirección sin señales previas, posiblemente por choques climáticos o de transporte que estos datos no registran.
+
+\section{Limitaciones}
+
+El periodo de prueba cubre 21 meses, menos de dos ciclos anuales y algo más tranquilos que el desarrollo, lo que limita la potencia para distinguir entre modelos con desempeño similar, y con tan pocos meses los intervalos bootstrap pueden cubrir algo menos de lo nominal. Los resultados se refieren a series con al menos cuatro años de historia y a un umbral de alza del 15\pct\ que no se derivó de costos. Además:
+\begin{itemize}[nosep]
+\item \emph{Precios promedio y rezago de publicación.} La variable es un promedio mensual y el boletín sale unos ocho días después del cierre, de modo que el horizonte efectivo es menor que un mes y parte de la persistencia se debe al promedio. El pronóstico a dos meses acota el problema, pero no se usaron los boletines semanales, que permitirían usar la información del último día del mes.
+\item \emph{Datos.} El SIPSA usa un muestreo no probabilístico, de modo que los resultados describen los mercados cubiertos y no el país. Tampoco se pudo establecer la causa del aumento de los faltantes desde 2022.
+\item \emph{Variables.} No se incluyeron clima regional, precios de insumos, tasa de cambio ni cierres de vías; la falta de aporte del ONI no excluye efectos del clima regional \citep{bohorquez2026}. La selección de variables se realizó con un solo modelo y resultó sensible a cambios pequeños en los datos, aunque el desempeño final no lo fue; los modelos lineales con todas las candidatas no mejoraron, pero algún bloque descartado podría tener un aporte no detectado en los modelos de árboles.
+\item \emph{Modelos.} Un promedio simple de los modelos de potenciación no mejoró a CatBoost, pero no se evaluaron combinaciones ponderadas, modelos globales profundos (DeepAR, N-BEATS o TFT) ni referencias como ETS o Theta.
+\end{itemize}
+
+\FloatBarrier

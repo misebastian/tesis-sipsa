@@ -1,0 +1,5 @@
+/Users/miguelherreraro/Documents/tesis-sipsa/entorno/lib/python3.13/site-packages/statsforecast/arima.py:1974: UserWarning: Having 3 or more differencing operations is not recommended. Please consider reducing the total number of differences.
+  warnings.warn(
+/Users/miguelherreraro/Documents/tesis-sipsa/entorno/lib/python3.13/site-packages/statsforecast/arima.py:1974: UserWarning: Having 3 or more differencing operations is not recommended. Please consider reducing the total number of differences.
+  warnings.warn(
+[1181s] SARIMA: 93896 pronósticos; series en prueba 1217; con términos estacionales 41.7%

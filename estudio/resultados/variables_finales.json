@@ -1,0 +1,146 @@
+{
+ "variables": [
+  "cambio_1m",
+  "cambio_2m",
+  "cambio_3m",
+  "cambio_6m",
+  "cambio_12m",
+  "cambio_mes_rez1",
+  "cambio_mes_rez2",
+  "cambio_mes_rez3",
+  "vol_3m",
+  "vol_12m",
+  "z_precio_12m",
+  "dist_max_12m",
+  "dist_min_12m",
+  "meses_desde_alza",
+  "mes_sin",
+  "mes_cos",
+  "frec_alza_hist",
+  "cambio_estacional_hist",
+  "brecha_nacional",
+  "cambio_nacional_1m",
+  "prop_centrales_alza",
+  "perecibilidad",
+  "grupo_c",
+  "ciudad_c",
+  "mercado_c",
+  "alimento_c",
+  "cambio_ton_nacional_1m",
+  "ton_nacional_rel_12m",
+  "participacion_central"
+ ],
+ "bloques_anadidos": [
+  "Abastecimiento nacional"
+ ],
+ "bloques_retirados": [
+  "Abastecimiento local",
+  "Calendario",
+  "El Niño (ONI)"
+ ],
+ "no_informativas": [
+  "cambio_2m",
+  "vol_3m",
+  "ciudad_c",
+  "mercado_c"
+ ],
+ "acepta_etapa3": false,
+ "etapa3": {
+  "d_mae": 0.005659461190732351,
+  "mae_lo": -0.009895932070775292,
+  "mae_hi": 0.02554129276414449,
+  "d_pr": -0.005812234849426612,
+  "pr_lo": -0.009127232013440165,
+  "pr_hi": -0.0005766972084405784,
+  "mae": 11.197813301497057,
+  "pr": 0.5250579567245587
+ },
+ "redundancia": [
+  {
+   "par": "vol_6m / vol_12m",
+   "rho": 0.9077121658127615,
+   "sale": "vol_6m",
+   "queda": "vol_12m"
+  },
+  {
+   "par": "vol_12m / alzas_12m",
+   "rho": 0.8513558697620836,
+   "sale": "alzas_12m",
+   "queda": "vol_12m"
+  }
+ ],
+ "acepta_etapa4": true,
+ "etapa4": {
+  "d_mae": -0.01338668153903766,
+  "mae_lo": -0.032022677703697176,
+  "mae_hi": 0.011308010742409117,
+  "d_pr": 0.0010252091626548054,
+  "pr_lo": -0.0006944546283043112,
+  "pr_hi": 0.004347380577897296,
+  "mae": 11.178767158767288,
+  "pr": 0.5318954007366401
+ },
+ "umbral_rho": 0.85,
+ "pasos": [
+  {
+   "paso": "Base (38 variables)",
+   "n": 38,
+   "d_mae": 0.0,
+   "mae_lo": 0.0,
+   "mae_hi": 0.0,
+   "d_pr": 0.0,
+   "pr_lo": 0.0,
+   "pr_hi": 0.0,
+   "mae": 11.225800210491643,
+   "pr": 0.5196530716632813
+  },
+  {
+   "paso": "Todas las candidatas",
+   "n": 52,
+   "d_mae": -0.005997282291352046,
+   "mae_lo": -0.0596955218546059,
+   "mae_hi": 0.05365444731353527,
+   "d_pr": 0.0029499824158265575,
+   "pr_lo": -0.0034208216472624976,
+   "pr_hi": 0.012970543648525094,
+   "mae": 11.219802928200291,
+   "pr": 0.5226030540791079
+  },
+  {
+   "paso": "Etapa 2: bloques",
+   "n": 31,
+   "d_mae": -0.033646370185318186,
+   "mae_lo": -0.1456108292277926,
+   "mae_hi": 0.07924041967398292,
+   "d_pr": 0.011217119910703954,
+   "pr_lo": -0.0023546245370770127,
+   "pr_hi": 0.023977291843928848,
+   "mae": 11.192153840306325,
+   "pr": 0.5308701915739853
+  },
+  {
+   "paso": "Etapa 3: sin no informativas",
+   "n": 31,
+   "d_mae": -0.033646370185318186,
+   "mae_lo": -0.1456108292277926,
+   "mae_hi": 0.07924041967398292,
+   "d_pr": 0.011217119910703954,
+   "pr_lo": -0.0023546245370770127,
+   "pr_hi": 0.023977291843928848,
+   "mae": 11.192153840306325,
+   "pr": 0.5308701915739853
+  },
+  {
+   "paso": "Etapa 4: sin redundancias (final)",
+   "n": 29,
+   "d_mae": -0.047033051724355845,
+   "mae_lo": -0.1555929086308805,
+   "mae_hi": 0.06272000559179755,
+   "d_pr": 0.01224232907335876,
+   "pr_lo": 0.0002893650887361737,
+   "pr_hi": 0.025094720308357653,
+   "mae": 11.178767158767288,
+   "pr": 0.5318954007366401
+  }
+ ]
+}

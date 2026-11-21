@@ -1,0 +1,18 @@
+\begin{table}[htbp]\centering\small
+\caption{MAE (puntos porcentuales) del último precio y del SARIMA y reducción del error del SARIMA (\%). Validación: promedio de los MAE de 2022, 2023 y 2024, con la misma definición que la tabla~\ref{tab:reg} (donde el SARIMA no pudo estimarse se usa el último precio).}\label{tab:sarima_error}
+\begin{adjustbox}{max width=\textwidth}\begin{tabular}{lrrrrrr}\toprule
+& \multicolumn{3}{c}{Validación} & \multicolumn{3}{c}{Prueba}\\ \cmidrule(lr){2-4}\cmidrule(lr){5-7}
+Grupo & Últ. precio & SARIMA & Reducción & Últ. precio & SARIMA & Reducción\\ \midrule
+Todo el panel & 13{,}31 & 13{,}51 & \ensuremath{-}1{,}5 & 12{,}06 & 11{,}50 & 4{,}7 \\ \midrule
+Verduras y hortalizas & 17{,}18 & 18{,}04 & \ensuremath{-}5{,}0 & 16{,}33 & 15{,}87 & 2{,}8 \\
+Tubérculos y plátanos & 12{,}81 & 14{,}02 & \ensuremath{-}9{,}4 & 12{,}35 & 12{,}16 & 1{,}5 \\
+Frutas & 13{,}79 & 12{,}99 & 5{,}8 & 11{,}91 & 10{,}89 & 8{,}6 \\
+Lácteos y huevos & 4{,}57 & 4{,}81 & \ensuremath{-}5{,}3 & 3{,}54 & 3{,}54 & 0{,}1 \\
+Pescados & 4{,}05 & 5{,}28 & \ensuremath{-}30{,}3 & 3{,}36 & 3{,}95 & \ensuremath{-}17{,}4 \\
+Granos y cereales & 3{,}36 & 4{,}22 & \ensuremath{-}25{,}8 & 2{,}75 & 2{,}86 & \ensuremath{-}3{,}8 \\
+Procesados & 2{,}54 & 2{,}72 & \ensuremath{-}7{,}0 & 2{,}00 & 2{,}07 & \ensuremath{-}3{,}5 \\
+\midrule \multicolumn{7}{l}{\emph{Validación por año (todo el panel)}}\\
+\quad 2022 & 13{,}41 & 15{,}93 & \ensuremath{-}18{,}8 & & & \\
+\quad 2023 & 12{,}89 & 12{,}01 & 6{,}8 & & & \\
+\quad 2024 & 13{,}62 & 12{,}59 & 7{,}6 & & & \\
+\bottomrule\end{tabular}\end{adjustbox}\end{table}

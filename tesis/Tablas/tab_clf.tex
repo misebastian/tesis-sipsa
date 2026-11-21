@@ -1,0 +1,16 @@
+\begin{table}[htbp]\centering\small
+\caption{Anticipación de alzas mayores al 15\,\%. Área bajo la curva de precisión y exhaustividad (AP) en validación y en prueba, área bajo la curva ROC (AUC) en prueba, diferencia de AP con CatBoost (negativa: peor) y, con el umbral fijado en validación, precisión y exhaustividad en prueba (\%). Intervalos al 95\,\%; los de la diferencia, ajustados por comparaciones múltiples. $^\ast$Modelo elegido.}\label{tab:clf}
+\begin{adjustbox}{max width=\textwidth}\begin{tabular}{lrrrrrr}\toprule
+& \multicolumn{2}{c}{AP} & & Diferencia & & \\ \cmidrule(lr){2-3}
+Modelo & Validación & Prueba & AUC & con CatBoost & Precisión & Exhaustividad\\ \midrule
+Regresión logística & 0{,}502 & 0{,}465 [0{,}424; 0{,}501] & 0{,}804 & \ensuremath{-}0{,}016 [\ensuremath{-}0{,}045; 0{,}011] & 38 & 68 \\
+MLP & 0{,}504 & 0{,}485 [0{,}441; 0{,}524] & 0{,}817 & 0{,}004 [\ensuremath{-}0{,}011; 0{,}018] & 39 & 64 \\
+Random Forest & 0{,}521 & 0{,}490 [0{,}447; 0{,}533] & 0{,}820 & 0{,}009 [\ensuremath{-}0{,}008; 0{,}022] & 39 & 67 \\
+XGBoost & 0{,}520 & 0{,}495 [0{,}454; 0{,}536] & 0{,}821 & 0{,}014 [0{,}007; 0{,}021] & 39 & 67 \\
+LightGBM & 0{,}523 & 0{,}492 [0{,}448; 0{,}538] & 0{,}819 & 0{,}011 [\ensuremath{-}0{,}001; 0{,}022] & 39 & 69 \\
+CatBoost$^\ast$ & 0{,}524 & 0{,}481 [0{,}439; 0{,}521] & 0{,}818 & -- & 37 & 71 \\
+\midrule
+SARIMA & -- & 0{,}431 [0{,}386; 0{,}469] & 0{,}789 & \ensuremath{-}0{,}049 [\ensuremath{-}0{,}087; \ensuremath{-}0{,}020] & -- & -- \\
+Frecuencia histórica & -- & 0{,}396 [0{,}340; 0{,}451] & 0{,}766 & \ensuremath{-}0{,}085 [\ensuremath{-}0{,}126; \ensuremath{-}0{,}050] & -- & -- \\
+Logística autorregresiva & -- & 0{,}381 [0{,}349; 0{,}414] & 0{,}727 & \ensuremath{-}0{,}100 [\ensuremath{-}0{,}129; \ensuremath{-}0{,}070] & -- & -- \\
+\bottomrule\end{tabular}\end{adjustbox}\end{table}

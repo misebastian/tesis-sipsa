@@ -1,0 +1,25 @@
+\section{Detalles de los modelos}
+\label{ap:modelos}
+
+
+
+\subsection*{Hiperparámetros}
+
+Los espacios de búsqueda están en la tabla~\ref{tab:espacios}. La tabla~\ref{tab:hiper} muestra los valores elegidos para cada modelo. Las búsquedas de regresión y de clasificación usaron la misma semilla y, por tanto, la misma secuencia de configuraciones; en Random Forest, la configuración 20 fue la mejor en ambas tareas, por lo que sus hiperparámetros coinciden. Se verificó en los archivos de la búsqueda que no se trata de un error de transcripción. La figura~\ref{fig:busqueda} muestra el mejor resultado de validación según el número de configuraciones evaluadas. Todas las búsquedas se detuvieron con las 40 configuraciones iniciales, salvo la de XGBoost en regresión: su mejor configuración fue la 39, de modo que la mejora en las últimas diez superó la tolerancia y la búsqueda se amplió a 60 configuraciones, sin nuevas mejoras.
+
+\begin{figure}[htbp]\centering
+\includegraphics[width=.8\textwidth]{fig_busqueda}
+\caption{Convergencia de la búsqueda aleatoria: mejor MAE promedio de validación (a) y mejor AP de validación (b) según el número de configuraciones evaluadas.}\label{fig:busqueda}
+\end{figure}
+\FloatBarrier
+
+\input{Tablas/tab_hiper}
+
+\clearpage
+\subsection*{Verificación de las implementaciones propias}
+
+La regresión cuantílica por descenso de gradiente se comparó con la solución exacta en una submuestra; la red neuronal con pérdida absoluta, comparando su gradiente con diferencias finitas y comprobando en datos simulados que estima la mediana y no la media, y el Random Forest de LightGBM, con el de scikit-learn con los mismos hiperparámetros. Las tres coinciden con su referencia (tabla~\ref{tab:verificacion}). En la regresión cuantílica, la correlación entre los coeficientes (0,77) es menor que entre las predicciones (0,998), porque varias variables están muy correlacionadas entre sí y distintas combinaciones de coeficientes dan casi el mismo ajuste. El bosque de LightGBM tiene un error 0,19 puntos mayor que el de scikit-learn en la submuestra, con predicciones muy correlacionadas.
+
+\input{Tablas/tab_verificacion}
+
+

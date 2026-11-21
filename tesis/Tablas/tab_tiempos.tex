@@ -1,0 +1,15 @@
+\begin{table}[htbp]\centering\footnotesize
+\caption{Tiempo de ejecución y memoria residente máxima por programa, medidos con \texttt{medir.py} en la corrida de referencia (Darwin arm64, 10 núcleos)}\label{tab:tiempos}
+\begin{adjustbox}{max width=\textwidth}\begin{tabular}{lp{6.4cm}rr}\toprule
+Programa & Qué hace & Minutos & Memoria (GB)\\ \midrule
+\texttt{01\_panel.py} & Panel supervisado y variables candidatas & 0{,}1 & 0{,}83 \\
+\texttt{02\_eda.py} & Análisis exploratorio y calidad & 0{,}2 & 0{,}77 \\
+\texttt{03\_variables.py} & Selección de variables (validación) & 8{,}2 & 0{,}69 \\
+\texttt{sarima.py} & SARIMA por serie (todos los cortes) & 19{,}7 & 0{,}47 \\
+\texttt{04\_regresion.py} & Búsqueda y prueba de los modelos de regresión & 14{,}1 & 0{,}98 \\
+\texttt{05\_clasificacion.py} & Búsqueda, balanceo, recalibración, umbral y prueba de los clasificadores & 27{,}9 & 0{,}81 \\
+\texttt{06\_resultados.py} & Métricas, bootstrap, pruebas, figuras e importancia & 18{,}1 & 0{,}64 \\
+\texttt{07\_complementarios.py} & Origen móvil, cuantiles, CQR y faltantes & 18{,}3 & 1{,}13 \\
+\texttt{09\_verificacion.py} & Verificación de implementaciones & 0{,}1 & 1{,}39 \\
+\midrule Total & & 107 & 1{,}39 \\
+\bottomrule\end{tabular}\end{adjustbox}\end{table}

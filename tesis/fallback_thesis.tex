@@ -1,0 +1,65 @@
+% ---------------------------------------------------------------------------------------
+% Diseño de respaldo: solo se usa si MastersDoctoralThesis.cls no está en el proyecto.
+% Imita la apariencia de la plantilla Masters/Doctoral Thesis (Palatino, dos caras,
+% títulos de capítulo del estilo book, encabezado con línea, páginas de resumen y
+% agradecimientos centradas) para que el documento se vea igual sin la clase.
+% ---------------------------------------------------------------------------------------
+\usepackage[includehead]{geometry}
+\usepackage{fancyhdr}
+\usepackage[english,spanish,es-noshorthands,es-nodecimaldot,es-nolayout,es-tabla,es-nosectiondot]{babel}
+\usepackage{setspace}
+\usepackage{longtable}
+\usepackage[hidelinks]{hyperref}
+
+% ---- comandos de la plantilla
+\newcommand{\thesistitle}[1]{\def\ttitle{#1}}
+\newcommand{\supervisor}[1]{\def\supname{#1}}
+\newcommand{\examiner}[1]{\def\examname{#1}}
+\newcommand{\degree}[1]{\def\degreename{#1}}
+\renewcommand{\author}[1]{\def\authorname{#1}}
+\newcommand{\addresses}[1]{\def\addressname{#1}}
+\newcommand{\subject}[1]{\def\subjectname{#1}}
+\newcommand{\keywords}[1]{\def\keywordnames{#1}}
+\newcommand{\university}[1]{\def\univname{#1}}
+\newcommand{\department}[1]{\def\deptname{#1}}
+\newcommand{\group}[1]{\def\groupname{#1}}
+\newcommand{\faculty}[1]{\def\facname{#1}}
+\newcommand{\HRule}{\rule{\linewidth}{.4mm}}
+\newcommand{\addchaptertocentry}[1]{\addcontentsline{toc}{chapter}{#1}}
+
+% ---- resumen y agradecimientos con el diseño centrado de la plantilla
+\newcommand{\abstractname}{Resumen}
+\newenvironment{abstract}{%
+  \cleardoublepage\thispagestyle{plain}
+  \begin{center}
+  {\normalsize\scshape\univname\par}\bigskip
+  {\huge\textit{\abstractname}\par}\bigskip
+  {\normalsize\facname\par}{\normalsize\deptname\par}\bigskip
+  {\normalsize\degreename\par}\bigskip
+  {\normalsize\bfseries\ttitle\par}\medskip
+  {\normalsize por \authorname\par}\bigskip
+  \end{center}}{\vfil\null}
+\newcommand{\acknowledgementname}{Agradecimientos}
+\newenvironment{acknowledgements}{%
+  \cleardoublepage\thispagestyle{plain}
+  \begin{center}{\huge\textit{\acknowledgementname}\par}\end{center}\bigskip}{\vfil\null}
+\newcommand{\abbrevname}{Lista de abreviaturas}
+\newenvironment{abbreviations}[1]{\cleardoublepage\chapter*{\abbrevname}\begin{longtable}{#1}}{\end{longtable}}
+\newcommand{\dedicatory}[1]{\cleardoublepage\thispagestyle{plain}\vspace*{.2\textheight}\begin{center}\itshape #1\end{center}}
+
+% ---- encabezados (con línea bajo el encabezado, como la opción headsepline)
+\fancypagestyle{thesis}{\fancyhf{}%
+  \fancyhead[LE,RO]{\thepage}%
+  \fancyhead[RE]{\itshape\nouppercase{\leftmark}}%
+  \fancyhead[LO]{\itshape\nouppercase{\rightmark}}%
+  \renewcommand{\headrulewidth}{0.4pt}}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\thepage}\renewcommand{\headrulewidth}{0pt}}
+
+% ---- títulos de capítulo con el estilo de la plantilla, pero con menos espacio vertical
+\makeatletter
+\def\@makechapterhead#1{\vspace*{10\p@}{\parindent\z@\raggedright\normalfont
+  \ifnum\c@secnumdepth>\m@ne\if@mainmatter\huge\bfseries\@chapapp\space\thechapter\par\nobreak\vskip 12\p@\fi\fi
+  \interlinepenalty\@M\Huge\bfseries #1\par\nobreak\vskip 24\p@}}
+\def\@makeschapterhead#1{\vspace*{10\p@}{\parindent\z@\raggedright\normalfont
+  \interlinepenalty\@M\Huge\bfseries #1\par\nobreak\vskip 24\p@}}
+\makeatother

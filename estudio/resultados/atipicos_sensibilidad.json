@@ -1,0 +1,32 @@
+{
+ "centrada_2": {
+  "casos": 611,
+  "aislados": 80,
+  "pct": 0.004964210560525183
+ },
+ "centrada_3": {
+  "casos": 25,
+  "aislados": 2,
+  "pct": 0.0002031182717072497
+ },
+ "centrada_4": {
+  "casos": 4,
+  "aislados": 0,
+  "pct": 3.2498923473159954e-05
+ },
+ "causal_2": {
+  "casos": 3322,
+  "aislados": 499,
+  "pct": 0.02699035594445934
+ },
+ "causal_3": {
+  "casos": 220,
+  "aislados": 21,
+  "pct": 0.0017874407910237974
+ },
+ "causal_4": {
+  "casos": 23,
+  "aislados": 1,
+  "pct": 0.00018686880997066972
+ }
+}

@@ -1,0 +1,10 @@
+\begin{table}[htbp]\centering\small
+\caption{Desempeño de LightGBM en las predicciones de 2023 y 2024 después de cada etapa de la selección, y diferencia frente a las 38 variables de partida con su intervalo del 95\,\%}\label{tab:pasos}
+\begin{adjustbox}{max width=\textwidth}\begin{tabular}{lrrrrr}\toprule
+Etapa & Variables & MAE & Diferencia & AP & Diferencia\\ \midrule
+Partida & 38 & 11{,}23 & 0{,}000 [0{,}000; 0{,}000] & 0{,}520 & 0{,}000 [0{,}000; 0{,}000] \\
+Todas las candidatas & 52 & 11{,}22 & \ensuremath{-}0{,}006 [\ensuremath{-}0{,}060; 0{,}054] & 0{,}523 & 0{,}003 [\ensuremath{-}0{,}003; 0{,}013] \\
+Etapa 1: bloques & 31 & 11{,}19 & \ensuremath{-}0{,}034 [\ensuremath{-}0{,}146; 0{,}079] & 0{,}531 & 0{,}011 [\ensuremath{-}0{,}002; 0{,}024] \\
+Etapa 2: sin poco informativas & 31 & 11{,}19 & \ensuremath{-}0{,}034 [\ensuremath{-}0{,}146; 0{,}079] & 0{,}531 & 0{,}011 [\ensuremath{-}0{,}002; 0{,}024] \\
+Etapa 3: sin redundancias (final) & 29 & 11{,}18 & \ensuremath{-}0{,}047 [\ensuremath{-}0{,}156; 0{,}063] & 0{,}532 & 0{,}012 [0{,}000; 0{,}025] \\
+\bottomrule\end{tabular}\end{adjustbox}\end{table}

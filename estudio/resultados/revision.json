@@ -1,0 +1,845 @@
+{
+ "muestras": {
+  "validacion": [
+   {
+    "ano": 2022,
+    "n": 13790,
+    "alza": 0.2050761421319797,
+    "n_ajuste": 39534
+   },
+   {
+    "ano": 2023,
+    "n": 13588,
+    "alza": 0.1614659994112452,
+    "n_ajuste": 53324
+   },
+   {
+    "ano": 2024,
+    "n": 13621,
+    "alza": 0.1810439762132002,
+    "n_ajuste": 66912
+   }
+  ],
+  "desarrollo": {
+   "n": 80533,
+   "alza": 0.18461996945351594
+  },
+  "prueba": {
+   "n": 23821,
+   "alza": 0.16825490113765165
+  }
+ },
+ "sarima_ano": [
+  {
+   "ano": 2022,
+   "mae_rw": 13.408191085184395,
+   "mae_sarima": 15.92836550716167,
+   "disponible": 0.9396664249456128,
+   "mae_rw_disp": 13.285795047347088,
+   "mae_sarima_disp": 15.967783415850453
+  },
+  {
+   "ano": 2023,
+   "mae_rw": 12.889044057825652,
+   "mae_sarima": 12.00887990316284,
+   "disponible": 0.99241978216073,
+   "mae_rw_disp": 12.891773574183258,
+   "mae_sarima_disp": 12.004886623233439
+  },
+  {
+   "ano": 2024,
+   "mae_rw": 13.623491662037809,
+   "mae_sarima": 12.587524684941414,
+   "disponible": 1.0,
+   "mae_rw_disp": 13.623491662037809,
+   "mae_sarima_disp": 12.587524684941414
+  }
+ ],
+ "reg_extra": {
+  "Paseo aleatorio": {
+   "avgrelmae": 1.0,
+   "mediana_rel": 1.0,
+   "reduccion_media_grupos": 0.0,
+   "razon_medias_grupos": 0.0,
+   "rmse": 18.39829468769701,
+   "mae": 12.064150200181945
+  },
+  "AR estacional": {
+   "avgrelmae": 0.9819967412608401,
+   "mediana_rel": 0.9828567738243568,
+   "reduccion_media_grupos": 0.04992806701430214,
+   "razon_medias_grupos": 0.05034534871138108,
+   "rmse": 17.193893938444326,
+   "mae": 11.4717024261811
+  },
+  "SARIMA": {
+   "avgrelmae": 0.9879625125036167,
+   "mediana_rel": 1.0,
+   "reduccion_media_grupos": -0.016503740593677936,
+   "razon_medias_grupos": 0.01761116923285866,
+   "rmse": 17.002541237051403,
+   "mae": 11.496193158955807
+  },
+  "Regresión cuantílica": {
+   "avgrelmae": 0.974080471388876,
+   "mediana_rel": 0.9448465296524673,
+   "reduccion_media_grupos": -0.03636360375630126,
+   "razon_medias_grupos": 0.02227726736585045,
+   "rmse": 16.289225864383607,
+   "mae": 11.068891202348171
+  },
+  "MLP": {
+   "avgrelmae": 0.9175282287880333,
+   "mediana_rel": 0.9206998063481058,
+   "reduccion_media_grupos": 0.039461088805111,
+   "razon_medias_grupos": 0.07211911241292424,
+   "rmse": 15.713014364377734,
+   "mae": 10.67385294640475
+  },
+  "Random Forest": {
+   "avgrelmae": 0.9177859685476619,
+   "mediana_rel": 0.9166859288609064,
+   "reduccion_media_grupos": 0.05327491961056517,
+   "razon_medias_grupos": 0.07654278704371953,
+   "rmse": 15.884011186937919,
+   "mae": 10.687505023498009
+  },
+  "XGBoost": {
+   "avgrelmae": 0.9207633217613086,
+   "mediana_rel": 0.915544522910595,
+   "reduccion_media_grupos": 0.04549448023099562,
+   "razon_medias_grupos": 0.07960738702163139,
+   "rmse": 15.598309083824288,
+   "mae": 10.596452200361437
+  },
+  "LightGBM": {
+   "avgrelmae": 0.9122353629556625,
+   "mediana_rel": 0.913768323036268,
+   "reduccion_media_grupos": 0.056878092489026706,
+   "razon_medias_grupos": 0.08340577773313518,
+   "rmse": 15.644816786358929,
+   "mae": 10.58917899228681
+  },
+  "CatBoost": {
+   "avgrelmae": 0.914931841834272,
+   "mediana_rel": 0.9180266508105426,
+   "reduccion_media_grupos": 0.05380115176695028,
+   "razon_medias_grupos": 0.08407338868100245,
+   "rmse": 15.609368048281642,
+   "mae": 10.58706985467706
+  }
+ },
+ "clf_extra": {
+  "Frecuencia histórica": {
+   "brier": 0.12145266558918298,
+   "brier_ic": [
+    0.1109950895651644,
+    0.13031835489746768
+   ],
+   "bss": 0.0,
+   "bss_ic": [
+    0.0,
+    0.0
+   ],
+   "logloss": 0.3869761250198281,
+   "logloss_ic": [
+    0.3589474600000312,
+    0.4123245162575817
+   ],
+   "intercepto": -0.07362120274730197,
+   "pendiente": 0.8684017079122515,
+   "pendiente_ic": [
+    0.8204969419129319,
+    0.940230998271713
+   ],
+   "ece": 0.01932004028789195
+  },
+  "Logística autorregresiva": {
+   "brier": 0.12511588778475294,
+   "brier_ic": [
+    0.11219606809117429,
+    0.1358416635154913
+   ],
+   "bss": -0.030161727433475338,
+   "bss_ic": [
+    -0.048706708339900553,
+    -0.0050361977303343694
+   ],
+   "logloss": 0.4031224920335985,
+   "logloss_ic": [
+    0.37117616776716905,
+    0.4295869534154241
+   ],
+   "intercepto": -0.16556106446066043,
+   "pendiente": 0.9586384090096582,
+   "pendiente_ic": [
+    0.8861481006110296,
+    1.075900951020515
+   ],
+   "ece": 0.02323566852755016
+  },
+  "SARIMA": {
+   "brier": 0.12083816358668084,
+   "brier_ic": [
+    0.11133505549615563,
+    0.12896322150993667
+   ],
+   "bss": 0.005059600787855167,
+   "bss_ic": [
+    -0.018762391329280693,
+    0.026857697423655916
+   ],
+   "logloss": 0.3949405042472024,
+   "logloss_ic": [
+    0.372038425966209,
+    0.41529581807282934
+   ],
+   "intercepto": -0.26967349220020576,
+   "pendiente": 0.6542902058608261,
+   "pendiente_ic": [
+    0.5959844233430487,
+    0.7004047566230355
+   ],
+   "ece": 0.033812694550948943
+  },
+  "Regresión logística": {
+   "brier": 0.11417764238340354,
+   "brier_ic": [
+    0.10249841219478804,
+    0.12370285966899122
+   ],
+   "bss": 0.059900070290654694,
+   "bss_ic": [
+    0.044785796045809914,
+    0.08462390160597341
+   ],
+   "logloss": 0.36692050828992,
+   "logloss_ic": [
+    0.3368933672457584,
+    0.39023870510532793
+   ],
+   "intercepto": -0.11868482659783411,
+   "pendiente": 1.0756342671972423,
+   "pendiente_ic": [
+    1.0044870493833202,
+    1.1867393105865867
+   ],
+   "ece": 0.01971759169412665
+  },
+  "MLP": {
+   "brier": 0.1125263124704361,
+   "brier_ic": [
+    0.10151676386594773,
+    0.12012479342520235
+   ],
+   "bss": 0.07349655995975024,
+   "bss_ic": [
+    0.053207260615643695,
+    0.10221351423386417
+   ],
+   "logloss": 0.35573193430900574,
+   "logloss_ic": [
+    0.3254791125655174,
+    0.3751390650868416
+   ],
+   "intercepto": -0.19920835718741092,
+   "pendiente": 0.9508868764737636,
+   "pendiente_ic": [
+    0.8958351062867252,
+    1.0183493949793037
+   ],
+   "ece": 0.022824527615411764
+  },
+  "Random Forest": {
+   "brier": 0.11135175253156097,
+   "brier_ic": [
+    0.10078581524370482,
+    0.11906559531732144
+   ],
+   "bss": 0.0831674875855638,
+   "bss_ic": [
+    0.06953287031094542,
+    0.10418470405245443
+   ],
+   "logloss": 0.3530489340522468,
+   "logloss_ic": [
+    0.3258757836287135,
+    0.37244580417808243
+   ],
+   "intercepto": -0.16239576327212008,
+   "pendiente": 1.0628323846246328,
+   "pendiente_ic": [
+    0.9924248550720447,
+    1.1535152493390601
+   ],
+   "ece": 0.0189648634614745
+  },
+  "XGBoost": {
+   "brier": 0.11137458682060242,
+   "brier_ic": [
+    0.10022097490727902,
+    0.11944898273795843
+   ],
+   "bss": 0.08297947780471071,
+   "bss_ic": [
+    0.06391350797306701,
+    0.11073131946341389
+   ],
+   "logloss": 0.35276302695274353,
+   "logloss_ic": [
+    0.32374259606003764,
+    0.37341786846518515
+   ],
+   "intercepto": -0.20059999927810995,
+   "pendiente": 0.9955977364047126,
+   "pendiente_ic": [
+    0.9380696699085795,
+    1.0826912042718755
+   ],
+   "ece": 0.02284955276377056
+  },
+  "LightGBM": {
+   "brier": 0.11196456976501819,
+   "brier_ic": [
+    0.10101269286208538,
+    0.11967125310339907
+   ],
+   "bss": 0.07812175861383353,
+   "bss_ic": [
+    0.05647324578839666,
+    0.10839666432104685
+   ],
+   "logloss": 0.3548766728572243,
+   "logloss_ic": [
+    0.3267596799896708,
+    0.3747664526971808
+   ],
+   "intercepto": -0.21449301980930852,
+   "pendiente": 0.9865011321097394,
+   "pendiente_ic": [
+    0.9201656892919552,
+    1.074378807672161
+   ],
+   "ece": 0.024785212758407713
+  },
+  "CatBoost": {
+   "brier": 0.11232268590918038,
+   "brier_ic": [
+    0.10095862205723213,
+    0.12056678344626735
+   ],
+   "bss": 0.07517315190829177,
+   "bss_ic": [
+    0.058814027033556475,
+    0.1000787391291267
+   ],
+   "logloss": 0.35625656049476856,
+   "logloss_ic": [
+    0.3272550743278619,
+    0.377041179286618
+   ],
+   "intercepto": -0.17933178799306826,
+   "pendiente": 1.0042661300686473,
+   "pendiente_ic": [
+    0.9347110996985469,
+    1.1033405854780791
+   ],
+   "ece": 0.02067032569393617
+  }
+ },
+ "intervalos": {
+  "Cuantiles 80": {
+   "cobertura": 0.7963141765668947,
+   "ancho": 33.40941471431721,
+   "puntaje": 49.56879876012429,
+   "por_grupo": {
+    "Frutas": 0.808,
+    "Granos y cereales": 0.7851,
+    "Lácteos y huevos": 0.8772,
+    "Pescados": 0.8649,
+    "Procesados": 0.8656,
+    "Tubérculos y plátanos": 0.7235,
+    "Verduras y hortalizas": 0.7913
+   }
+  },
+  "CQR por grupo 80": {
+   "cobertura": 0.8121405482557408,
+   "ancho": 34.7765823031627,
+   "puntaje": 49.56019620057056,
+   "por_grupo": {
+    "Frutas": 0.8313,
+    "Granos y cereales": 0.7792,
+    "Lácteos y huevos": 0.8737,
+    "Pescados": 0.8378,
+    "Procesados": 0.8499,
+    "Tubérculos y plátanos": 0.7478,
+    "Verduras y hortalizas": 0.8072
+   }
+  },
+  "Cuantiles 90": {
+   "cobertura": 0.8912724066999707,
+   "ancho": 43.49345181861159,
+   "puntaje": 59.723539794454474,
+   "por_grupo": {
+    "Frutas": 0.8995,
+    "Granos y cereales": 0.8815,
+    "Lácteos y huevos": 0.9368,
+    "Pescados": 0.8919,
+    "Procesados": 0.9228,
+    "Tubérculos y plátanos": 0.8475,
+    "Verduras y hortalizas": 0.89
+   }
+  },
+  "CQR por grupo 90": {
+   "cobertura": 0.911422694261366,
+   "ancho": 46.54823166422906,
+   "puntaje": 59.72289371348537,
+   "por_grupo": {
+    "Frutas": 0.9235,
+    "Granos y cereales": 0.8933,
+    "Lácteos y huevos": 0.9404,
+    "Pescados": 0.8919,
+    "Procesados": 0.9276,
+    "Tubérculos y plátanos": 0.8771,
+    "Verduras y hortalizas": 0.908
+   }
+  }
+ },
+ "intervalos_resumen": {
+  "pinball": 3.1311073821897177,
+  "pinball_cv": 3.1138336098091046,
+  "mae_mediana": 10.60201207991744,
+  "cruces": 0.013517484572436086,
+  "mae_mediana_reduccion": 0.12119694267752523
+ },
+ "working": {
+  "mae_rw": 12.064150200181945,
+  "mae_ar025": 12.200516654292407,
+  "red_ar025": -0.011303444656085793,
+  "mae_cat": 10.58706985467706,
+  "red_cat_vs_ar025": 0.1322441373044395,
+  "red_cat_vs_ar025_ic": [
+   0.1022756980182467,
+   0.17010502247747325
+  ],
+  "corr_nacional": 0.14145460882021915,
+  "corr_parcial_nacional": 0.1370745067191014,
+  "corr_propio": 0.0663390578277947
+ },
+ "horizonte2": {
+  "n": 23501,
+  "n_ajuste": 77933,
+  "mae_rw": 12.106222526192811,
+  "mae_cat": 11.036411238184712,
+  "reduccion": 0.08836871168471205,
+  "reduccion_ic": [
+   0.04481611418187363,
+   0.14425731511487463
+  ],
+  "tasa": 0.169397046934173,
+  "ap": 0.4639257041859562,
+  "ap_ic": [
+   0.42282401159355176,
+   0.5168234802182962
+  ],
+  "ap_frec": 0.39756482852785013,
+  "d_ap_frec": 0.06636087565810606,
+  "d_ap_frec_ic": [
+   0.03476248037974394,
+   0.1109727084747055
+  ],
+  "auc": 0.8019036633023253,
+  "meses": 21,
+  "por_grupo": {
+   "Frutas": 0.1629,
+   "Granos y cereales": -0.0546,
+   "Lácteos y huevos": 0.0229,
+   "Pescados": 0.0001,
+   "Procesados": 0.0038,
+   "Tubérculos y plátanos": -0.0362,
+   "Verduras y hortalizas": 0.0665
+  }
+ },
+ "lineales": [
+  {
+   "config": "Indicadores de grupo, 24 variables (original)",
+   "modelo": "Regresión cuantílica",
+   "tarea": "Cambio",
+   "mae": 11.068891202348171,
+   "reduccion": 0.08249723199059333,
+   "ic": [
+    0.04889001011560794,
+    0.12500132486596902
+   ],
+   "columnas": 32
+  },
+  {
+   "config": "Indicadores de grupo, 24 variables (original)",
+   "modelo": "MLP",
+   "tarea": "Cambio",
+   "mae": 10.676128284128207,
+   "reduccion": 0.11505343459938056,
+   "ic": [
+    0.07851986164988228,
+    0.15868110732589344
+   ],
+   "columnas": 32
+  },
+  {
+   "config": "Indicadores de grupo, 24 variables (original)",
+   "modelo": "Regresión logística",
+   "tarea": "Alzas",
+   "ap": 0.46450251292466926,
+   "ic": [
+    0.42414756578439233,
+    0.5035189046855647
+   ],
+   "columnas": 32
+  },
+  {
+   "config": "Indicadores de grupo, 24 variables (original)",
+   "modelo": "MLP",
+   "tarea": "Alzas",
+   "ap": 0.4849820820575982,
+   "ic": [
+    0.44221833367030733,
+    0.524060387163469
+   ],
+   "columnas": 32
+  },
+  {
+   "config": "Indicadores de grupo, producto, central y ciudad; 24 variables",
+   "modelo": "Regresión cuantílica",
+   "tarea": "Cambio",
+   "mae": 11.124913914206017,
+   "reduccion": 0.07785349737785618,
+   "ic": [
+    0.04359587083760392,
+    0.12255963425463418
+   ],
+   "columnas": 184
+  },
+  {
+   "config": "Indicadores de grupo, producto, central y ciudad; 24 variables",
+   "modelo": "MLP",
+   "tarea": "Cambio",
+   "mae": 10.803108329882386,
+   "reduccion": 0.10452803134700206,
+   "ic": [
+    0.06633436080123471,
+    0.14845173833380965
+   ],
+   "columnas": 184
+  },
+  {
+   "config": "Indicadores de grupo, producto, central y ciudad; 24 variables",
+   "modelo": "Regresión logística",
+   "tarea": "Alzas",
+   "ap": 0.46450727101313666,
+   "ic": [
+    0.4241533744030275,
+    0.5035236673583204
+   ],
+   "columnas": 184
+  },
+  {
+   "config": "Indicadores de grupo, producto, central y ciudad; 24 variables",
+   "modelo": "MLP",
+   "tarea": "Alzas",
+   "ap": 0.49260038744280177,
+   "ic": [
+    0.4451728232816168,
+    0.538814646938397
+   ],
+   "columnas": 184
+  },
+  {
+   "config": "Indicadores de grupo, producto, central y ciudad; 52 candidatas",
+   "modelo": "Regresión cuantílica",
+   "tarea": "Cambio",
+   "mae": 11.176452021050864,
+   "reduccion": 0.07358149263739222,
+   "ic": [
+    0.03805761597136311,
+    0.11973033748297592
+   ],
+   "columnas": 207
+  },
+  {
+   "config": "Indicadores de grupo, producto, central y ciudad; 52 candidatas",
+   "modelo": "MLP",
+   "tarea": "Cambio",
+   "mae": 10.723580543799322,
+   "reduccion": 0.11112010660828842,
+   "ic": [
+    0.07323353284981163,
+    0.15935840167581988
+   ],
+   "columnas": 207
+  },
+  {
+   "config": "Indicadores de grupo, producto, central y ciudad; 52 candidatas",
+   "modelo": "Regresión logística",
+   "tarea": "Alzas",
+   "ap": 0.462470291366081,
+   "ic": [
+    0.42252938954904307,
+    0.5014982095112973
+   ],
+   "columnas": 207
+  },
+  {
+   "config": "Indicadores de grupo, producto, central y ciudad; 52 candidatas",
+   "modelo": "MLP",
+   "tarea": "Alzas",
+   "ap": 0.4786602461446249,
+   "ic": [
+    0.42966519509354023,
+    0.5374790440372648
+   ],
+   "columnas": 207
+  },
+  {
+   "config": "Interacciones grupo × variables; 24 variables",
+   "modelo": "Regresión cuantílica",
+   "tarea": "Cambio",
+   "mae": 10.827632163710033,
+   "reduccion": 0.10249524549630207,
+   "ic": [
+    0.06610431276096022,
+    0.1520897493211554
+   ],
+   "columnas": 359
+  },
+  {
+   "config": "Interacciones grupo × variables; 24 variables",
+   "modelo": "Regresión logística",
+   "tarea": "Alzas",
+   "ap": 0.48027029428711726,
+   "ic": [
+    0.4415559977472418,
+    0.521234760729058
+   ],
+   "columnas": 359
+  }
+ ],
+ "ensamble": {
+  "mae": 10.558719554066588,
+  "reduccion": 0.1247854694392525,
+  "ic": [
+   0.08499588957247532,
+   0.17049799296755783
+  ],
+  "ap": 0.49313828864978254,
+  "ap_ic": [
+   0.4518745778183038,
+   0.5356574337000528
+  ],
+  "auc": 0.8211814648601148,
+  "d_mae_vs_cat": 0.02835030061047128,
+  "d_mae_ic": [
+   -0.0010897468915681773,
+   0.047334628340784494
+  ],
+  "brier": 0.11142858374732187
+ },
+ "ks": {
+  "Frutas": {
+   "ks": 0.037175718564146254,
+   "p": 1.4868080066721439e-07,
+   "sd_des": 19.68926399870448,
+   "sd_pru": 17.28749476510698,
+   "n_pru": 7988
+  },
+  "Granos y cereales": {
+   "ks": 0.18200745966275667,
+   "p": 2.296563867140683e-25,
+   "sd_des": 6.283609768043727,
+   "sd_pru": 4.423425277186154,
+   "n_pru": 1160
+  },
+  "Lácteos y huevos": {
+   "ks": 0.08110456966638627,
+   "p": 0.167061271811095,
+   "sd_des": 6.69604592716371,
+   "sd_pru": 5.182301900043314,
+   "n_pru": 246
+  },
+  "Pescados": {
+   "ks": 0.15828957239309827,
+   "p": 0.5534013046095518,
+   "sd_des": 4.77620289478469,
+   "sd_pru": 5.245082498524792,
+   "n_pru": 31
+  },
+  "Procesados": {
+   "ks": 0.09649915082535876,
+   "p": 5.419686755007798e-10,
+   "sd_des": 4.626827882683297,
+   "sd_pru": 3.436100456238097,
+   "n_pru": 1590
+  },
+  "Tubérculos y plátanos": {
+   "ks": 0.07303041009412975,
+   "p": 5.548829104746865e-09,
+   "sd_des": 17.906426015316274,
+   "sd_pru": 16.20550835784833,
+   "n_pru": 2431
+  },
+  "Verduras y hortalizas": {
+   "ks": 0.060946471463450336,
+   "p": 2.60430104324765e-17,
+   "sd_des": 24.50969677372509,
+   "sd_pru": 22.99187417497125,
+   "n_pru": 6966
+  }
+ },
+ "adversaria": {
+  "auc": 0.9267314359834562,
+  "variables": 23,
+  "auc_2023_2024": 0.956323389376953,
+  "solo_y": 0.526699167109472,
+  "importancia": {
+   "frec_alza_hist": 0.262,
+   "ton_nacional_rel_12m": 0.182,
+   "cambio_ton_nacional_1m": 0.163,
+   "cambio_nacional_1m": 0.085,
+   "prop_centrales_alza": 0.082,
+   "cambio_12m": 0.041
+  }
+ },
+ "sd_ene_sep": {
+  "2019": 20.63,
+  "2020": 21.68,
+  "2021": 22.94,
+  "2022": 21.18,
+  "2023": 20.7,
+  "2024": 21.87,
+  "2025": 21.61,
+  "2026": 17.43
+ },
+ "kpss": {
+  "n": 1230,
+  "adf_no": 0.5146341463414634,
+  "kpss_rech": 0.348780487804878,
+  "ambas_raiz": 0.2658536585365854,
+  "ambas_est": 0.4024390243902439,
+  "kpss_rech_cambio": 0.0065040650406504065
+ },
+ "oni_episodios": [
+  {
+   "tipo": "El Niño",
+   "inicio": "2018-ASO",
+   "fin": "2019-MJJ",
+   "pico": 1.1,
+   "fuerza": "moderado"
+  },
+  {
+   "tipo": "El Niño",
+   "inicio": "2019-SON",
+   "fin": "2020-FMA",
+   "pico": 0.8,
+   "fuerza": "débil"
+  },
+  {
+   "tipo": "El Niño",
+   "inicio": "2023-AMJ",
+   "fin": "2024-MAM",
+   "pico": 2.0,
+   "fuerza": "muy fuerte"
+  },
+  {
+   "tipo": "El Niño",
+   "inicio": "2026-MAM",
+   "fin": "2026-JAS",
+   "pico": 2.2,
+   "fuerza": "muy fuerte"
+  },
+  {
+   "tipo": "La Niña",
+   "inicio": "2017-OND",
+   "fin": "2018-FMA",
+   "pico": 0.8,
+   "fuerza": "débil"
+  },
+  {
+   "tipo": "La Niña",
+   "inicio": "2020-ASO",
+   "fin": "2021-MAM",
+   "pico": 1.1,
+   "fuerza": "moderado"
+  },
+  {
+   "tipo": "La Niña",
+   "inicio": "2021-JAS",
+   "fin": "2023-DJF",
+   "pico": 0.9,
+   "fuerza": "débil"
+  }
+ ],
+ "variedades": {
+  "series_equivalencia": 335,
+  "series": 1260,
+  "productos": [
+   "Arracacha",
+   "Arroz",
+   "Azúcar",
+   "Cebolla Cabezona",
+   "Fríjol",
+   "Fríjol verde",
+   "Harinas",
+   "Lenteja",
+   "Manzana importada",
+   "Maíz Amarillo",
+   "Maíz Blanco",
+   "Melón",
+   "Mojarra",
+   "Mora",
+   "Naranja Valencia y/o Sweet",
+   "Panela",
+   "Papa R-12",
+   "Papa criolla",
+   "Repollo",
+   "Yuca"
+  ]
+ },
+ "bootstrap": {
+  "puntual": 0.12243550693546634,
+  "bloques_10000": [
+   0.08349498874668744,
+   0.16923118461750136
+  ],
+  "estacionario_10000": [
+   0.07642972810193821,
+   0.16599760259858987
+  ],
+  "bloques_1000": [
+   0.08001824422718727,
+   0.17031703798603018
+  ]
+ },
+ "mango_feb25": {
+  "dist_max": -1.7567120774626526,
+  "por_debajo_max": 0.8273885350318471
+ },
+ "apio": {
+  "n": 437,
+  "mae_rw": 10.28438916328077,
+  "mae_cat": 10.845710757121028,
+  "tasa_alza": 0.09610983981693363,
+  "corr_pred_obs": 0.5217575976320374,
+  "mae_rw_des": 15.221787421209912
+ },
+ "casos_volumen": {
+  "Mango Tommy": {
+   "Bogotá, D.C., Corabastos": 319586.0,
+   "Medellín, Central Mayorista de Antioquia": 134452.0,
+   "Medellín, Plaza Minorista \"José María Villa": 41459.0
+  },
+  "Cilantro": {
+   "Bogotá, D.C., Corabastos": 92291.0,
+   "Medellín, Central Mayorista de Antioquia": 20716.0,
+   "Cali, Santa Elena": 18886.0
+  }
+ }
+}

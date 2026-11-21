@@ -1,0 +1,19 @@
+\begin{table}[htbp]\centering\small
+\caption{Modelos SARIMA estimados con datos hasta 2024 (corte de la prueba): órdenes elegidos y diagnóstico de residuos}\label{tab:sarima}
+\begin{adjustbox}{max width=\textwidth}\begin{tabular}{lr}\toprule
+Característica & Valor\\ \midrule
+Series estimadas & 1.260 \\
+Con una diferencia regular ($d\ge1$) & 87{,}5\,\% \\
+Con diferencia estacional ($D\ge1$) & 12{,}8\,\% \\
+Con algún término estacional & 42{,}1\,\% \\
+Residuos sin autocorrelación (Ljung--Box, 12 rezagos, $p>0{,}05$) & 84{,}5\,\% \\
+Residuos sin autocorrelación (Ljung--Box, 24 rezagos, $p>0{,}05$) & 83{,}7\,\% \\
+\midrule
+\multicolumn{2}{l}{Órdenes más frecuentes $(p,d,q)(P,D,Q)_{12}$} \\
+\quad (0,1,0)(0,0,0) & 24{,}7\,\% \\
+\quad (1,1,0)(0,0,0) & 5{,}2\,\% \\
+\quad (0,1,1)(0,0,0) & 5{,}0\,\% \\
+\quad (2,1,1)(0,0,0) & 3{,}5\,\% \\
+\quad (0,1,2)(0,0,0) & 3{,}3\,\% \\
+\quad (1,1,1)(0,0,0) & 3{,}1\,\% \\
+\bottomrule\end{tabular}\end{adjustbox}\end{table}

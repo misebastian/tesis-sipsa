@@ -1,0 +1,18 @@
+\begin{table}[htbp]\centering\small
+\caption{Robustez de los resultados principales: reducción del error de CatBoost frente al último precio (\%) y AP de CatBoost en la prueba bajo cada variante; entre corchetes, intervalos del 95\,\%}\label{tab:robustez}
+\begin{adjustbox}{max width=\textwidth}\begin{tabular}{lrr}\toprule
+Variante & Reducción del error (\%) & AP\\ \midrule
+Resultado principal & 12{,}2 [8{,}3; 16{,}9] & 0{,}481 [0{,}439; 0{,}521] \\
+Bloques de 1 mes en el bootstrap & [8{,}9; 15{,}5] & [0{,}439; 0{,}523] \\
+Bloques de 6 meses en el bootstrap & [9{,}4; 18{,}2] & [0{,}459; 0{,}522] \\
+Reajuste trimestral & 12{,}6 & 0{,}484 \\
+Faltantes: cambio de las demás centrales & 12{,}2 & 0{,}481 \\
+Faltantes: todos alzas & 12{,}1 & 0{,}472 \\
+Faltantes: ninguna alza & 12{,}2 & 0{,}475 \\
+Error valorado en pesos & 11{,}7 [7{,}6; 17{,}6] & -- \\
+\midrule
+Bootstrap estacionario ($B=10\,000$) & [7{,}6; 16{,}6] & -- \\
+Frente a la referencia $\hat y=0{,}25\,r_t$ (Working) & 13{,}2 [10{,}2; 17{,}0] & -- \\
+Promedio de XGBoost, LightGBM y CatBoost & 12{,}5 [8{,}5; 17{,}0] & 0{,}493 [0{,}452; 0{,}536] \\
+Cambio de $t+1$ a $t+2$ con información de $t$ & 8{,}8 [4{,}5; 14{,}4] & 0{,}464 [0{,}423; 0{,}517] \\
+\bottomrule\end{tabular}\end{adjustbox}\end{table}

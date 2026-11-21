@@ -1,0 +1,1 @@
+panel: (104354, 64) {'entrenamiento': 66912, 'prueba': 23821, 'validacion': 13621} series: 1260

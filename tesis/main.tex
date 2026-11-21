@@ -1,0 +1,259 @@
+%========================================================================================
+%  Tesis de maestría — Predictibilidad de los precios mayoristas de alimentos en Colombia
+%  Proyecto para Overleaf. Compilador: pdfLaTeX. Bibliografía: biblatex (backend bibtex).
+%  Si la clase MastersDoctoralThesis.cls no está en el proyecto, se usa un diseño
+%  equivalente (fallback_thesis.tex) para que el documento compile igual.
+%========================================================================================
+\IfFileExists{MastersDoctoralThesis.cls}{%
+\documentclass[
+11pt,
+english, % Se mantiene como en la plantilla; los textos fijos se traducen más abajo
+openany, % Sin páginas en blanco antes de cada capítulo (máximo 50 páginas)
+singlespacing,
+headsepline,
+]{MastersDoctoralThesis}
+\newcommand{\usandoplantilla}{}
+}{%
+\documentclass[11pt,a4paper,twoside,openany]{book}
+\input{fallback_thesis}
+}
+
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{adjustbox}
+\usepackage{multirow}
+\usepackage{caption}\captionsetup{font=small,skip=4pt}\setlength{\textfloatsep}{10pt plus 2pt minus 2pt}\setlength{\intextsep}{8pt plus 2pt minus 2pt}\setlength{\floatsep}{8pt plus 2pt minus 2pt}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{float}
+\usepackage{placeins}
+\usepackage[titles]{tocloft}
+\renewcommand{\topfraction}{0.9}\renewcommand{\bottomfraction}{0.8}\renewcommand{\textfraction}{0.07}
+\renewcommand{\floatpagefraction}{0.8}\setcounter{topnumber}{3}\setcounter{bottomnumber}{2}\setcounter{totalnumber}{5}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{enumitem}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{mathpazo}
+\usepackage{amsthm}
+\usepackage{threeparttable}
+\usepackage{bm}
+\newtheorem{proposicion}{Proposición}[chapter]
+\newtheorem{definicion}{Definición}[chapter]
+\AtBeginDocument{\renewcommand{\proofname}{Demostración}}
+
+\graphicspath{{Figures/}}
+
+% Bibliografía: biblatex autor-año (como la plantilla); si no está disponible, natbib.
+\IfFileExists{biblatex.sty}{%
+\usepackage[backend=bibtex,style=authoryear,natbib=true,maxcitenames=2,uniquelist=false]{biblatex}
+\addbibresource{bibliothesis.bib}
+\DefineBibliographyStrings{spanish}{%
+  in = {En}, and = {y}, andothers = {et\addabbrvspace al\adddot},
+  techreport = {Informe técnico}, mathesis = {Tesis de maestría}, phdthesis = {Tesis doctoral},
+  editor = {ed\adddot}, editors = {eds\adddot}, byeditor = {editado por}, urlseen = {consultado el},
+}
+\renewcommand*{\bibfont}{\footnotesize}
+\newcommand{\imprimirbibliografia}{\printbibliography[heading=bibintoc]}
+}{%
+\usepackage[authoryear,round]{natbib}
+\bibliographystyle{apalike}
+\newcommand{\imprimirbibliografia}{\cleardoublepage\phantomsection\addcontentsline{toc}{chapter}{\bibname}\bibliography{bibliothesis}}
+}
+\usepackage[autostyle=true]{csquotes}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{}
+
+\lstset{basicstyle=\ttfamily\scriptsize, breaklines=true, frame=single,
+        columns=fullflexible, keepspaces=true, showstringspaces=false,
+        commentstyle=\color{gray}, keywordstyle=\color{blue!60!black},
+        literate={á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1 {ñ}{{\~n}}1 {Á}{{\'A}}1 {É}{{\'E}}1 {Ó}{{\'O}}1 {ü}{{\"u}}1}
+
+\AtBeginDocument{%
+  \renewcommand{\figurename}{Figura}%
+  \renewcommand{\tablename}{Tabla}%
+  \renewcommand{\chaptername}{Capítulo}%
+  \renewcommand{\appendixname}{Apéndice}%
+  \renewcommand{\bibname}{Bibliografía}%
+  \renewcommand{\contentsname}{Índice general}%
+  \renewcommand{\listfigurename}{Índice de figuras}%
+  \renewcommand{\listtablename}{Índice de tablas}%
+  \def\abbrevname{Lista de abreviaturas}%
+  \def\acknowledgementname{Agradecimientos}%
+  \renewcommand{\lstlistingname}{Código}%
+}
+
+% Comandos de la tesis
+\newcommand{\pct}{\,\%}
+\newcommand{\dec}[2]{#1{,}#2}  % decimal con coma en modo matemático
+\input{Tablas/cifras}
+\input{Tablas/cifras_revision}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,fit,backgrounds}
+
+\geometry{
+	paper=a4paper, % Igual que la plantilla
+	inner=2.5cm,
+	outer=2.5cm,
+	bindingoffset=.5cm,
+	top=1.5cm,
+	bottom=1.5cm,
+}
+
+%----------------------------------------------------------------------------------------
+%	THESIS INFORMATION
+%----------------------------------------------------------------------------------------
+\thesistitle{Aprendizaje automático para pronosticar el cambio mensual de los precios mayoristas de alimentos en Colombia y anticipar sus alzas fuertes}
+\supervisor{Carlos Mario\\ \textsc{de Oro Aguado}}
+\examiner{}
+\degree{Maestría en Estadística Aplicada}
+\author{Miguel \textsc{Herrera}}
+\addresses{}
+\subject{Estadística Aplicada}
+\keywords{Pronóstico, precios de alimentos, aprendizaje automático, potenciación por gradiente, clasificación desbalanceada, validación temporal, SIPSA}
+\university{\href{https://www.uninorte.edu.co/}{Universidad del Norte}}
+\department{\href{https://www.uninorte.edu.co/web/maestria-en-estadistica-aplicada}{Departamento de Matemáticas y Estadística}}
+\group{\href{https://www.uninorte.edu.co/web/ciencias-basicas}{Facultad de Ciencias Básicas}}
+\faculty{\href{https://www.uninorte.edu.co/web/ciencias-basicas}{Facultad de Ciencias Básicas}}
+
+\AtBeginDocument{
+\hypersetup{pdftitle=\ttitle}
+\hypersetup{pdfauthor=\authorname}
+\hypersetup{pdfkeywords=\keywordnames}
+}
+
+\sloppy
+
+% Menos espacios en blanco: sin páginas en blanco entre secciones, páginas que no se estiran
+% verticalmente y figuras que pueden ocupar más de la página
+\raggedbottom
+\let\cleardoublepage\clearpage
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\bottomfraction}{0.8}
+\renewcommand{\textfraction}{0.07}
+\renewcommand{\floatpagefraction}{0.75}
+\setcounter{topnumber}{3}
+\setcounter{bottomnumber}{2}
+\setcounter{totalnumber}{4}
+
+\begin{document}
+
+\setlength{\headheight}{14.5pt}
+\frontmatter
+\pagestyle{plain}
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+\begin{titlepage}
+\begin{center}
+\vspace*{.06\textheight}
+{\scshape\LARGE \univname\par}\vspace{1.5cm}
+\textsc{\Large Trabajo de profundización}\\[0.5cm]
+\HRule \\[0.4cm]
+{\huge \bfseries \ttitle\par}\vspace{0.4cm}
+\HRule \\[1.5cm]
+\begin{minipage}[t]{0.4\textwidth}
+\begin{flushleft} \large
+\emph{Autor:}\\
+\href{https://www.linkedin.com/in/miguel-herrera-rocha-87075411b}{\authorname}
+\end{flushleft}
+\end{minipage}
+\begin{minipage}[t]{0.4\textwidth}
+\begin{flushright} \large
+\emph{Supervisor:} \\
+\supname
+\end{flushright}
+\end{minipage}\\[3cm]
+\vfill
+\large \textit{Trabajo presentado en cumplimiento de los requisitos \\ para el grado de \degreename}\\[0.3cm]
+\textit{En la}\\[0.4cm]
+\groupname\\\deptname\\[2cm]
+\vfill
+{\large Barranquilla, 2026}\\[4cm]
+\vfill
+\end{center}
+\end{titlepage}
+
+%----------------------------------------------------------------------------------------
+%	ABSTRACT
+%----------------------------------------------------------------------------------------
+\input{Resumen}
+
+%----------------------------------------------------------------------------------------
+%	ACKNOWLEDGEMENTS
+%----------------------------------------------------------------------------------------
+\begin{acknowledgements}
+
+A mis padres, cuya constancia y apoyo incondicional han sido fundamentales en mi crecimiento académico y personal. Su enseñanza de que la disciplina y la determinación hacen posibles los sueños ha sido clave en este logro.
+
+Al Departamento de Matemáticas y Estadística de la Universidad del Norte, por proporcionar una formación rigurosa y por el respaldo constante en el desarrollo de este estudio.
+
+Al profesor Carlos Mario de Oro Aguado, mi tutor, por su guía y acompañamiento a lo largo del proceso.
+
+Al DANE, por mantener públicos los registros del SIPSA que hacen posible este trabajo.
+
+\end{acknowledgements}
+\begin{abbreviations}{lp{10.5cm}}
+\addchaptertocentry{\abbrevname}
+\textbf{ADF} & Prueba de Dickey--Fuller aumentada\\
+\textbf{AICc} & Criterio de información de Akaike corregido para muestras pequeñas\\
+\textbf{AP} & Precisión media: estimador del área bajo la curva PR\\
+\textbf{AR} & Modelo autorregresivo\\
+\textbf{AUC} & Área bajo la curva ROC\\
+\textbf{AvgRelMAE} & Media geométrica del error absoluto medio relativo por serie\\
+\textbf{BN} & Beneficio neto\\
+\textbf{BSS} & \emph{Brier skill score}\\
+\textbf{CQR} & Regresión cuantílica conforme\\
+\textbf{DANE} & Departamento Administrativo Nacional de Estadística\\
+\textbf{DM} & Prueba de Diebold--Mariano\\
+\textbf{ECE} & Error esperado de calibración\\
+\textbf{$F_1$} & Media armónica de la precisión y la exhaustividad\\
+\textbf{KPSS} & Prueba de estacionariedad de Kwiatkowski, Phillips, Schmidt y Shin\\
+\textbf{MAE} & Error absoluto medio\\
+\textbf{MASE} & Error absoluto medio escalado\\
+\textbf{MLP} & Perceptrón multicapa (red neuronal)\\
+\textbf{NOAA} & Administración Nacional Oceánica y Atmosférica de Estados Unidos\\
+\textbf{ONI} & Índice Oceánico de El Niño\\
+\textbf{p.~p.} & Puntos porcentuales (en este trabajo, diferencias logarítmicas multiplicadas por 100)\\
+\textbf{PR} & Curva de precisión y exhaustividad\\
+\textbf{RMSE} & Raíz del error cuadrático medio\\
+\textbf{ROC} & Curva característica operativa del receptor\\
+\textbf{SARIMA} & Modelo autorregresivo integrado de medias móviles estacional\\
+\textbf{SHAP} & Valores de Shapley para explicar pronósticos\\
+\textbf{SIPSA} & Sistema de Información de Precios y Abastecimiento del Sector Agropecuario\\
+\textbf{STL} & Descomposición estacional y de tendencia por regresión local\\
+\textbf{VP, FP, FN} & Verdaderos positivos, falsos positivos y falsos negativos\\
+\end{abbreviations}
+
+
+\setcounter{tocdepth}{1}\setlength{\cftbeforechapskip}{0pt}\setlength{\cftbeforesecskip}{-1pt}\setlength{\cftparskip}{0pt}\setlength{\cftbeforetoctitleskip}{0pt}\setlength{\cftaftertoctitleskip}{8pt}\renewcommand{\cfttoctitlefont}{\LARGE\bfseries}\renewcommand{\cftchapfont}{\small\bfseries}\renewcommand{\cftchappagefont}{\small\bfseries}\renewcommand{\cftsecfont}{\small}\renewcommand{\cftsecpagefont}{\small}\tableofcontents
+{\setlength{\cftbeforefigskip}{1pt}\setlength{\cftbeforetabskip}{1pt}\setlength{\cftbeforeloftitleskip}{0pt}\setlength{\cftafterloftitleskip}{8pt}\setlength{\cftbeforelottitleskip}{0pt}\setlength{\cftafterlottitleskip}{8pt}\renewcommand{\cftloftitlefont}{\LARGE\bfseries}\renewcommand{\cftlottitlefont}{\LARGE\bfseries}\renewcommand{\cftfigfont}{\small}\renewcommand{\cftfigpagefont}{\small}\renewcommand{\cfttabfont}{\small}\renewcommand{\cfttabpagefont}{\small}
+\listoffigures
+\listoftables}
+\clearpage
+
+
+
+%----------------------------------------------------------------------------------------
+%	CHAPTERS
+%----------------------------------------------------------------------------------------
+\mainmatter
+\pagestyle{thesis}
+
+\include{Chapters/Introduccion}
+\include{Chapters/MarcoTeorico}
+\include{Chapters/EDA}
+\include{Chapters/SARIMA}
+\include{Chapters/ML}
+\include{Chapters/Discusion}
+\include{Chapters/Conclusiones}
+
+\appendix
+\include{Appendices/AppendixA}
+
+\imprimirbibliografia
+
+\end{document}

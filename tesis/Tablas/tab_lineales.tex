@@ -1,0 +1,12 @@
+\begin{table}[htbp]\centering\small
+\caption{Robustez de los modelos lineales y de la red neuronal en la prueba, con los hiperparámetros elegidos en validación: reducción del error frente al último precio (\%) y AP. Las variables categóricas entran como indicadores (\emph{one-hot}); las numéricas, estandarizadas con los datos de ajuste.}\label{tab:lineales}
+\begin{adjustbox}{max width=\textwidth}\begin{tabular}{lrrrrr}\toprule
+& & \multicolumn{2}{c}{Reducción del error (\%)} & \multicolumn{2}{c}{AP}\\ \cmidrule(lr){3-4}\cmidrule(lr){5-6}
+Especificación & Columnas & Reg. cuantílica & MLP & Reg. logística & MLP\\ \midrule
+Indicadores de grupo, 24 variables (original) & 32 & 8{,}2 & 11{,}5 & 0{,}465 & 0{,}485 \\
+Indicadores de grupo, producto, central y ciudad; 24 variables & 184 & 7{,}8 & 10{,}5 & 0{,}465 & 0{,}493 \\
+Indicadores de grupo, producto, central y ciudad; 52 candidatas & 207 & 7{,}4 & 11{,}1 & 0{,}462 & 0{,}479 \\
+Interacciones grupo × variables; 24 variables & 359 & 10{,}2 & -- & 0{,}480 & -- \\
+\midrule
+Referencia: CatBoost y CatBoost & -- & \multicolumn{2}{c}{12{,}2} & \multicolumn{2}{c}{0{,}481} \\
+\bottomrule\end{tabular}\end{adjustbox}\end{table}

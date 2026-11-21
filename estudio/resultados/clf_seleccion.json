@@ -1,0 +1,178 @@
+{
+ "mejores": {
+  "Regresión logística": {
+   "params": {
+    "C": 0.0029723346443356552,
+    "pen": "l1"
+   },
+   "pr_cv": 0.5140967026418743,
+   "pr_cortes": [
+    0.5363548670818556,
+    0.49785436353715623,
+    0.5080808773066111
+   ],
+   "n_ensayos": 40,
+   "convergio": true
+  },
+  "MLP": {
+   "params": {
+    "alpha": 1.856978896572847e-05,
+    "capas": 1,
+    "lr": 0.00019515333830126354
+   },
+   "pr_cv": 0.5147225531592997,
+   "pr_cortes": [
+    0.5259860652468452,
+    0.4966469674852796,
+    0.5215346267457742
+   ],
+   "n_ensayos": 40,
+   "convergio": true
+  },
+  "Random Forest": {
+   "params": {
+    "hoja": 21,
+    "mf": 0.40519128053692044,
+    "prof": 19
+   },
+   "pr_cv": 0.5341128705334443,
+   "pr_cortes": [
+    0.5379594152356963,
+    0.5179545274877407,
+    0.5464246688768956
+   ],
+   "n_ensayos": 40,
+   "convergio": true
+  },
+  "XGBoost": {
+   "params": {
+    "cs": 0.5727946026179683,
+    "lr": 0.039757732335703844,
+    "mcw": 21.485095215287984,
+    "n": 190,
+    "prof": 6,
+    "ss": 0.6369495557843593
+   },
+   "pr_cv": 0.5328483246028557,
+   "pr_cortes": [
+    0.5308487975469283,
+    0.516058711805801,
+    0.5516374644558378
+   ],
+   "n_ensayos": 40,
+   "convergio": true
+  },
+  "LightGBM": {
+   "params": {
+    "cs": 0.7219475266652333,
+    "hojas": 89,
+    "l2": 9.148624225979637,
+    "lr": 0.029499092471569916,
+    "mcs": 83,
+    "n": 166,
+    "ss": 0.7053289506948602
+   },
+   "pr_cv": 0.5349987409832613,
+   "pr_cortes": [
+    0.5323856094424754,
+    0.5184470948648732,
+    0.5541635186424351
+   ],
+   "n_ensayos": 40,
+   "convergio": true
+  },
+  "CatBoost": {
+   "params": {
+    "l2": 4.4480726512667275,
+    "lr": 0.0386881185825396,
+    "n": 447,
+    "prof": 4
+   },
+   "pr_cv": 0.5342394497840001,
+   "pr_cortes": [
+    0.5285544734807565,
+    0.5221910837105799,
+    0.5519727921606639
+   ],
+   "n_ensayos": 40,
+   "convergio": true
+  }
+ },
+ "balanceo": {
+  "Regresión logística": "Sin balanceo",
+  "MLP": "Sin balanceo",
+  "Random Forest": "Sin balanceo",
+  "XGBoost": "Sin balanceo",
+  "LightGBM": "Sin balanceo",
+  "CatBoost": "Sin balanceo"
+ },
+ "recalibracion": {
+  "Regresión logística": {
+   "intercepto": -0.09380226917486241,
+   "brier_antes": 0.11949107580176416,
+   "brier_despues": 0.11965733383717689,
+   "media_antes": 0.1947334891057558,
+   "media_despues": 0.18263845497625825
+  },
+  "MLP": {
+   "intercepto": -0.012523653411576803,
+   "brier_antes": 0.11785374581813812,
+   "brier_despues": 0.11784502863883972,
+   "media_antes": 0.18408268690109253,
+   "media_despues": 0.18263867497444153
+  },
+  "Random Forest": {
+   "intercepto": -0.031556200867770993,
+   "brier_antes": 0.11666475746085243,
+   "brier_despues": 0.1166861121370853,
+   "media_antes": 0.1864826548867578,
+   "media_despues": 0.18263871848394012
+  },
+  "XGBoost": {
+   "intercepto": -0.011667293998497122,
+   "brier_antes": 0.11644597351551056,
+   "brier_despues": 0.11644555628299713,
+   "media_antes": 0.18400035798549652,
+   "media_despues": 0.18263868987560272
+  },
+  "LightGBM": {
+   "intercepto": 0.017625694155837552,
+   "brier_antes": 0.1162570608361815,
+   "brier_despues": 0.11625142780856516,
+   "media_antes": 0.18060393956430612,
+   "media_despues": 0.18263867369781714
+  },
+  "CatBoost": {
+   "intercepto": -0.03211144904941648,
+   "brier_antes": 0.11608355177327748,
+   "brier_despues": 0.11609361615067575,
+   "media_antes": 0.18644059410856034,
+   "media_despues": 0.1826387141539111
+  }
+ },
+ "umbral": {
+  "Regresión logística": 0.20659749437284397,
+  "MLP": 0.26719504594802856,
+  "Random Forest": 0.2496024731391061,
+  "XGBoost": 0.24566742777824402,
+  "LightGBM": 0.2424368273071886,
+  "CatBoost": 0.21677529400948872
+ },
+ "pr_val": {
+  "Regresión logística": 0.5015930089754136,
+  "MLP": 0.5044020029792506,
+  "Random Forest": 0.520955014841957,
+  "XGBoost": 0.5201340306838442,
+  "LightGBM": 0.5226174961006381,
+  "CatBoost": 0.5238700950065517
+ },
+ "elegido": "CatBoost",
+ "modelos": [
+  "Regresión logística",
+  "MLP",
+  "Random Forest",
+  "XGBoost",
+  "LightGBM",
+  "CatBoost"
+ ]
+}

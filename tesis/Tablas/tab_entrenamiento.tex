@@ -1,0 +1,23 @@
+\begin{table}[htbp]\centering\small
+\caption{Desempeño en entrenamiento (ajuste y evaluación con 2019--2024), validación (promedio de 2022--2024 en regresión; predicciones reunidas en clasificación) y prueba. Una diferencia grande entre entrenamiento y prueba indica sobreajuste. Las cifras de validación son optimistas, porque esa muestra se usó para varias decisiones; la única evaluación imparcial es la de prueba.}\label{tab:entrenamiento}
+\begin{adjustbox}{max width=\textwidth}\begin{tabular}{lrrr}\toprule
+Modelo & Entrenamiento & Validación & Prueba\\ \midrule
+\multicolumn{4}{l}{\emph{Cambio del mes siguiente: MAE (p. p.)}}\\
+Paseo aleatorio & 13{,}40 & 13{,}31 & 12{,}06 \\
+AR estacional & 12{,}33 & 12{,}34 & 11{,}47 \\
+Regresión cuantílica & 11{,}95 & 11{,}92 & 11{,}07 \\
+MLP & 11{,}35 & 11{,}44 & 10{,}67 \\
+Random Forest & 9{,}89 & 11{,}56 & 10{,}69 \\
+XGBoost & 9{,}65 & 11{,}38 & 10{,}60 \\
+LightGBM & 9{,}83 & 11{,}40 & 10{,}59 \\
+CatBoost$^\ast$ & 10{,}30 & 11{,}33 & 10{,}59 \\
+\midrule
+\multicolumn{4}{l}{\emph{Alzas mayores al 15\,\%: AP}}\\
+Logística autorregresiva & 0{,}430 & -- & 0{,}381 \\
+Regresión logística & 0{,}490 & 0{,}502 & 0{,}465 \\
+MLP & 0{,}571 & 0{,}504 & 0{,}485 \\
+Random Forest & 0{,}760 & 0{,}521 & 0{,}490 \\
+XGBoost & 0{,}658 & 0{,}520 & 0{,}495 \\
+LightGBM & 0{,}732 & 0{,}523 & 0{,}492 \\
+CatBoost$^\ast$ & 0{,}594 & 0{,}524 & 0{,}481 \\
+\bottomrule\end{tabular}\end{adjustbox}\end{table}

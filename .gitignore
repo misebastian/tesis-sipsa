@@ -1,0 +1,28 @@
+# Entorno y herramientas (se crean con preparar.sh)
+entorno/
+herramientas/
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+# Archivos originales del DANE (ver datos_fuentes/LEEME.md)
+datos_fuentes/*.zip
+# Compilación de LaTeX
+*.aux
+*.log
+*.toc
+*.out
+*.bbl
+*.blg
+*.lof
+*.lot
+*.synctex.gz
+*.fdb_latexmk
+*.fls
+# Web
+web-precios/node_modules/
+web-precios/.next/
+web-precios/.vercel/
+# Sistema
+.DS_Store
+registro.txt

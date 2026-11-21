@@ -1,0 +1,18 @@
+\begin{table}[htbp]\centering\small
+\caption{Métricas complementarias del pronóstico del cambio en la prueba: MAE y RMSE (puntos porcentuales), MASE (escala: MAE del último precio de cada serie en entrenamiento), media geométrica del MAE relativo al último precio por serie (AvgRelMAE; menor que 1 indica mejora en la serie típica), promedio simple de las reducciones del error por grupo (\%) y porcentaje de series en que el modelo tiene menor MAE que el último precio. $^\ast$Modelo elegido.}\label{tab:reg_extra}
+\begin{adjustbox}{max width=\textwidth}\begin{tabular}{lrrrrrr}\toprule
+Modelo & MAE & RMSE & MASE & AvgRelMAE & Red. media por grupo & Series que gana\\ \midrule
+Paseo aleatorio & 12{,}06 & 18{,}40 & 0{,}940 & 1{,}000 & 0{,}0 & -- \\
+AR estacional & 11{,}47 & 17{,}19 & 0{,}931 & 0{,}982 & 5{,}0 & 56 \\
+SARIMA & 11{,}50 & 17{,}00 & 0{,}945 & 0{,}988 & \ensuremath{-}1{,}7 & 42 \\
+\midrule
+Regresión cuantílica & 11{,}07 & 16{,}29 & 0{,}938 & 0{,}974 & \ensuremath{-}3{,}6 & 63 \\
+MLP & 10{,}67 & 15{,}71 & 0{,}867 & 0{,}918 & 3{,}9 & 72 \\
+Random Forest & 10{,}69 & 15{,}88 & 0{,}872 & 0{,}918 & 5{,}3 & 73 \\
+XGBoost & 10{,}60 & 15{,}60 & 0{,}873 & 0{,}921 & 4{,}5 & 71 \\
+LightGBM & 10{,}59 & 15{,}64 & 0{,}859 & 0{,}912 & 5{,}7 & 73 \\
+CatBoost$^\ast$ & 10{,}59 & 15{,}61 & 0{,}866 & 0{,}915 & 5{,}4 & 72 \\
+\midrule
+Promedio de XGBoost, LightGBM y CatBoost & 10{,}56 & -- & -- & -- & -- & -- \\
+LightGBM cuantílico (mediana) & 10{,}60 & -- & -- & -- & -- & -- \\
+\bottomrule\end{tabular}\end{adjustbox}\end{table}

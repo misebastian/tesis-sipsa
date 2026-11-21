@@ -1,0 +1,10 @@
+paso,minutos,memoria_gb,equipo
+01_panel,0.1,0.83,"Darwin arm64, 10 núcleos"
+02_eda,0.18,0.77,"Darwin arm64, 10 núcleos"
+03_variables,8.2,0.69,"Darwin arm64, 10 núcleos"
+sarima,19.71,0.47,"Darwin arm64, 10 núcleos"
+04_regresion,14.11,0.98,"Darwin arm64, 10 núcleos"
+05_clasificacion,27.86,0.81,"Darwin arm64, 10 núcleos"
+06_resultados,18.12,0.64,"Darwin arm64, 10 núcleos"
+07_complementarios,18.3,1.13,"Darwin arm64, 10 núcleos"
+09_verificacion,0.14,1.39,"Darwin arm64, 10 núcleos"

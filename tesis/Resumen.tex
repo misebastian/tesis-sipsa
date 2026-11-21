@@ -1,0 +1,26 @@
+\renewcommand\abstractname{Resumen}
+\begin{abstract}
+\addchaptertocentry{\abstractname}
+
+Este trabajo evalúa si los modelos de aprendizaje automático pronostican el cambio mensual de los precios mayoristas de alimentos en Colombia mejor que el último precio observado, y si permiten anticipar las alzas mayores al 15\pct. Con los datos abiertos del SIPSA de enero de 2018 a septiembre de 2026 se construyó un panel de \cseries\ series producto--central, con meses pronosticados de febrero de 2019 a septiembre de 2026 por el rezago de doce meses que requieren las variables. Se compararon seis modelos (regresión lineal, red neuronal, Random Forest, XGBoost, LightGBM y CatBoost) con el último precio, un modelo autorregresivo estacional y un SARIMA por serie. Los seis modelos de aprendizaje automático y el autorregresivo estacional minimizaron la misma pérdida (absoluta para el cambio y logarítmica para las alzas), y los seis primeros se ajustaron con la misma regla de búsqueda de hiperparámetros. Las decisiones se tomaron con datos hasta 2024 y la evaluación se hizo entre enero de 2025 y septiembre de 2026.
+
+CatBoost redujo el error del último precio en un \cmeje\pct\ (intervalo del 95\pct: \cmejloe\ a \cmejhie) y el de los modelos estadísticos en cerca de un 8\pct. Los demás modelos de árboles obtuvieron resultados similares, la ganancia se concentró en frutas y verduras y se mantuvo, menor, al pronosticar el cambio entre el segundo y el tercer mes. Para las alzas fuertes, el modelo detectó el \crece\pct\ de ellas con una precisión del \cprece\pct\ y fue útil en todo el rango de costos evaluado. Los valores de Shapley muestran que el modelo se apoya en la estacionalidad de cada serie, la señal de las demás centrales y la corrección de precios extremos. El balanceo de clases no mejoró los resultados, y los intervalos de pronóstico con calibración conforme alcanzaron en promedio la cobertura buscada, aunque no en las series más volátiles.
+
+\medskip
+
+\textbf{Palabras clave:} pronóstico, precios de alimentos, aprendizaje automático, potenciación por gradiente, alertas, validación temporal, SIPSA.
+\end{abstract}
+
+\begin{otherlanguage}{english}
+\renewcommand\abstractname{Abstract}
+\begin{abstract}
+\addchaptertocentry{\abstractname}
+This work assesses whether machine learning models forecast monthly changes in Colombian wholesale food prices better than the last observed price, and whether they can anticipate price rises above 15\,\%. Using open SIPSA data from January 2018 to September 2026, a panel of 1,260 product--market series was built, with forecast months from February 2019 to September 2026 because the predictors require twelve months of history. Six models (linear regression, neural network, random forest, XGBoost, LightGBM and CatBoost) were compared with the last price, a seasonal autoregressive model and a per-series SARIMA. The six machine learning models and the seasonal autoregressive model minimized the same loss (absolute for changes, logarithmic for rises), and the six machine learning models were tuned with the same hyperparameter search rule. Decisions used data up to 2024, and the evaluation covered January 2025 to September 2026.
+
+CatBoost reduced the error of the last price by 12.2\,\% (95\,\% interval: 8.3 to 16.9) and that of the statistical models by about 8\,\%. The other tree-based models performed similarly, gains concentrated in fruits and vegetables, and they persisted, smaller, when forecasting the change between the second and third months. For large rises, the model detected 70.6\,\% of them with 37.1\,\% precision and was useful across the whole range of costs considered. Shapley values show that the model relies on each series' seasonality, price signals from other markets and the correction of extreme prices. Class rebalancing did not help, and conformally calibrated prediction intervals reached their target coverage on average, though not for the most volatile series.
+
+\medskip
+
+\textbf{Keywords:} forecasting, food prices, machine learning, gradient boosting, early warning, temporal validation, SIPSA.
+\end{abstract}
+\end{otherlanguage}

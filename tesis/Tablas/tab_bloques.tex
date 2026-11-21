@@ -1,0 +1,19 @@
+\begin{table}[htbp]\centering\small
+\caption{Bloques de variables candidatas y resultado de la selección. Arriba, los bloques de partida; abajo, los bloques adicionales evaluados.}\label{tab:bloques}
+\begin{adjustbox}{max width=\textwidth}\begin{tabular}{l>{\raggedright\arraybackslash}p{5.6cm}rrl}\toprule
+Bloque & Contenido & Candidatas & Finales & Decisión\\ \midrule
+Historia del precio & cambios acumulados y rezagados, volatilidad, posición en el rango anual & 16 & 14 & Queda en parte \\
+Estacionalidad & mes del año, frecuencia y cambio histórico del mismo mes & 4 & 4 & Queda \\
+Abastecimiento local & toneladas ingresadas, municipios de origen, días con registro & 6 & 0 & Sale \\
+Red de centrales & precio del producto en las demás centrales & 3 & 3 & Queda \\
+Calendario & Semana Santa, diciembre & 2 & 0 & Sale \\
+Producto y lugar & grupo, producto, central, ciudad, perecibilidad & 5 & 5 & Queda \\
+El Niño (ONI) & índice ONI y su cambio & 2 & 0 & Sale \\
+\midrule
+Promedios móviles & distancia a medias móviles & 2 & 0 & No entra \\
+Año anterior & cambio del mismo mes un año antes & 2 & 0 & No entra \\
+Red ampliada & otros cambios del precio nacional & 3 & 0 & No entra \\
+Grupo en la central & cambio y alzas del grupo en la central & 2 & 0 & No entra \\
+Abastecimiento nacional & toneladas nacionales y participación de la central & 3 & 3 & Queda \\
+Calidad del dato & meses y días con registro & 2 & 0 & No entra \\
+\bottomrule\end{tabular}\end{adjustbox}\end{table}

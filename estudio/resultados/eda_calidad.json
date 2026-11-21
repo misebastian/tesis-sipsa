@@ -1,0 +1,312 @@
+{
+ "composicion": {
+  "Solo abastecimiento": 172565,
+  "Precio en $/kg": 140496,
+  "Precio en otra unidad": 4261
+ },
+ "registros": 317322,
+ "mercados_base": 32,
+ "alimentos_base": 196,
+ "cobertura_central": {
+  "Ipiales (Nariño), Centro de acopio": 0.75,
+  "Bogotá, D.C., Paloquemao": 0.785,
+  "Valledupar, Mercado Nuevo": 0.819,
+  "Santa Marta (Magdalena)": 0.867,
+  "Ibagué, Plaza La 21": 0.882,
+  "Cúcuta, La Nueva Sexta": 0.889,
+  "Bogotá, D.C., Plaza Las Flores": 0.895,
+  "Sincelejo, Nuevo Mercado": 0.902,
+  "Popayán, Plaza de mercado del barrio Bolívar": 0.916,
+  "Montería, Mercado del Sur": 0.916,
+  "Pasto, El Potrerillo": 0.92,
+  "Neiva, Surabastos": 0.925,
+  "Armenia, Mercar": 0.925,
+  "Barranquilla, Granabastos": 0.926,
+  "Valledupar, Mercabastos": 0.927,
+  "Medellín, Plaza Minorista \"José María Villa": 0.927,
+  "Barranquilla, Barranquillita": 0.937,
+  "Cali, Cavasa": 0.938,
+  "Cartagena, Bazurto": 0.938,
+  "Tunja, Complejo de Servicios del Sur": 0.939,
+  "Pereira, Mercasa": 0.941,
+  "Villavicencio, CAV": 0.942,
+  "Manizales, Centro Galerías": 0.943,
+  "Cúcuta, Cenabastos": 0.946,
+  "Medellín, Central Mayorista de Antioquia": 0.952,
+  "Bogotá, D.C., Corabastos": 0.957,
+  "Cali, Santa Elena": 0.959,
+  "Bucaramanga, Centroabastos": 0.96
+ },
+ "series_central": {
+  "Armenia, Mercar": 63,
+  "Barranquilla, Barranquillita": 46,
+  "Barranquilla, Granabastos": 33,
+  "Bogotá, D.C., Corabastos": 84,
+  "Bogotá, D.C., Paloquemao": 9,
+  "Bogotá, D.C., Plaza Las Flores": 3,
+  "Bucaramanga, Centroabastos": 68,
+  "Cali, Cavasa": 50,
+  "Cali, Santa Elena": 59,
+  "Cartagena, Bazurto": 43,
+  "Cúcuta, Cenabastos": 62,
+  "Cúcuta, La Nueva Sexta": 9,
+  "Ibagué, Plaza La 21": 47,
+  "Ipiales (Nariño), Centro de acopio": 6,
+  "Manizales, Centro Galerías": 57,
+  "Medellín, Central Mayorista de Antioquia": 80,
+  "Medellín, Plaza Minorista \"José María Villa": 49,
+  "Montería, Mercado del Sur": 43,
+  "Neiva, Surabastos": 65,
+  "Pasto, El Potrerillo": 41,
+  "Pereira, Mercasa": 63,
+  "Popayán, Plaza de mercado del barrio Bolívar": 43,
+  "Santa Marta (Magdalena)": 24,
+  "Sincelejo, Nuevo Mercado": 43,
+  "Tunja, Complejo de Servicios del Sur": 59,
+  "Valledupar, Mercabastos": 26,
+  "Valledupar, Mercado Nuevo": 20,
+  "Villavicencio, CAV": 65
+ },
+ "rachas": {
+  "n": 2419,
+  "hasta2": 0.8036378668871434,
+  "media": 2.0566349731293925,
+  "mas6": 0.040926002480363786
+ },
+ "alza_ano": {
+  "2019": 0.1655,
+  "2020": 0.1764,
+  "2021": 0.215,
+  "2022": 0.2051,
+  "2023": 0.1615,
+  "2024": 0.181,
+  "2025": 0.1698,
+  "2026": 0.1662
+ },
+ "n_ano": {
+  "2019": 12201,
+  "2020": 13365,
+  "2021": 13968,
+  "2022": 13790,
+  "2023": 13588,
+  "2024": 13621,
+  "2025": 13621,
+  "2026": 10200
+ },
+ "productos_n": 103,
+ "productos_centrales_mediana": 12.0,
+ "prod_mas_volatiles": {
+  "Ají topito dulce": 0.407,
+  "Limón Tahití": 0.381,
+  "Mango Tommy": 0.373,
+  "Cilantro": 0.373,
+  "Mango Yulima": 0.361
+ },
+ "prod_mas_estables": {
+  "Sardinas en lata": 0.038,
+  "Harinas": 0.037,
+  "Pastas alimenticias": 0.029,
+  "Sal yodada": 0.029,
+  "Leche en polvo": 0.027
+ },
+ "central_rel": {
+  "Santa Marta (Magdalena)": -0.0291,
+  "Barranquilla, Barranquillita": -0.0192,
+  "Popayán, Plaza de mercado del barrio Bolívar": -0.0183,
+  "Barranquilla, Granabastos": -0.0178,
+  "Manizales, Centro Galerías": -0.0135,
+  "Valledupar, Mercabastos": -0.013,
+  "Cartagena, Bazurto": -0.0121,
+  "Pereira, Mercasa": -0.012,
+  "Armenia, Mercar": -0.0112,
+  "Cúcuta, Cenabastos": -0.0071,
+  "Montería, Mercado del Sur": -0.0038,
+  "Cúcuta, La Nueva Sexta": -0.0014,
+  "Bogotá, D.C., Plaza Las Flores": 0.0014,
+  "Cali, Santa Elena": 0.0023,
+  "Sincelejo, Nuevo Mercado": 0.0023,
+  "Pasto, El Potrerillo": 0.0025,
+  "Bogotá, D.C., Paloquemao": 0.0029,
+  "Villavicencio, CAV": 0.003,
+  "Valledupar, Mercado Nuevo": 0.0031,
+  "Ibagué, Plaza La 21": 0.004,
+  "Tunja, Complejo de Servicios del Sur": 0.0051,
+  "Neiva, Surabastos": 0.0053,
+  "Bucaramanga, Centroabastos": 0.008,
+  "Cali, Cavasa": 0.0088,
+  "Medellín, Central Mayorista de Antioquia": 0.0144,
+  "Medellín, Plaza Minorista \"José María Villa": 0.0156,
+  "Ipiales (Nariño), Centro de acopio": 0.0193,
+  "Bogotá, D.C., Corabastos": 0.0239
+ },
+ "corr_vol_ton_precio": -0.301025534845536,
+ "ton_mediana_cambio": {
+  "Tubérculos y plátanos": 0.15,
+  "Verduras y hortalizas": 0.154,
+  "Frutas": 0.219,
+  "Pescados": 0.245,
+  "Granos y cereales": 0.355,
+  "Procesados": 0.375,
+  "Lácteos y huevos": 0.453
+ },
+ "extremos": {
+  "total": 6009,
+  "pct": 0.05758284301512161,
+  "muy": 54
+ },
+ "extremos_grupo": {
+  "Lácteos y huevos": {
+   "ext": 0.0,
+   "muy": 0,
+   "n": 1276
+  },
+  "Pescados": {
+   "ext": 0.0,
+   "muy": 0,
+   "n": 153
+  },
+  "Procesados": {
+   "ext": 0.0001,
+   "muy": 0,
+   "n": 7916
+  },
+  "Granos y cereales": {
+   "ext": 0.001,
+   "muy": 0,
+   "n": 5815
+  },
+  "Tubérculos y plátanos": {
+   "ext": 0.0339,
+   "muy": 1,
+   "n": 13002
+  },
+  "Frutas": {
+   "ext": 0.0535,
+   "muy": 5,
+   "n": 40125
+  },
+  "Verduras y hortalizas": {
+   "ext": 0.0947,
+   "muy": 48,
+   "n": 36067
+  }
+ },
+ "mayores_saltos": [
+  {
+   "mercado": "Medellín, Central Mayorista de Antioquia",
+   "alimento": "Cilantro",
+   "mes": "2023-05",
+   "y": 1.55,
+   "cambio_pct": 369.22
+  },
+  {
+   "mercado": "Medellín, Plaza Minorista \"José María Villa",
+   "alimento": "Cilantro",
+   "mes": "2025-02",
+   "y": 1.49,
+   "cambio_pct": 344.81
+  },
+  {
+   "mercado": "Pasto, El Potrerillo",
+   "alimento": "Cilantro",
+   "mes": "2020-03",
+   "y": -1.46,
+   "cambio_pct": -76.73
+  },
+  {
+   "mercado": "Medellín, Central Mayorista de Antioquia",
+   "alimento": "Cilantro",
+   "mes": "2019-09",
+   "y": 1.41,
+   "cambio_pct": 307.72
+  },
+  {
+   "mercado": "Tunja, Complejo de Servicios del Sur",
+   "alimento": "Cilantro",
+   "mes": "2025-07",
+   "y": -1.39,
+   "cambio_pct": -75.12
+  },
+  {
+   "mercado": "Medellín, Plaza Minorista \"José María Villa",
+   "alimento": "Cilantro",
+   "mes": "2023-02",
+   "y": 1.39,
+   "cambio_pct": 299.71
+  },
+  {
+   "mercado": "Medellín, Plaza Minorista \"José María Villa",
+   "alimento": "Cilantro",
+   "mes": "2023-05",
+   "y": 1.39,
+   "cambio_pct": 299.53
+  },
+  {
+   "mercado": "Medellín, Central Mayorista de Antioquia",
+   "alimento": "Cilantro",
+   "mes": "2025-02",
+   "y": 1.38,
+   "cambio_pct": 297.22
+  }
+ ],
+ "precio_mediana_grupo": {
+  "Frutas": 2764.0,
+  "Granos y cereales": 2873.0,
+  "Lácteos y huevos": 20580.0,
+  "Pescados": 9200.0,
+  "Procesados": 3276.0,
+  "Tubérculos y plátanos": 1574.0,
+  "Verduras y hortalizas": 2054.0
+ },
+ "precio_rango": [
+  547.0,
+  18101.0
+ ],
+ "centrales_por_producto": {
+  "mediana": 12.0,
+  "max": 24,
+  "uno": 0
+ },
+ "picos": [
+  {
+   "mercado": "Bogotá, D.C., Corabastos",
+   "alimento": "Espinaca",
+   "mes": "2025-06",
+   "razon": 4.132524271844656,
+   "n_otras": 16,
+   "cambio_propio": 0.6718784376429561,
+   "mediana_otras": 0.40086899577071433,
+   "prop_mismo_signo": 0.875
+  },
+  {
+   "mercado": "Bogotá, D.C., Corabastos",
+   "alimento": "Limón Tahití",
+   "mes": "2023-06",
+   "razon": 0.21690943635212168,
+   "n_otras": 19,
+   "cambio_propio": -0.8742514517501476,
+   "mediana_otras": -0.622106081934807,
+   "prop_mismo_signo": 1.0
+  },
+  {
+   "mercado": "Bogotá, D.C., Paloquemao",
+   "alimento": "Pastas alimenticias",
+   "mes": "2024-02",
+   "razon": 0.04801950030469229,
+   "n_otras": 18,
+   "cambio_propio": null,
+   "mediana_otras": -0.0030785113270379583,
+   "prop_mismo_signo": 0.5555555555555556
+  },
+  {
+   "mercado": "Medellín, Central Mayorista de Antioquia",
+   "alimento": "Perejil",
+   "mes": "2025-07",
+   "razon": 4.247519961287197,
+   "n_otras": 11,
+   "cambio_propio": 0.50325914484071,
+   "mediana_otras": 0.1780795751744435,
+   "prop_mismo_signo": 0.8181818181818182
+  }
+ ]
+}

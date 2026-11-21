@@ -1,0 +1,16 @@
+{
+ "corte": "2024-12-01",
+ "pares_con_variedad": 662,
+ "pares_que_cambian": 1,
+ "detalle": [
+  {
+   "mercado": "Montería, Mercado del Sur",
+   "alimento": "Panela",
+   "variedad_antes": "Panela cuadrada morena",
+   "variedad_ahora": "Panela redonda morena",
+   "meses_con_precio_antes": 97,
+   "meses_con_precio_ahora": 83,
+   "ultimo_mes_con_precio": "2025-04-01"
+  }
+ ]
+}

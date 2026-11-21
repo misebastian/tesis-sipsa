@@ -1,0 +1,72 @@
+\footnotesize
+\begin{longtable}{>{\raggedright\arraybackslash}p{2.3cm}>{\raggedright\arraybackslash}p{4.1cm}>{\raggedright\arraybackslash}p{6.2cm}c}
+\caption{Definición de las 52 variables candidatas. Notación: $l_t=\ln p_t$ con el último precio repetido en huecos de hasta dos meses; $r_t=l_t-l_{t-1}$; $a_t=1\{r_t>\ln 1{,}15\}$; $o_t$, promedio de $l_t$ en las demás centrales que cotizan el producto; $T_t$, logaritmo de las toneladas; $m_{t+1}$, mes del año pronosticado. Las ventanas móviles exigen al menos tres cuartas partes de los meses. Final: variable incluida en los modelos.}\label{tab:variables}\\
+\toprule Bloque & Variable & Definición & Final\\ \midrule\endfirsthead
+\toprule Bloque & Variable & Definición & Final\\ \midrule\endhead
+\bottomrule\endfoot
+Historia del precio & Cambio del precio, 1 mes & $l_t-l_{t-1}$ & Sí \\
+ & Cambio del precio, 2 meses & $l_t-l_{t-2}$ & Sí \\
+ & Cambio del precio, 3 meses & $l_t-l_{t-3}$ & Sí \\
+ & Cambio del precio, 6 meses & $l_t-l_{t-6}$ & Sí \\
+ & Cambio del precio, 12 meses & $l_t-l_{t-12}$ & Sí \\
+ & Cambio mensual hace 1 mes & $r_{t-1}$ & Sí \\
+ & Cambio mensual hace 2 meses & $r_{t-2}$ & Sí \\
+ & Cambio mensual hace 3 meses & $r_{t-3}$ & Sí \\
+ & Volatilidad 3 meses & desv. típica de $r$ en $t-2,\dots,t$ & Sí \\
+ & Volatilidad 6 meses & desv. típica de $r$ en $t-5,\dots,t$ & No \\
+ & Volatilidad 12 meses & desv. típica de $r$ en $t-11,\dots,t$ & Sí \\
+ & Posición del precio en el año (z) & $(l_t-\bar l_{12})/s_{12}$, media y desv. de $l$ en 12 meses & Sí \\
+ & Distancia al máximo anual & $l_t-\max_{12}l$ & Sí \\
+ & Distancia al mínimo anual & $l_t-\min_{12}l$ & Sí \\
+ & Alzas fuertes en el último año & $\sum_{k=0}^{11}a_{t-k}$ & No \\
+ & Meses desde la última alza & meses desde el último $a=1$ (tope 24) & Sí \\
+\addlinespace[2pt]
+Estacionalidad & Mes del año (seno) & $\sin(2\pi m_{t+1}/12)$ & Sí \\
+ & Mes del año (coseno) & $\cos(2\pi m_{t+1}/12)$ & Sí \\
+ & Frecuencia histórica de alzas en el mes & $(k+1)/(n+6)$: alzas $k$ del producto en el mes $m_{t+1}$ en $n$ registros de años anteriores & Sí \\
+ & Cambio histórico en el mes & media de $r$ de la serie en el mes $m_{t+1}$ en años anteriores & Sí \\
+\addlinespace[2pt]
+Abastecimiento local & Cambio de toneladas, 1 mes & $T_t-T_{t-1}$ & No \\
+ & Cambio de toneladas, 12 meses & $T_t-T_{t-12}$ & No \\
+ & Toneladas frente a su promedio anual & $T_t-$ media de $T$ en $t-12,\dots,t-1$ & No \\
+ & Municipios de origen (log) & $\ln(1+$municipios de origen$)$ & No \\
+ & Departamentos de origen & departamentos de origen & No \\
+ & Días con registro & días con registro de toneladas & No \\
+\addlinespace[2pt]
+Red de centrales & Brecha con las demás centrales & $l_t-o_t$ & Sí \\
+ & Cambio en las demás centrales, 1 mes & $o_t-o_{t-1}$ & Sí \\
+ & Demás centrales con alza en t & proporción de las demás centrales con $a_t=1$ & Sí \\
+\addlinespace[2pt]
+Calendario & Semana Santa & 1 si Semana Santa cae en $t+1$ & No \\
+ & Diciembre & 1 si $t+1$ es diciembre & No \\
+\addlinespace[2pt]
+Producto y lugar & Perecibilidad & 0 granos y procesados; 1 tubérculos, lácteos y pescados; 2 frutas y verduras & Sí \\
+ & Grupo (código) & código entero del grupo & Sí \\
+ & Ciudad (código) & código entero de la ciudad & Sí \\
+ & Central (código) & código entero de la central & Sí \\
+ & Producto (código) & código entero del producto & Sí \\
+\addlinespace[2pt]
+El Niño (ONI) & ONI & ONI de $t-2$ & No \\
+ & Cambio del ONI, 3 meses & ONI$_{t-2}-$ONI$_{t-5}$ & No \\
+\addlinespace[2pt]
+Promedios móviles & Desviación de la media móvil 3m & $l_t-$ media de $l$ en 3 meses & No \\
+ & Desviación de la media móvil 6m & $l_t-$ media de $l$ en 6 meses & No \\
+\addlinespace[2pt]
+Año anterior & Cambio del mismo mes, año anterior & $r_{t-10}$ (cambio del mes objetivo un año antes) & No \\
+ & Cambio en las demás centrales, mismo mes del año anterior & $o_{t-10}-o_{t-11}$ & No \\
+\addlinespace[2pt]
+Red ampliada & Cambio en las demás centrales, 2 meses & $o_t-o_{t-2}$ & No \\
+ & Cambio en las demás centrales, 12 meses & $o_t-o_{t-12}$ & No \\
+ & Cambio de la brecha con las demás centrales & $(l_t-o_t)-(l_{t-1}-o_{t-1})$ & No \\
+\addlinespace[2pt]
+Grupo en la central & Cambio del grupo en la central & media de $r_t$ de los demás productos del grupo en la central & No \\
+ & Alzas del grupo en la central & proporción de $a_t=1$ en los demás productos del grupo en la central & No \\
+\addlinespace[2pt]
+Abastecimiento nacional & Cambio de toneladas en todas las centrales & cambio de $\ln$ toneladas del producto en todas las centrales & Sí \\
+ & Toneladas en todas las centrales frente al año & $\ln$ toneladas en todas las centrales frente a su media de 12 meses & Sí \\
+ & Participación de la central en las toneladas & toneladas de la central / toneladas en todas las centrales & Sí \\
+\addlinespace[2pt]
+Calidad del dato & Meses con precio en el año & meses con precio observado en $t-11,\dots,t$ & No \\
+ & Días con registro frente al año & días con registro frente a su media de 12 meses & No \\
+\end{longtable}
+\normalsize

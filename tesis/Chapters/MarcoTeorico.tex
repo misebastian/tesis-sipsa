@@ -1,0 +1,224 @@
+\chapter{Marco teórico}
+\label{cap:marco}
+
+El capítulo se divide en dos partes. En la primera se describen los factores económicos que explican los cambios de los precios mayoristas y sus implicaciones para el pronóstico. En la segunda se presentan los fundamentos estadísticos de los modelos y de las medidas de evaluación.
+
+\section{Cómo se forman los precios mayoristas}
+\label{sec:economia}
+
+\textbf{Oferta y demanda en la central.} El precio mayorista se forma diariamente en la central de abasto a partir del encuentro entre la oferta proveniente de las zonas productoras y la demanda de comerciantes, plazas, restaurantes y supermercados. La demanda de alimentos varía poco de un mes a otro, mientras que la oferta depende de las cosechas, el clima y las condiciones de transporte. En consecuencia, la mayor parte de los cambios de precio se origina en choques de oferta, como heladas, sequías, cierres de vías o paros de transportadores \citep{bohorquez2026}.
+
+\textbf{Perecederos y almacenables.} De acuerdo con la teoría del almacenamiento \citep{working1949,deaton1992}, en los bienes que pueden almacenarse, como el arroz o la harina, los inventarios se acumulan cuando el precio es bajo y se liberan cuando es alto, lo que suaviza las variaciones. En este caso el precio actual incorpora la información disponible y el último precio constituye un buen pronóstico \citep{samuelson1965}. Las frutas y verduras, en cambio, tienen una vida útil corta, por lo que los choques de oferta se trasladan casi por completo al precio y se revierten con la siguiente cosecha. El resultado son variaciones amplias con un componente estacional, que ofrecen mayor margen para el pronóstico.
+
+\textbf{Transmisión entre mercados.} Las centrales del país están conectadas por el comercio de los mismos productos. Cuando el precio aumenta en una central, se desvía producto hacia ella hasta que la diferencia de precios deja de cubrir el costo de transporte \citep{takayama1964,fackler2001}. En Colombia estos costos de transacción son altos y aumentan con la distancia \citep{gafaro2020}, de modo que los cambios de precio en otras centrales pueden anticipar, con algún rezago, los cambios en una central determinada.
+
+\textbf{Precios promedio.} El SIPSA publica el promedio mensual de cotizaciones recogidas a diario en los perecederos y semanalmente en los demás productos \citep{danefme2022}. \citet{working1960} mostró que, aunque el precio puntual siga un paseo aleatorio, la primera diferencia de sus promedios por periodo tiene una autocorrelación de primer orden cercana a 0,25. Una parte de la persistencia del cambio mensual puede deberse entonces a que se trabaja con promedios, y no a información sobre el mes siguiente. El argumento de \citet{samuelson1965} sobre la impredecibilidad del precio se refiere a precios puntuales. Este efecto se evalúa en la sección~\ref{sec:res_robustez} con una referencia que lo incorpora y con un pronóstico a dos meses, que no se ve afectado por él.
+
+\textbf{Qué implica para el pronóstico.} De lo anterior se espera que el pronóstico sea más preciso en los productos perecederos que en los almacenables, que la estacionalidad y la información de otras centrales contribuyan al pronóstico y que una parte importante de la variación no sea predecible, dado que los choques climáticos y de transporte no se conocen con anticipación.
+
+\section{Antecedentes}
+\label{sec:antecedentes}
+
+La revisión se hizo en noviembre de 2026 en buscadores web y en repositorios de acceso abierto (PubMed Central, arXiv, RePEc y DOAJ), con combinaciones de los términos \emph{food price forecasting}, \emph{wholesale price}, \emph{agricultural commodity price}, \emph{machine learning}, \emph{XGBoost}, \emph{LSTM}, \emph{early warning} y \emph{price spike}, y sus equivalentes en español, para el periodo 2015--2026. Se incluyeron estudios que pronostican precios de alimentos con modelos de aprendizaje automático, sistemas operativos de alerta temprana y revisiones sistemáticas recientes. No se consultaron Scopus ni Web of Science, de modo que la revisión no es exhaustiva. La tabla~\ref{tab:antecedentes} resume los estudios seleccionados.
+
+\begin{table}[htbp]\centering\scriptsize\setlength{\tabcolsep}{3pt}
+\caption{Antecedentes seleccionados sobre pronóstico de precios de alimentos y alertas tempranas}\label{tab:antecedentes}
+\begin{tabular}{>{\raggedright\arraybackslash}p{2.1cm}>{\raggedright\arraybackslash}p{1.3cm}>{\raggedright\arraybackslash}p{2.6cm}>{\raggedright\arraybackslash}p{1.3cm}>{\raggedright\arraybackslash}p{2.3cm}>{\raggedright\arraybackslash}p{1.5cm}>{\raggedright\arraybackslash}p{2.5cm}}\toprule
+Estudio & País & Variable & Horizonte & Modelos & Métrica & Resultado\\ \midrule
+\citet{menculini2021} & Italia & Precio semanal de venta de un mayorista (3 productos) & 1 semana & ARIMA, Prophet, LSTM, CNN+LSTM & RMSE, MAE, MAPE & CNN+LSTM, el mejor; Prophet, el peor\\
+\citet{paul2022} & India & Precio mayorista diario de berenjena en 17 mercados & Último 10\pct\ de la serie & ARIMA, RF, SVR, GBM, red GRNN & MAE, RMSE, MAPE, DM & Todos los modelos de AA superan a ARIMA; GRNN, la mejor en 14 mercados\\
+\citet{zhang2024} & China & Precio mayorista diario de 6 verduras en 7 mercados de Pekín & Corto plazo & LSTM, otros modelos de AA y CNN & $R^2$, MAE & LSTM mejora en más de 5\pct\ a los demás\\
+\citet{ogol2025} & Kenia & Precios de 47 productos en 59 mercados (PMA), 2006--2024 & No indicado & Árboles, RF, lineal, XGBoost, LightGBM, apilamiento & MAE, RMSE, $R^2$, DM & Apilamiento de XGBoost y GB, el mejor; validación cruzada aleatoria\\
+\citet{anzola2025} & Colombia & Inflación mensual de 33 canastas de alimentos & Corto plazo & XGBoost, modelos lineales & Error de pronóstico & XGBoost con menor error que los lineales\\
+\citet{bohorquez2026} & Colombia & Precios mayoristas de 40 cultivos & No es de pronóstico & Modelos econométricos & -- & Efecto heterogéneo del clima sobre los precios\\
+\citet{busker2024} & Cuerno de África & Crisis de inseguridad alimentaria (IPC) & Hasta 12 meses & XGBoost & Contraste con FEWS NET & Similar a FEWS NET a 8 meses en zonas pastorales\\
+\citet{balboni2024} & Global (FAO) & Precios y alertas de severidad & 1 mes o más & Transformadores & MAE, $F_1$ & $F_1$ de 72\pct\ en las alertas\\
+\citet{silva2024} & 225 países & Inflación de alimentos (mes actual) y monitor diario de alzas & Mes actual & Panel y umbrales robustos & MASE, MAPE & Mejora sobre un autorregresivo\\
+\citet{baquedano2015} & Países en desarrollo & Anomalías de precios al consumidor & -- & Tasa de crecimiento compuesta & -- & Indicador operativo de FAO-GIEWS\\
+\citet{perakis2018} & Países de FEWS NET & Proyección de precios & 8 meses & Descomposición, suavizado y juicio experto & -- & Práctica operativa de FEWS NET\\
+\citet{theofilou2025} & Revisión & Precios de trigo, maíz y arroz & -- & Revisión sistemática & -- & Los modelos híbridos profundos superan a los tradicionales; poca interpretabilidad\\
+\citet{mello2024} & Revisión & Precio de la soya (24 artículos) & -- & Revisión sistemática & MAPE & Sin referencias comunes no se puede contrastar la ventaja de la IA\\ \bottomrule
+\end{tabular}
+\end{table}
+
+De la revisión se desprenden cuatro rasgos. Primero, la mayoría de los estudios pronostica pocas series de uno o pocos productos, mientras que los modelos estimados sobre muchas series han dado buenos resultados en otros dominios \citep{montero2021,m5}. Segundo, la evaluación suele hacerse con una sola partición final o con validación cruzada aleatoria, y rara vez con inferencia que tenga en cuenta la dependencia temporal. Tercero, la referencia habitual es ARIMA y no el último precio, lo que \citet{mello2024} señalan como un obstáculo para comparar estudios. Cuarto, los sistemas operativos de alerta (FAO-GIEWS, FEWS NET) se basan en reglas o en juicio experto, y no en probabilidades evaluadas según los costos de cada tipo de error. Este trabajo se ubica en esa intersección.
+
+\section{Fundamentos estadísticos}
+\label{sec:estadistica}
+
+\subsection{El problema de pronóstico}
+\label{sec:formulacion}
+
+Sea $p_{i,t}$ el precio mayorista promedio de la serie $i$ (un producto en una central de abasto) en el mes $t$. Las dos variables que se quieren anticipar son
+\begin{equation}
+y_{i,t+1}=\ln p_{i,t+1}-\ln p_{i,t},\qquad z_{i,t+1}=\mathbf{1}\{y_{i,t+1}>c\},\qquad c=\ln 1{,}15 .
+\label{eq:objetivo}
+\end{equation}
+La primera es la diferencia logarítmica del precio; $100\,y$ aproxima la variación porcentual solo para cambios pequeños ($y=0{,}10$ equivale a +10,5\pct y $y=1{,}55$, a +371\pct); la segunda toma el valor uno si el precio aumenta más del 15\pct. Un pronóstico es una función $f(\mathbf{x}_{i,t})$ de variables conocidas al cierre del mes $t$. Si alguna variable utiliza información posterior se produce una \emph{fuga de información}, y el error medido deja de representar el error real del modelo \citep{kaufman2012}.
+
+Cada modelo se estima minimizando una función de pérdida $\ell$. El pronóstico que minimiza el valor esperado de esa pérdida se denomina predictor de Bayes.
+
+\begin{proposicion}[\citealp{koenker1978,gneiting2007}]\label{prop:bayes}
+Para cada valor de $\mathbf{x}$:
+\begin{enumerate}[label=(\roman*),nosep]
+\item con la pérdida absoluta $|y-a|$, el mejor pronóstico es la mediana condicional de $y$;
+\item con la pérdida de pinball $\rho_\tau(u)=u\,(\tau-\mathbf{1}\{u<0\})$, $u=y-a$, es el cuantil $\tau$ condicional, $Q_\tau(y\mid\mathbf{x})$;
+\item con la pérdida logarítmica $-z\ln q-(1-z)\ln(1-q)$, es la probabilidad condicional $\pi(\mathbf{x})=\Pr(z=1\mid\mathbf{x})$.
+\end{enumerate}
+\end{proposicion}
+
+A partir de (i), todos los modelos de regresión se estiman y evalúan con el error absoluto, de modo que estiman la mediana condicional, que es menos sensible que la media a los cambios extremos. A partir de (iii), los clasificadores se estiman con la pérdida logarítmica. Ambos objetivos se derivan de la misma distribución condicional $F(\cdot\mid\mathbf{x})$ de $y$:
+\begin{equation}
+\pi(\mathbf{x})=1-F(c\mid\mathbf{x}),\qquad \operatorname{med}(y\mid\mathbf{x})=F^{-1}(1/2\mid\mathbf{x}).
+\label{eq:coherencia}
+\end{equation}
+
+\subsection{Modelos de referencia}
+\label{sec:referencias}
+
+El \emph{paseo aleatorio} pronostica que el precio no cambia, $\hat y=0$. Equivale a utilizar el último precio observado y, en bienes almacenables, suele ser difícil de superar \citep{samuelson1965,fpp3}.
+
+El \emph{modelo autorregresivo estacional} (AR) explica el cambio con un efecto de cada mes del año y la historia reciente del precio. Para la serie $i$ del grupo de alimentos $g$ y el mes calendario $m$ de $t+1$,
+\begin{equation}
+y_{i,t+1}=\alpha_{g,m}+\sum_{j=0}^{2}\phi_{g,j}\,r_{i,t-j}+\psi_g\,r_{i,t-11}+u_{i,t+1},\qquad r_{i,t}=\ln p_{i,t}-\ln p_{i,t-1}.
+\label{eq:ar}
+\end{equation}
+Los coeficientes son comunes a las series de un grupo y se estiman por mínima desviación absoluta. Su versión para alzas es una regresión logística con las mismas variables.
+
+El \emph{SARIMA} es el modelo clásico para una serie mensual con estacionalidad \citep{box2015}. Con $w_t=\ln p_{i,t}$ y el operador de rezago $B$,
+\begin{equation}
+\phi(B)\,\Phi(B^{12})\,(1-B)^d(1-B^{12})^D\,w_t=c+\theta(B)\,\Theta(B^{12})\,\varepsilon_t .
+\label{eq:sarima}
+\end{equation}
+Se estima un modelo por serie por máxima verosimilitud gaussiana, por lo que pronostica la media condicional y no la mediana. Los órdenes se eligen automáticamente con el criterio de información de Akaike corregido para muestras pequeñas, AICc \citep{hurvich1989,hyndman2008auto}; el número de diferencias regulares $d$ se decide con la prueba KPSS \citep{kpss1992}. La probabilidad de alza se obtiene sumando al pronóstico los errores históricos de la serie y contando qué fracción supera $c$.
+
+La \emph{frecuencia histórica} estima la probabilidad de alza de un producto en el mes del año $m$ a partir de las $k$ alzas observadas en ese mes en los $n$ registros de años anteriores (todas las centrales), como $\hat p=(k+m_0\,p_0)/(n+m_0)$ con $m_0=6$ y $p_0=1/6$, es decir, $(k+1)/(n+6)$. El valor $p_0=1/6$ es cercano a la tasa de alzas de entrenamiento (0,185) y $m_0=6$ equivale a seis registros previos; no se ajustaron con los datos.
+
+\subsection{Modelos de aprendizaje automático}
+\label{sec:modelos}
+
+Estos modelos se estiman con todas las series de forma conjunta, lo que permite aprovechar patrones comunes entre ellas \citep{montero2021}.
+
+La \emph{regresión cuantílica} para la mediana es el modelo lineal $\hat y=\beta_0+\mathbf{x}^\top\boldsymbol\beta$ estimado con pérdida absoluta y una penalización que encoge los coeficientes \citep{koenker1978,tibshirani1996}. Su par en clasificación es la \emph{regresión logística}, $\pi(\mathbf{x})=1/(1+e^{-\beta_0-\mathbf{x}^\top\boldsymbol\beta})$.
+
+El \emph{perceptrón multicapa} (MLP) es una red neuronal compuesta por capas de transformaciones no lineales, capaz de aproximar relaciones complejas entre las variables \citep{hornik1989}. Se estima con el algoritmo Adam \citep{kingma2015}.
+
+El \emph{Random Forest} promedia cientos de árboles de decisión, cada uno estimado con una muestra distinta y con una selección aleatoria de variables en cada división \citep{breiman2001}. Al promediar, la varianza del pronóstico queda determinada sobre todo por la correlación entre árboles, que la selección aleatoria de variables busca reducir \citep[cap.~15]{esl2009}.
+
+La \emph{potenciación por gradiente} construye el modelo por etapas: cada árbol nuevo corrige los errores de los anteriores,
+\begin{equation}
+F_M(\mathbf{x})=F_0+\nu\sum_{m=1}^{M}T_m(\mathbf{x}),
+\end{equation}
+donde $\nu$ es una tasa de aprendizaje pequeña y el árbol $T_m$ se ajusta a los seudorresiduos $g_k=-\partial\ell(y_k,F)/\partial F$ evaluados en $F_{m-1}(\mathbf{x}_k)$, la dirección en que más baja la pérdida \citep{friedman2001}. Con la pérdida absoluta, $g_k=\operatorname{signo}(y_k-F_{m-1}(\mathbf{x}_k))$, por lo que los cambios extremos no tienen más peso que los moderados. Con la pérdida logarítmica sobre $F=\operatorname{logit}\pi$, $g_k=z_k-\pi_{m-1}(\mathbf{x}_k)$. XGBoost \citep{chen2016}, LightGBM \citep{ke2017} y CatBoost \citep{prokhorenkova2018} son tres implementaciones de este método, que difieren en la construcción de los árboles y en los mecanismos de regularización.
+
+
+\subsection{Pronóstico por intervalos}
+\label{sec:cuantilica}
+
+La estimación de varios cuantiles con la pérdida de pinball proporciona una aproximación de la distribución $F(\cdot\mid\mathbf{x})$. Los cuantiles $0{,}05$ y $0{,}95$ definen un intervalo de pronóstico del 90\pct, y a partir de \eqref{eq:coherencia} se obtiene también una probabilidad de alza, $\hat\pi=1-\hat F(c\mid\mathbf{x})$.
+
+Los cuantiles estimados no garantizan la cobertura nominal. La regresión cuantílica conforme (CQR) de \citet{romano2019} la corrige mediante una muestra de calibración no utilizada en el ajuste. Para cada caso de calibración se calcula la distancia del valor observado al intervalo, $E_k=\max\{\hat q_{\mathrm{lo}}(\mathbf{x}_k)-y_k,\ y_k-\hat q_{\mathrm{hi}}(\mathbf{x}_k)\}$, y se amplía el intervalo en el cuantil $\hat Q$ de orden $\lceil(n_c+1)(1-\alpha)\rceil/n_c$ de esas cantidades:
+\begin{equation}
+\big[\hat q_{\mathrm{lo}}(\mathbf{x})-\hat Q,\ \hat q_{\mathrm{hi}}(\mathbf{x})+\hat Q\big].
+\label{eq:cqr}
+\end{equation}
+
+\begin{proposicion}[\citealp{romano2019}]\label{prop:cqr}
+Si los casos de calibración y el caso nuevo son intercambiables (su orden no altera su distribución conjunta), el intervalo \eqref{eq:cqr} contiene a $y$ con probabilidad de al menos $1-\alpha$.
+\end{proposicion}
+
+En datos temporales este supuesto se cumple solo de forma aproximada. La calibración por subgrupos, por ejemplo perecederos y no perecederos, ofrece la misma garantía dentro de cada subgrupo \citep{angelopoulos2023}.
+
+\subsection{Medidas de desempeño}
+\label{sec:metricas}
+
+El error de un pronóstico del cambio se mide con el error absoluto medio, $\mathrm{MAE}=n^{-1}\sum_k|y_k-\hat y_k|$, expresado en puntos logarítmicos multiplicados por 100, que por comodidad se llaman puntos porcentuales. La comparación principal es la reducción del error frente al paseo aleatorio, $1-\mathrm{MAE}/\mathrm{MAE}_{\mathrm{PA}}$. Como el MAE agrupado da más peso a las series volátiles, se reportan también medidas que tratan las series por igual: el MASE \citep{hyndman2006}, que divide cada error por el MAE del paseo aleatorio de la serie en entrenamiento, y la media geométrica del MAE relativo por serie, $\mathrm{AvgRelMAE}=\exp\{\overline{\ln(\mathrm{MAE}_i/\mathrm{MAE}_{\mathrm{PA},i})}\}$ \citep{davydenko2013}, menor que 1 cuando el modelo mejora al último precio en la serie típica. La raíz del error cuadrático medio (RMSE) muestra el comportamiento en las colas. Para los intervalos se usa el puntaje de intervalo de \citet{gneiting2007}, $S_\alpha(L,U;y)=(U-L)+\tfrac{2}{\alpha}(L-y)\mathbf{1}\{y<L\}+\tfrac{2}{\alpha}(y-U)\mathbf{1}\{y>U\}$, que premia los intervalos angostos y penaliza los que no contienen el valor observado.
+
+Una alerta se emite cuando la probabilidad supera un umbral $u$. Con $VP$ alzas alertadas, $FP$ falsas alarmas y $FN$ alzas no alertadas, la \emph{precisión} $VP/(VP+FP)$ es la fracción de alertas que aciertan y la \emph{exhaustividad} (sensibilidad o \emph{recall}) $VP/(VP+FN)$ es la fracción de alzas que se detectan. La medida $F_1$ es la media armónica de ambas. La curva ROC relaciona la exhaustividad con la tasa de falsas alarmas para distintos valores de $u$. Su área (AUC) corresponde a la probabilidad de que el modelo asigne un riesgo mayor a un caso con alza que a uno sin alza \citep{hanley1982}, y se estima con el estadístico de Mann--Whitney,
+\begin{equation}
+\widehat{\mathrm{AUC}}=\frac{1}{n_+n_-}\sum_{a:\,z_a=1}\ \sum_{b:\,z_b=0}\Big[\mathbf{1}\{\hat\pi_a>\hat\pi_b\}+\tfrac12\,\mathbf{1}\{\hat\pi_a=\hat\pi_b\}\Big].
+\end{equation}
+La curva de precisión y exhaustividad (curva PR) muestra la relación entre el número de falsas alarmas y la proporción de alzas detectadas; su área se estima mediante la precisión media (AP),
+\begin{equation}
+\mathrm{AP}=\sum_{k}(R_k-R_{k-1})\,P_k,
+\end{equation}
+donde $P_k$ y $R_k$ son la precisión y la exhaustividad en el $k$-ésimo umbral, de mayor a menor. La AP es igual a la tasa de alzas para un modelo sin información y a 1 para un modelo perfecto. Se utiliza como medida principal porque, con clases desbalanceadas, la AUC puede ser alta aunque la mayoría de las alertas sean falsas \citep{davis2006,saito2015}.
+
+Un modelo está \emph{calibrado} si, entre los casos a los que asigna una probabilidad $q$, la fracción con alza es $q$. La calibración se evalúa comparando la probabilidad media y la frecuencia observada por deciles de probabilidad, y con la regresión logística de $z$ sobre $\operatorname{logit}\hat\pi$: una pendiente cercana a 1 y un intercepto cercano a 0 indican buena calibración \citep{vancalster2019}. El error esperado de calibración (ECE) promedia, por deciles, la diferencia absoluta entre la probabilidad media y la frecuencia observada \citep{naeini2015}. Como reglas de puntuación propias se usan el puntaje de \citet{brier1950}, $n^{-1}\sum_k(z_k-\hat\pi_k)^2$, la pérdida logarítmica y el \emph{Brier skill score} frente a la frecuencia histórica, $1-\mathrm{Brier}/\mathrm{Brier}_{\mathrm{FH}}$ \citep{gneiting2007}. Un desplazamiento sistemático puede corregirse con datos de validación mediante $\hat\pi^\ast=1/\{1+e^{-a-\operatorname{logit}\hat\pi}\}$, que no cambia el orden de los casos.
+
+\subsection{Desbalance de clases y umbral de decisión}
+\label{sec:desbalance}
+
+Cerca del 18\pct\ de los casos corresponde a alzas. Dos prácticas habituales ante clases desbalanceadas son asignar mayor peso a la clase minoritaria y descartar aleatoriamente parte de los casos de la clase mayoritaria (submuestreo).
+
+\begin{proposicion}[\citealp{saerens2002}]\label{prop:prior}
+Si el modelo se entrena con todos los casos con alza y una fracción $\beta$ de los casos sin alza, la probabilidad que estima es
+$\pi_\beta(\mathbf{x})=\pi(\mathbf{x})/\{\pi(\mathbf{x})+\beta\,(1-\pi(\mathbf{x}))\}$.
+\end{proposicion}
+
+Dado que $\pi_\beta$ es creciente en $\pi$, el submuestreo no modifica el ordenamiento de los casos y solo aumenta las probabilidades estimadas.
+
+Sean $c_{FP}$ el costo de una falsa alarma y $c_{FN}$ el de un alza no alertada.
+
+\begin{proposicion}[\citealp{elkan2001}]\label{prop:umbral}
+Con probabilidades calibradas, el costo esperado es mínimo si se alerta cuando $\pi(\mathbf{x})\ge u^\ast=c_{FP}/(c_{FP}+c_{FN})$.
+\end{proposicion}
+
+Cada umbral corresponde a una razón de costos; por ejemplo, $u=0{,}25$ supone que el costo de no alertar un alza es tres veces el de una falsa alarma. Elegir el umbral que maximiza $F_1$, como se hace por defecto en este trabajo, equivale a suponer de forma implícita una razón de costos: un umbral $u$ corresponde a $c_{FP}:c_{FN}=u:(1-u)$ \citep{lipton2014}. Para evaluar el modelo sin fijar los costos se usa el \emph{beneficio neto} \citep{vickers2006},
+\begin{equation}
+\mathrm{BN}(u)=\frac{VP(u)}{n}-\frac{FP(u)}{n}\cdot\frac{u}{1-u},
+\label{eq:bn}
+\end{equation}
+que corresponde a la proporción de alzas correctamente alertadas menos la proporción de falsas alarmas, ponderada por la razón de costos implícita en el umbral. Un modelo es útil en los umbrales en que su beneficio neto supera al de no emitir alertas ($\mathrm{BN}=0$) y al de emitirlas siempre.
+
+\subsection{Validación y búsqueda de hiperparámetros}
+\label{sec:validacion}
+
+La validación cruzada con particiones aleatorias combina observaciones pasadas y futuras y no es adecuada cuando las series comparten choques comunes \citep{bergmeir2018}. Por esta razón se emplean cortes por fecha, en los que el modelo se estima con los datos hasta un corte y se evalúa en los meses posteriores \citep{tashman2000}.
+
+Los hiperparámetros se eligen mediante búsqueda aleatoria, que evalúa configuraciones sorteadas y selecciona la de menor error en validación \citep{bergstra2012}. Se aplicó a todos los modelos una regla común de parada, que da a todos el mismo presupuesto inicial de evaluaciones, ampliado solo cuando la búsqueda sigue mejorando, aunque no el mismo grado de exploración: con uno o dos hiperparámetros, cuarenta configuraciones cubren bien el espacio, mientras que con siete lo cubren solo de forma parcial. Si $b_N$ es el mejor resultado tras $N$ configuraciones, la búsqueda empieza con $N_0$ y se amplía de a $\Delta N$ mientras
+\begin{equation}
+b_{N-10}-b_N>\delta ,
+\label{eq:convergencia}
+\end{equation}
+es decir, la búsqueda se detiene cuando las últimas diez configuraciones no mejoran el resultado en más de una tolerancia $\delta$.
+
+\subsection{Inferencia}
+\label{sec:inferencia}
+
+Los pronósticos de un mismo mes no son independientes, ya que las series comparten choques climáticos, de transporte y de demanda. Por ello, la unidad de inferencia es el mes, y los intervalos de confianza se obtienen con un bootstrap de bloques móviles \citep{kunsch1989,lahiri2003}. Sea $\hat\theta$ una medida calculada con los $T$ meses de la prueba (un MAE, una AP o la diferencia entre dos modelos). Para $b=1,\dots,B$:
+\begin{enumerate}[nosep]
+\item se sortean $\lceil T/L\rceil$ inicios uniformes en $\{1,\dots,T-L+1\}$ y se toman los bloques de $L$ meses consecutivos que empiezan en ellos;
+\item se unen los meses de esos bloques, con todas sus series, y se recorta la muestra a $T$ meses;
+\item se calcula la medida $\hat\theta^\ast_b$ sobre esa muestra.
+\end{enumerate}
+Se usan $B=10\,000$ réplicas con semilla fija. El intervalo del 95\pct\ se construye con los percentiles 2,5 y 97,5 de las réplicas. El remuestreo de meses completos conserva la correlación entre series, y el uso de bloques conserva la dependencia entre meses consecutivos. La longitud $L=3$ se fijó de antemano, dado que con $T=21$ los métodos automáticos de selección son inestables \citep{politis2004}, y se evaluó la sensibilidad a otros valores. Con tan pocos meses, los intervalos por percentiles pueden cubrir menos de lo nominal; por eso se comparan también con el bootstrap estacionario de \citet{politis1994}, que usa bloques de longitud aleatoria.
+
+Para contrastar si un modelo tiene menor error que otro se usa la prueba de \citet{dm1995}. Con $d_t$ la diferencia de error absoluto medio entre los dos modelos en el mes $t$, el estadístico es
+\begin{equation}
+\mathrm{DM}=\frac{\bar d}{\sqrt{\hat\omega^2/T}},\qquad \hat\omega^2=\hat\gamma_0+2\sum_{k=1}^{K}\Big(1-\frac{k}{K+1}\Big)\hat\gamma_k ,
+\end{equation}
+donde $\hat\gamma_k$ es la autocovarianza de orden $k$ de $d_t$ y $\hat\omega^2$ es la varianza robusta a la autocorrelación de \citet{newey1987}, con $K=\lfloor T^{1/3}\rfloor=2$ rezagos. Para muestras pequeñas se aplica la corrección de \citet{hln1997} y se usa una distribución $t$ con $T-1$ grados de libertad. Cuando se realizan varias comparaciones, los valores $p$ se ajustan con el método de \citet{holm1979} y los intervalos con la corrección de Bonferroni, construyendo cada uno de los $m$ intervalos con un nivel de $1-0{,}05/m$.
+
+Para la comparación simultánea de varios modelos se utiliza la prueba de \citet{friedman1937}, siguiendo a \citet{demsar2006}. En cada mes se ordenan los $k$ modelos según su desempeño y se calcula el rango medio $\bar R_j$ de cada uno en los $N$ meses. Bajo la hipótesis de igualdad, el estadístico
+\begin{equation}
+\chi^2_F=\frac{12N}{k(k+1)}\Big[\sum_{j=1}^{k}\bar R_j^2-\frac{k(k+1)^2}{4}\Big]
+\end{equation}
+sigue aproximadamente una $\chi^2$ con $k-1$ grados de libertad. La prueba supone que los bloques (aquí, los meses) son independientes; como los meses consecutivos comparten series y están autocorrelacionados, sus valores $p$ son aproximados, y en este trabajo se usa como complemento descriptivo de los intervalos bootstrap por bloques. Si se rechaza la hipótesis, la prueba de \citet{nemenyi1963} considera distintos dos modelos cuando la diferencia entre sus rangos medios supera $\mathrm{DC}=q_\alpha\sqrt{k(k+1)/(6N)}$, donde $q_\alpha$ proviene de la distribución del rango studentizado. Para comparar dos AUC calculadas sobre los mismos casos se utiliza la prueba de \citet{delong1988}, que supone independencia entre pronósticos y, en presencia de correlación dentro de cada mes, tiende a producir valores $p$ demasiado pequeños.
+
+La importancia de un bloque de variables se mide por cuánto empeora el modelo cuando se permutan al azar los valores de esas variables \citep{breiman2001,fisher2019}. Indica cuánto depende el modelo de ellas, no su efecto causal \citep{hooker2021}.
+
+\subsection{Explicación de los pronósticos}
+\label{sec:shap}
+
+La importancia por permutación no indica la dirección del efecto de una variable ni su contribución en un caso particular. Los valores de Shapley permiten obtener esa información. Provienen de la teoría de juegos cooperativos \citep{shapley1953}, en la que el resultado de un juego se reparte entre los jugadores según su aporte promedio a todas las coaliciones posibles. En su aplicación a modelos predictivos \citep{lundberg2017}, los jugadores son las variables y el resultado es el pronóstico. Para un caso $\mathbf{x}$ y la variable $j$,
+\begin{equation}
+\phi_j(\mathbf{x})=\sum_{S\subseteq\{1,\dots,p\}\setminus\{j\}}\frac{|S|!\,(p-|S|-1)!}{p!}\Big[v(S\cup\{j\})-v(S)\Big],
+\end{equation}
+donde $v(S)$ es el pronóstico esperado cuando solo se conocen las variables de $S$. Los aportes suman exactamente la diferencia entre el pronóstico del caso y el pronóstico promedio,
+\begin{equation}
+f(\mathbf{x})=\phi_0+\sum_{j=1}^{p}\phi_j(\mathbf{x}),
+\end{equation}
+de modo que cada pronóstico puede expresarse como la suma de las contribuciones de las variables. En los modelos de árboles los valores se calculan de forma exacta \citep{lundberg2020}, y en el clasificador se expresan en escala logit. Al igual que la importancia por permutación, describen el funcionamiento del modelo y no relaciones causales.
+
+\FloatBarrier

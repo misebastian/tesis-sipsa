@@ -1,0 +1,12 @@
+\begin{table}[htbp]\centering\small
+\caption{Costo computacional. Complejidad aproximada de un ajuste ($n$ observaciones, $p$ variables) y tiempo medido de la búsqueda de hiperparámetros en segundos (40 configuraciones $\times$ 3 cortes = 120 ajustes, salvo las que se ampliaron según la tabla~\ref{tab:hiper}, en paralelo con 10 núcleos).}\label{tab:costo}
+\begin{adjustbox}{max width=\textwidth}\begin{tabular}{llp{4.3cm}rr}\toprule
+& & & \multicolumn{2}{c}{Tiempo de búsqueda (s)}\\ \cmidrule(lr){4-5}
+Modelo & Complejidad & Parámetros & Regresión & Clasificación\\ \midrule
+Regresión cuantílica / logística & $O(E\,n\,p)$ & pasadas $E$ sobre los datos & 17 & 92 \\
+MLP & $O(E\,n\,p\,h)$ & $h$ neuronas por capa & 165 & 101 \\
+Random Forest & reg.: $O(B\,n\,p)$; clas.: $O(B\,m\,n\log n)$ & reg.: bosque de LightGBM con histogramas; clas.: scikit-learn, $m$ variables por división & 150 & 1009 \\
+XGBoost & $O(M\,n\,p)$ & $M$ árboles, cortes por histogramas & 119 & 55 \\
+LightGBM & $O(M\,n\,p)$ & $M$ árboles, cortes por histogramas & 74 & 74 \\
+CatBoost & $O(M\,n\,p)$ & $M$ árboles simétricos & 130 & 191 \\
+\bottomrule\end{tabular}\end{adjustbox}\end{table}

@@ -1,0 +1,12 @@
+\begin{table}[htbp]\centering\footnotesize
+\caption{Verificación de las implementaciones no estándar (submuestras de 6\,000 y 3\,000 filas de entrenamiento, 4\,000 de validación; simulación con ruido exponencial centrado en la mediana)}\label{tab:verificacion}
+\begin{adjustbox}{max width=\textwidth}\begin{tabular}{llr}\toprule
+Implementación & Comprobación & Resultado\\ \midrule
+Regresión cuantílica & MAE (p.\,p.) solución exacta / descenso de gradiente & 11{,}58 / 11{,}59 \\
+ & Correlación de predicciones / de coeficientes & 0{,}9979 / 0{,}769 \\
+MLP (error absoluto) & Error relativo del gradiente, mediana / máximo & $1{,}8\cdot10^{-9}$ / $8{,}1\cdot10^{-6}$ \\
+ & Simulación: distancia a la mediana / a la media (pérdida absoluta) & 0{,}059 / 0{,}334 \\
+ & Simulación: distancia a la mediana / a la media (pérdida cuadrática) & 0{,}337 / 0{,}045 \\
+Random Forest & MAE (p.\,p.) LightGBM / scikit-learn / paseo aleatorio & 11{,}81 / 11{,}62 / 13{,}43 \\
+ & Correlación de predicciones & 0{,}954 \\
+\bottomrule\end{tabular}\end{adjustbox}\end{table}

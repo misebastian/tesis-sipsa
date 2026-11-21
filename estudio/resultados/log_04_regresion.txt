@@ -1,0 +1,14 @@
+[   17s] Regresión cuantílica MAE CV 11.919 ensayos 40 convergió
+[  182s] MLP MAE CV 11.438 ensayos 40 convergió
+[  332s] Random Forest MAE CV 11.561 ensayos 40 convergió
+[  451s] XGBoost MAE CV 11.382 ensayos 60 convergió
+[  525s] LightGBM MAE CV 11.399 ensayos 40 convergió
+[  655s] CatBoost MAE CV 11.334 ensayos 40 convergió
+[  738s] elegido: CatBoost {'Paseo aleatorio': 13.307, 'AR estacional': 12.342, 'SARIMA': 13.508}
+[  798s] prueba Regresión cuantílica 11.069
+[  801s] prueba MLP 10.674
+[  837s] prueba Random Forest 10.688
+[  839s] prueba XGBoost 10.596
+[  842s] prueba LightGBM 10.589
+[  844s] prueba CatBoost 10.587
+[  844s] fin

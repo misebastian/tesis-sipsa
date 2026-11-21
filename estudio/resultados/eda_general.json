@@ -1,0 +1,156 @@
+{
+ "registros_base": 317322,
+ "series_panel": 1260,
+ "filas_panel": 104354,
+ "filas_muestra": {
+  "entrenamiento": 66912,
+  "prueba": 23821,
+  "validacion": 13621
+ },
+ "centrales": 28,
+ "ciudades": 21,
+ "alimentos": 103,
+ "tasa_alza": {
+  "entrenamiento": 0.1853,
+  "prueba": 0.1683,
+  "validacion": 0.181
+ },
+ "sd_cambio": 0.1955795913583228,
+ "mediana_abs": 0.08191484428851625,
+ "kurtosis": 3.6702387446302476,
+ "asimetria": -0.07398669288838207,
+ "cobertura_ano": {
+  "2018": 0.888,
+  "2019": 0.927,
+  "2020": 0.95,
+  "2021": 0.936,
+  "2022": 0.893,
+  "2023": 0.893,
+  "2024": 0.895,
+  "2025": 0.908,
+  "2026": 0.907
+ },
+ "faltante_total": 0.06968253968253968,
+ "por_grupo": {
+  "Frutas": {
+   "sd": 0.1898,
+   "alza": 0.1846,
+   "n": 40125
+  },
+  "Granos y cereales": {
+   "sd": 0.0581,
+   "alza": 0.0198,
+   "n": 5815
+  },
+  "Lácteos y huevos": {
+   "sd": 0.0649,
+   "alza": 0.0361,
+   "n": 1276
+  },
+  "Pescados": {
+   "sd": 0.0482,
+   "alza": 0.0065,
+   "n": 153
+  },
+  "Procesados": {
+   "sd": 0.0424,
+   "alza": 0.013,
+   "n": 7916
+  },
+  "Tubérculos y plátanos": {
+   "sd": 0.1767,
+   "alza": 0.1964,
+   "n": 13002
+  },
+  "Verduras y hortalizas": {
+   "sd": 0.2413,
+   "alza": 0.2399,
+   "n": 36067
+  }
+ },
+ "ciudades_alza": {
+  "Barranquilla": 0.138,
+  "Montería": 0.147,
+  "Popayán": 0.151,
+  "Armenia": 0.159,
+  "Cúcuta": 0.163,
+  "Cartagena": 0.164,
+  "Manizales": 0.164,
+  "Sincelejo": 0.168,
+  "Pereira": 0.169,
+  "Santa Marta": 0.179,
+  "Valledupar": 0.184,
+  "Bogotá": 0.185,
+  "Villavicencio": 0.186,
+  "Neiva": 0.189,
+  "Medellín": 0.195,
+  "Cali": 0.196,
+  "Bucaramanga": 0.198,
+  "Pasto": 0.206,
+  "Ibagué": 0.216,
+  "Tunja": 0.225,
+  "Ipiales": 0.278
+ },
+ "mes_alza": {
+  "1": 0.236,
+  "2": 0.204,
+  "3": 0.222,
+  "4": 0.144,
+  "5": 0.169,
+  "6": 0.167,
+  "7": 0.187,
+  "8": 0.182,
+  "9": 0.192,
+  "10": 0.156,
+  "11": 0.126,
+  "12": 0.183
+ },
+ "corr_precio_ton_mismo": -0.1403744086274921,
+ "corr_precio_ton_sig": -0.0500453844833312,
+ "acf": {
+  "1": 0.111,
+  "2": -0.158,
+  "3": -0.143,
+  "4": -0.097,
+  "5": -0.028,
+  "6": 0.016,
+  "7": 0.003,
+  "8": -0.035,
+  "9": -0.04,
+  "10": -0.034,
+  "11": 0.071,
+  "12": 0.127
+ },
+ "corr_oni_alza": 0.0039026453635345342,
+ "pares_alta_corr": [
+  [
+   "vol_3m",
+   "vol_6m",
+   0.83
+  ],
+  [
+   "vol_6m",
+   "vol_12m",
+   0.91
+  ],
+  [
+   "vol_12m",
+   "alzas_12m",
+   0.86
+  ],
+  [
+   "z_precio_12m",
+   "dist_max_12m",
+   0.8
+  ]
+ ],
+ "extremos": 114,
+ "extremos_pct": 0.0010924353642409491,
+ "extremos_grupo": {
+  "Verduras y hortalizas": 56,
+  "Frutas": 32,
+  "Tubérculos y plátanos": 19,
+  "Granos y cereales": 6,
+  "Procesados": 1
+ }
+}

@@ -1,0 +1,15 @@
+config,modelo,tarea,mae,reduccion,ic,columnas,ap
+"Indicadores de grupo, 24 variables (original)",Regresión cuantílica,Cambio,11.068891202348171,0.08249723199059333,"(0.04889001011560794, 0.12500132486596902)",32,
+"Indicadores de grupo, 24 variables (original)",MLP,Cambio,10.676128284128207,0.11505343459938056,"(0.07851986164988228, 0.15868110732589344)",32,
+"Indicadores de grupo, 24 variables (original)",Regresión logística,Alzas,,,"(0.42414756578439233, 0.5035189046855647)",32,0.46450251292466926
+"Indicadores de grupo, 24 variables (original)",MLP,Alzas,,,"(0.44221833367030733, 0.524060387163469)",32,0.4849820820575982
+"Indicadores de grupo, producto, central y ciudad; 24 variables",Regresión cuantílica,Cambio,11.124913914206017,0.07785349737785618,"(0.04359587083760392, 0.12255963425463418)",184,
+"Indicadores de grupo, producto, central y ciudad; 24 variables",MLP,Cambio,10.803108329882386,0.10452803134700206,"(0.06633436080123471, 0.14845173833380965)",184,
+"Indicadores de grupo, producto, central y ciudad; 24 variables",Regresión logística,Alzas,,,"(0.4241533744030275, 0.5035236673583204)",184,0.46450727101313666
+"Indicadores de grupo, producto, central y ciudad; 24 variables",MLP,Alzas,,,"(0.4451728232816168, 0.538814646938397)",184,0.49260038744280177
+"Indicadores de grupo, producto, central y ciudad; 52 candidatas",Regresión cuantílica,Cambio,11.176452021050864,0.07358149263739222,"(0.03805761597136311, 0.11973033748297592)",207,
+"Indicadores de grupo, producto, central y ciudad; 52 candidatas",MLP,Cambio,10.723580543799322,0.11112010660828842,"(0.07323353284981163, 0.15935840167581988)",207,
+"Indicadores de grupo, producto, central y ciudad; 52 candidatas",Regresión logística,Alzas,,,"(0.42252938954904307, 0.5014982095112973)",207,0.462470291366081
+"Indicadores de grupo, producto, central y ciudad; 52 candidatas",MLP,Alzas,,,"(0.42966519509354023, 0.5374790440372648)",207,0.4786602461446249
+Interacciones grupo × variables; 24 variables,Regresión cuantílica,Cambio,10.827632163710033,0.10249524549630207,"(0.06610431276096022, 0.1520897493211554)",359,
+Interacciones grupo × variables; 24 variables,Regresión logística,Alzas,,,"(0.4415559977472418, 0.521234760729058)",359,0.48027029428711726

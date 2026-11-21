@@ -1,0 +1,17 @@
+# Entorno del estudio (conda-forge, Mac con chip Apple). Versiones fijadas para reproducir los resultados.
+name: tesis-sipsa
+channels:
+  - conda-forge
+dependencies:
+  - python=3.13
+  - numpy=2.5.3
+  - pandas=2.3.3
+  - scipy=1.18.1
+  - scikit-learn=1.9.1
+  - statsmodels=0.15.0
+  - lightgbm=4.7.0          # incluye OpenMP (llvm-openmp); no requiere Homebrew
+  - statsforecast=2.1.1
+  - matplotlib-base=3.11.2
+  - openpyxl=3.1.5
+  - pyarrow=26.0.0
+  - joblib=1.6.0

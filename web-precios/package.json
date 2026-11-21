@@ -1,0 +1,16 @@
+{
+  "name": "pronostico-precios-sipsa",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Página web para consultar el pronóstico del precio mayorista de alimentos y las alertas de alza (datos del DANE, SIPSA).",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "16.4.5",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  }
+}

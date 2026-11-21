@@ -1,0 +1,15 @@
+\begin{table}[htbp]\centering\small
+\caption{Reglas de puntuación propias y calibración de las probabilidades en la prueba: puntaje de Brier, \emph{Brier skill score} frente a la frecuencia histórica (BSS, \%), pérdida logarítmica, intercepto (con pendiente fija en 1) y pendiente de calibración, y error esperado de calibración por deciles (ECE, puntos porcentuales). Entre corchetes, intervalos bootstrap por bloques de meses al 95\,\%. $^\ast$Modelo elegido.}\label{tab:clf_extra}
+\begin{adjustbox}{max width=\textwidth}\begin{tabular}{lrrrrrr}\toprule
+Modelo & Brier & BSS (\%) & Log-loss & Intercepto & Pendiente & ECE\\ \midrule
+Regresión logística & 0{,}1142 [0{,}1025; 0{,}1237] & 6{,}0 [4{,}5; 8{,}5] & 0{,}367 & \ensuremath{-}0{,}12 & 1{,}08 [1{,}00; 1{,}19] & 2{,}0 \\
+MLP & 0{,}1125 [0{,}1015; 0{,}1201] & 7{,}3 [5{,}3; 10{,}2] & 0{,}356 & \ensuremath{-}0{,}20 & 0{,}95 [0{,}90; 1{,}02] & 2{,}3 \\
+Random Forest & 0{,}1114 [0{,}1008; 0{,}1191] & 8{,}3 [7{,}0; 10{,}4] & 0{,}353 & \ensuremath{-}0{,}16 & 1{,}06 [0{,}99; 1{,}15] & 1{,}9 \\
+XGBoost & 0{,}1114 [0{,}1002; 0{,}1194] & 8{,}3 [6{,}4; 11{,}1] & 0{,}353 & \ensuremath{-}0{,}20 & 1{,}00 [0{,}94; 1{,}08] & 2{,}3 \\
+LightGBM & 0{,}1120 [0{,}1010; 0{,}1197] & 7{,}8 [5{,}6; 10{,}8] & 0{,}355 & \ensuremath{-}0{,}21 & 0{,}99 [0{,}92; 1{,}07] & 2{,}5 \\
+CatBoost$^\ast$ & 0{,}1123 [0{,}1010; 0{,}1206] & 7{,}5 [5{,}9; 10{,}0] & 0{,}356 & \ensuremath{-}0{,}18 & 1{,}00 [0{,}93; 1{,}10] & 2{,}1 \\
+\midrule
+SARIMA & 0{,}1208 [0{,}1113; 0{,}1290] & 0{,}5 [\ensuremath{-}1{,}9; 2{,}7] & 0{,}395 & \ensuremath{-}0{,}27 & 0{,}65 [0{,}60; 0{,}70] & 3{,}4 \\
+Frecuencia histórica & 0{,}1215 [0{,}1110; 0{,}1303] & -- & 0{,}387 & \ensuremath{-}0{,}07 & 0{,}87 [0{,}82; 0{,}94] & 1{,}9 \\
+Logística autorregresiva & 0{,}1251 [0{,}1122; 0{,}1358] & \ensuremath{-}3{,}0 [\ensuremath{-}4{,}9; \ensuremath{-}0{,}5] & 0{,}403 & \ensuremath{-}0{,}17 & 0{,}96 [0{,}89; 1{,}08] & 2{,}3 \\
+\bottomrule\end{tabular}\end{adjustbox}\end{table}

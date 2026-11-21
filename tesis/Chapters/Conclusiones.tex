@@ -1,0 +1,25 @@
+\chapter{Conclusiones y recomendaciones}
+\label{cap:conclusiones}
+
+\section{Conclusiones}
+
+En respuesta a la pregunta de investigación, los modelos de aprendizaje automático estimados con los datos abiertos del SIPSA pronostican el cambio mensual del precio mayorista con menor error que el último precio y que los modelos clásicos, y sus alertas de alza son útiles para decidir. La mejora es moderada y se concentra en frutas y verduras. Se aceptan las tres hipótesis de la sección~\ref{sec:hipotesis}: menor error que el último precio (H1), mayor AP que la frecuencia histórica (H2) y mayor beneficio neto que no alertar y que alertar siempre (H3). La capacidad de pronóstico se mantiene, menor, a dos meses, un horizonte que empieza después de publicados los datos.
+
+En relación con el primer objetivo, los datos del SIPSA tienen una calidad adecuada; el cambio mensual tiene colas pesadas y se concentra en los perecederos. La evidencia de raíz unitaria en el nivel del precio es mixta (Dickey--Fuller no la rechaza en la mitad de las series y KPSS rechaza la estacionariedad en un tercio), y el cambio mensual es estacionario en casi todas, por lo que se modeló el cambio.
+
+En cuanto al segundo objetivo, el SARIMA por serie redujo el error del último precio en un \cmejsar\pct\ en la prueba, pero no en el promedio de validación por su mal desempeño en 2022: es una referencia útil, pero inestable entre años.
+
+Respecto al tercer objetivo, con la misma pérdida y la misma regla de búsqueda para los modelos de aprendizaje automático, CatBoost redujo el error del último precio en un \cmeje\pct\ (intervalo de \cmejloe\pct\ a \cmejhie\pct). Los demás modelos de árboles obtuvieron resultados equivalentes y la red neuronal, un error apenas mayor. La mejora se asocia tanto con las variables (estacionalidad propia y precios en las demás centrales) como con la flexibilidad de los modelos: la ventaja sobre el modelo lineal aditivo no se debe a la codificación de las variables ni a su selección, y se reduce cuando el modelo lineal permite efectos distintos por grupo de alimentos.
+
+Finalmente, en relación con el cuarto objetivo, el modelo seleccionado detectó el \crece\pct\ de las alzas mayores al 15\pct\ con una precisión del \cprece\pct, y su beneficio neto superó también al de la frecuencia histórica. XGBoost obtuvo en la prueba una AP algo mayor; las probabilidades estuvieron bien calibradas y el balanceo de clases no ayudó.
+
+\section{Recomendaciones}
+
+\begin{enumerate}[nosep]
+\item Usar CatBoost (u otro modelo de potenciación) para el pronóstico central y la probabilidad de alza, y el LightGBM cuantílico con calibración conforme para los intervalos, reestimados al menos cada trimestre (la mensual no se evaluó), lo que redujo levemente el error frente al modelo fijo. Como la mediana cuantílica tuvo un error casi igual al de CatBoost, podría usarse un solo modelo, y la calibración conforme podría hacerse por nivel de volatilidad.
+\item Fijar el umbral con la razón de costos del usuario, $u=c_{FP}/(c_{FP}+c_{FN})$, e informarlo con la precisión y la exhaustividad esperadas.
+\item Aplicarlo sobre todo en frutas y verduras; en los demás grupos, usar el último precio.
+\item Como trabajo futuro: usar los boletines semanales, agregar clima regional y transporte, evaluar combinaciones de pronósticos y ampliar la prueba.
+\end{enumerate}
+
+\FloatBarrier

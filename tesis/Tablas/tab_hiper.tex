@@ -1,0 +1,22 @@
+\footnotesize
+\begin{longtable}{llrp{7.4cm}}
+\caption{Hiperparámetros elegidos por búsqueda aleatoria (número de configuraciones evaluadas en la tercera columna). Las dos búsquedas de cada modelo usaron la misma semilla y, por tanto, la misma secuencia de configuraciones; en Random Forest, la misma configuración resultó la mejor en ambas tareas, por lo que sus valores coinciden.}\label{tab:hiper}\\
+\toprule Tarea & Modelo & $N$ & Valores elegidos\\ \midrule\endfirsthead
+\toprule Tarea & Modelo & $N$ & Valores elegidos\\ \midrule\endhead
+\bottomrule\endfoot
+Reg. & Regresión cuantílica & 40 & $\alpha$ $3{,}4\cdot10^{-7}$; penal. L1 \\
+Reg. & MLP & 40 & $\alpha$ 0{,}0067; capas (128, 64); tasa 0{,}0019 \\
+Reg. & Random Forest & 40 & hoja mín. 21; frac. var. 0{,}405; prof. 19 \\
+Reg. & XGBoost & 60 & frac. col. 0{,}451; tasa 0{,}022; peso mín. 7{,}370; árboles 424; prof. 7; submuestra 0{,}751 \\
+Reg. & LightGBM & 40 & frac. col. 0{,}636; hojas 33; $\lambda$ 0{,}0019; tasa 0{,}023; obs. hoja 135; árboles 581; submuestra 0{,}948 \\
+Reg. & CatBoost & 40 & $\lambda$ 2{,}288; tasa 0{,}044; árboles 307; prof. 7 \\
+\midrule
+Clas. & Regresión logística & 40 & $C$ 0{,}0030; penal. L1 \\
+Clas. & MLP & 40 & $\alpha$ $1{,}9\cdot10^{-5}$; capas (64); tasa $2{,}0\cdot10^{-4}$ \\
+Clas. & Random Forest & 40 & hoja mín. 21; frac. var. 0{,}405; prof. 19 \\
+Clas. & XGBoost & 40 & frac. col. 0{,}573; tasa 0{,}040; peso mín. 21{,}485; árboles 190; prof. 6; submuestra 0{,}637 \\
+Clas. & LightGBM & 40 & frac. col. 0{,}722; hojas 89; $\lambda$ 9{,}149; tasa 0{,}029; obs. hoja 83; árboles 166; submuestra 0{,}705 \\
+Clas. & CatBoost & 40 & $\lambda$ 4{,}448; tasa 0{,}039; árboles 447; prof. 4 \\
+Cuant. & LightGBM & 40 & frac. col. 0{,}808; hojas 12; $\lambda$ 8{,}209; tasa 0{,}025; obs. hoja 106; árboles 611; submuestra 0{,}765 \\
+\end{longtable}
+\normalsize

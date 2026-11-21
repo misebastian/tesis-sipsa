@@ -1,0 +1,13 @@
+\begin{table}[htbp]\centering\small
+\caption{Prueba de DeLong: diferencia de AUC entre CatBoost y cada clasificador en la prueba (positiva: CatBoost mejor) y valor $p$ ajustado por Holm}\label{tab:delong}
+\begin{adjustbox}{max width=\textwidth}\begin{tabular}{lrr}\toprule
+Clasificador & Diferencia de AUC & $p$ (Holm)\\ \midrule
+XGBoost & \ensuremath{-}0{,}0028 & 0{,}001 \\
+Random Forest & \ensuremath{-}0{,}0013 & 0{,}456 \\
+LightGBM & \ensuremath{-}0{,}0011 & 0{,}456 \\
+MLP & 0{,}0011 & 0{,}456 \\
+Regresión logística & 0{,}0143 & $<0{,}001$ \\
+SARIMA & 0{,}0295 & $<0{,}001$ \\
+Frecuencia histórica & 0{,}0524 & $<0{,}001$ \\
+Logística autorregresiva & 0{,}0913 & $<0{,}001$ \\
+\bottomrule\end{tabular}\end{adjustbox}\end{table}

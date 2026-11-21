@@ -1,0 +1,5 @@
+[ 338s] bloques evaluados
+[ 364s] etapa 2: ['Abastecimiento nacional'] ['Abastecimiento local', 'Calendario', 'El Niño (ONI)'] 31
+[ 422s] etapa 3: ['cambio_2m', 'vol_3m', 'ciudad_c', 'mercado_c'] False
+[ 451s] etapa 4: ['vol_6m', 'alzas_12m'] True
+[ 490s] variables finales: 29

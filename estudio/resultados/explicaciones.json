@@ -1,0 +1,178 @@
+{
+ "repro_reg": 1.0,
+ "repro_reg_dif": 0.0,
+ "shap_reg": {
+  "cambio_estacional_hist": 0.1087,
+  "cambio_nacional_1m": 0.1063,
+  "dist_min_12m": 0.0999,
+  "z_precio_12m": 0.0708,
+  "frec_alza_hist": 0.0673,
+  "dist_max_12m": 0.0648,
+  "cambio_1m": 0.0619,
+  "cambio_12m": 0.0606,
+  "brecha_nacional": 0.0427,
+  "perecibilidad": 0.0357,
+  "grupo_c": 0.0353,
+  "cambio_ton_nacional_1m": 0.0336,
+  "cambio_mes_rez1": 0.0242,
+  "mes_sin": 0.024,
+  "cambio_mes_rez2": 0.0236,
+  "prop_centrales_alza": 0.0225,
+  "cambio_6m": 0.0225,
+  "vol_12m": 0.0179,
+  "cambio_mes_rez3": 0.0171,
+  "alimento_c": 0.0161,
+  "ton_nacional_rel_12m": 0.0121,
+  "mes_cos": 0.0113,
+  "cambio_3m": 0.0098,
+  "cambio_2m": 0.0044,
+  "meses_desde_alza": 0.0027,
+  "vol_3m": 0.0025,
+  "participacion_central": 0.0011,
+  "mercado_c": 0.0005,
+  "ciudad_c": 0.0004
+ },
+ "repro_clf": 1.0,
+ "repro_clf_dif": 0.0,
+ "shap_clf": {
+  "dist_max_12m": 0.1394,
+  "frec_alza_hist": 0.0886,
+  "cambio_nacional_1m": 0.0729,
+  "cambio_estacional_hist": 0.0665,
+  "perecibilidad": 0.0638,
+  "brecha_nacional": 0.0545,
+  "cambio_1m": 0.0529,
+  "prop_centrales_alza": 0.0508,
+  "vol_12m": 0.0506,
+  "z_precio_12m": 0.0443,
+  "mes_sin": 0.0377,
+  "grupo_c": 0.0374,
+  "cambio_ton_nacional_1m": 0.0296,
+  "cambio_12m": 0.0287,
+  "vol_3m": 0.0251,
+  "ton_nacional_rel_12m": 0.0224,
+  "cambio_6m": 0.0205,
+  "cambio_mes_rez3": 0.0199,
+  "alimento_c": 0.0154,
+  "dist_min_12m": 0.0138,
+  "mes_cos": 0.0127,
+  "participacion_central": 0.012,
+  "cambio_mes_rez2": 0.0106,
+  "cambio_mes_rez1": 0.0102,
+  "meses_desde_alza": 0.0095,
+  "cambio_3m": 0.0063,
+  "cambio_2m": 0.0016,
+  "mercado_c": 0.0014,
+  "ciudad_c": 0.0009
+ },
+ "res": {
+  "media": -0.475903538399686,
+  "mediana": -0.39695977304613494,
+  "asimetria": 0.03294626277503983,
+  "curtosis": 3.6567678473943976,
+  "p05": -26.004595019363986,
+  "p95": 25.70050629287252,
+  "acf_med": [
+   -0.03,
+   -0.037,
+   -0.019
+  ],
+  "n_series_acf": 1117,
+  "sesgo_decil": [
+   1.04,
+   0.27,
+   0.1,
+   0.09,
+   -0.2,
+   -0.91,
+   -1.03,
+   -1.22,
+   -1.97,
+   -2.35
+  ],
+  "corr_abs_vol": 0.5352815896897877
+ },
+ "friedman_reg": {
+  "chi2": 98.71746031746034,
+  "p": 7.804932720765352e-18,
+  "k": 9,
+  "N": 21,
+  "rangos": {
+   "LightGBM": 2.952,
+   "XGBoost": 3.048,
+   "CatBoost": 3.19,
+   "Random Forest": 3.524,
+   "MLP": 3.762,
+   "Regresión cuantílica": 6.143,
+   "AR estacional": 7.095,
+   "SARIMA": 7.095,
+   "Paseo aleatorio": 8.19
+  },
+  "cd": 2.621668498167858
+ },
+ "friedman_clf": {
+  "chi2": 81.42222222222222,
+  "p": 2.5278615507817852e-14,
+  "k": 9,
+  "N": 21,
+  "rangos": {
+   "XGBoost": 2.619,
+   "LightGBM": 3.429,
+   "Random Forest": 3.905,
+   "CatBoost": 3.905,
+   "MLP": 4.143,
+   "Regresión logística": 5.095,
+   "SARIMA": 6.333,
+   "Frecuencia histórica": 7.286,
+   "Logística autorregresiva": 8.286
+  },
+  "cd": 2.621668498167858
+ },
+ "delong": {
+  "Regresión logística": {
+   "dif": 0.01429694993498598,
+   "p": 1.5776455466815126e-19,
+   "p_holm": 7.888227733407563e-19
+  },
+  "MLP": {
+   "dif": 0.0011192320354960206,
+   "p": 0.45180389494515927,
+   "p_holm": 0.4557342290154789
+  },
+  "Random Forest": {
+   "dif": -0.00132648698464366,
+   "p": 0.1519114096718263,
+   "p_holm": 0.4557342290154789
+  },
+  "XGBoost": {
+   "dif": -0.0027562023631551025,
+   "p": 0.00028873535314929185,
+   "p_holm": 0.0011549414125971674
+  },
+  "LightGBM": {
+   "dif": -0.0010927899412399578,
+   "p": 0.21201143665916677,
+   "p_holm": 0.4557342290154789
+  },
+  "Frecuencia histórica": {
+   "dif": 0.052367883221091316,
+   "p": 3.603653910463081e-54,
+   "p_holm": 2.522557737324157e-53
+  },
+  "Logística autorregresiva": {
+   "dif": 0.09130010055092963,
+   "p": 8.55321075967453e-144,
+   "p_holm": 6.842568607739624e-143
+  },
+  "SARIMA": {
+   "dif": 0.029474740520473275,
+   "p": 1.5953852688397857e-20,
+   "p_holm": 9.572311613038714e-20
+  }
+ },
+ "adf": {
+  "series": 1230,
+  "rechaza_nivel": 0.4853658536585366,
+  "rechaza_cambio": 0.9569105691056911
+ }
+}

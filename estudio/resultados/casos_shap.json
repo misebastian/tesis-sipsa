@@ -1,0 +1,54 @@
+[
+ {
+  "alimento": "Mango Tommy",
+  "mercado": "Medellín, Central Mayorista de Antioquia",
+  "mes": "2025-02-01",
+  "p0": 0.12120734956858303,
+  "p1": 0.9329942715516256,
+  "alza": 1.1785977859778596,
+  "top": [
+   [
+    "Cambio histórico en el mes",
+    0.850764981928225
+   ],
+   [
+    "Distancia al máximo anual",
+    0.7674931457175914
+   ],
+   [
+    "Frecuencia histórica de alzas en el mes",
+    0.6393607218994927
+   ],
+   [
+    "Volatilidad 12 meses",
+    0.26236801170877344
+   ]
+  ]
+ },
+ {
+  "alimento": "Cilantro",
+  "mercado": "Manizales, Centro Galerías",
+  "mes": "2025-05-01",
+  "p0": 0.12120734956858303,
+  "p1": 0.0676512228880482,
+  "alza": 0.853782383419688,
+  "top": [
+   [
+    "Frecuencia histórica de alzas en el mes",
+    0.39964513378661687
+   ],
+   [
+    "Cambio en las demás centrales, 1 mes",
+    -0.3038260814384899
+   ],
+   [
+    "Brecha con las demás centrales",
+    -0.269836598678352
+   ],
+   [
+    "Distancia al mínimo anual",
+    -0.18085215475591726
+   ]
+  ]
+ }
+]

@@ -1,0 +1,74 @@
+\chapter{Introducción}
+\label{cap:intro}
+
+En las centrales de abasto de Colombia, el precio mayorista de frutas, verduras y tubérculos sube más de un 15\pct\ de un mes a otro en cerca de uno de cada cinco meses. Estas alzas se asocian principalmente con choques de oferta, como las condiciones climáticas o los costos de transporte \citep{gafaro2020,bohorquez2026}. Su anticipación es de interés para comerciantes, compradores institucionales y entidades encargadas de vigilar el abastecimiento.
+
+El DANE publica, a través del Sistema de Información de Precios y Abastecimiento del Sector Agropecuario (SIPSA), los precios mayoristas de más de 60 mercados y el abastecimiento de las principales centrales \citep{dane,danebol2026}. En este trabajo se utilizan esos datos, entre enero de 2018 y septiembre de 2026, para evaluar si es posible pronosticar el cambio del precio en el mes siguiente. Como cada observación requiere el precio de doce meses atrás, los meses pronosticados van de febrero de 2019 a septiembre de 2026.
+
+\section{Variables de estudio}
+
+La unidad de análisis es la \emph{serie}, definida como un producto en una central de abasto observado mensualmente. La tabla~\ref{tab:ficha} describe las variables principales; las dos primeras son las variables objetivo y las demás se usan para construir las variables explicativas.
+
+\begin{table}[htbp]\centering\small
+\caption{Ficha de las variables principales}\label{tab:ficha}
+\begin{tabular}{>{\raggedright\arraybackslash}p{2.5cm}>{\raggedright\arraybackslash}p{4.5cm}>{\raggedright\arraybackslash}p{1.9cm}>{\raggedright\arraybackslash}p{3.4cm}}\toprule
+Variable & Definición & Tipo y unidad & Interpretación\\ \midrule
+Cambio del mes siguiente ($y$) & $y=\ln p_{t+1}-\ln p_t$ & Continua; diferencia logarítmica & $100\,y$ aproxima la variación porcentual para cambios pequeños; $y=0{,}10$ equivale a +10,5\pct\\
+Alza fuerte ($z$) & Vale 1 si el precio sube más del 15\pct\ en el mes siguiente y 0 si no & Binaria & Evento que se quiere anticipar con una alerta\\
+Precio mayorista & Promedio mensual de las cotizaciones de venta en la central, recogidas en las horas de mayor movimiento & Continua; pesos por kilogramo & Base de todas las variables de precio\\
+Abastecimiento & Toneladas del producto que entran a la central en el mes & Continua; toneladas & Oferta disponible en la central\\
+ONI & Promedio de tres meses de la anomalía de temperatura del mar en la región Niño 3.4 & Continua; grados Celsius & Valores mayores a 0,5 indican El Niño; menores a $-0{,}5$, La Niña\\ \bottomrule
+\end{tabular}
+\end{table}
+
+Todas las variables tienen frecuencia mensual. Dado que el SIPSA se basa en un muestreo no probabilístico, los resultados se refieren a los mercados cubiertos y no al conjunto del país.
+
+\section{Pregunta de investigación}
+
+\begin{center}
+\begin{minipage}{.88\textwidth}\itshape
+¿Pueden los modelos de aprendizaje automático, estimados con los datos abiertos del SIPSA, pronosticar el cambio mensual del precio mayorista de los alimentos y anticipar sus alzas fuertes mejor que el último precio observado y que los modelos estadísticos clásicos?
+\end{minipage}
+\end{center}
+
+\section{Hipótesis}
+\label{sec:hipotesis}
+
+La pregunta se responde con tres hipótesis contrastables en el periodo de prueba (enero de 2025 a septiembre de 2026), con la unidad de inferencia en el mes:
+\begin{enumerate}[label=H\arabic*.,nosep]
+\item El error absoluto medio del mejor modelo de aprendizaje automático, elegido en validación, es menor que el del último precio. Se contrasta con la prueba de Diebold--Mariano unilateral y con el intervalo bootstrap de la reducción del error.
+\item La precisión media (AP) del mejor clasificador, elegido en validación, es mayor que la de la frecuencia histórica de alzas. Se contrasta con el intervalo bootstrap de la diferencia.
+\item El beneficio neto del mejor clasificador es mayor que el de no emitir alertas y que el de emitirlas siempre para todo umbral $u\in[0{,}05;\,0{,}60]$, es decir, para razones de costos entre 1:19 y 3:2.
+\end{enumerate}
+Como referencia de relevancia práctica se adopta una reducción del error absoluto medio de al menos un 5\pct\ frente al último precio, cerca de 0,6 puntos logarítmicos en este panel. Este valor se propuso durante la revisión del trabajo, después de conocer los resultados, por lo que se usa solo como guía de interpretación y no como criterio de decisión.
+
+\section{Justificación}
+
+En el comercio mayorista es habitual tomar el último precio observado como referencia para el mes siguiente. Un pronóstico más preciso, aunque sea solo para una parte de los productos, facilita la planeación de compras, la negociación de contratos y el seguimiento de la inflación de alimentos. Del mismo modo, una alerta temprana de alza permite tomar medidas antes de que el aumento ocurra.
+
+La literatura reciente ofrece antecedentes favorables. Los modelos estimados sobre muchas series a la vez han obtenido mejores resultados que los modelos ajustados serie por serie \citep{montero2021}, y los métodos de potenciación por gradiente ocuparon los primeros lugares en la competencia M5 \citep{m5,januschowski2022}. Para Colombia, \citet{anzola2025} pronostican la inflación de 33 canastas de alimentos con XGBoost y obtienen errores menores que con modelos lineales; \citet{bohorquez2026} documentan el efecto del clima sobre los precios mayoristas, y \citet{gafaro2020} muestran la importancia de los costos de transacción en la formación del precio. La revisión de antecedentes de la sección~\ref{sec:antecedentes} muestra que la mayoría de los estudios internacionales pronostica pocas series, con particiones que no siempre respetan el orden del tiempo y sin inferencia sobre las diferencias entre modelos. En la búsqueda realizada no se encontraron estudios que evalúen estos modelos para el precio mayorista por producto y central con validación temporal, inferencia que tenga en cuenta la correlación entre series de un mismo mes y un umbral de alerta definido a partir de costos. Este trabajo busca aportar en esa dirección con datos públicos y código reproducible.
+
+\section{Objetivos}
+
+\textbf{Objetivo general.} Evaluar si los modelos de aprendizaje automático pronostican el cambio mensual de los precios mayoristas de alimentos en Colombia y anticipan sus alzas fuertes mejor que el último precio y que los modelos estadísticos clásicos.
+
+\textbf{Objetivos específicos.}
+\begin{enumerate}[label=O\arabic*.,nosep]
+\item Describir el comportamiento de los precios mayoristas y del abastecimiento entre 2018 y 2026, y la calidad de los datos, mediante un análisis exploratorio.
+\item Construir un modelo estadístico clásico de referencia (SARIMA por serie) y evaluar su capacidad de pronóstico.
+\item Construir modelos de aprendizaje automático para el cambio del mes siguiente y compararlos, en igualdad de condiciones, con las referencias.
+\item Evaluar la capacidad de anticipar las alzas mayores al 15\pct\ y su utilidad para decidir según los costos de cada tipo de error.
+\end{enumerate}
+
+\section{Metodología}
+
+El estudio emplea un panel de series de tiempo y se organiza en cuatro fases, una por cada objetivo específico:
+\begin{enumerate}[nosep]
+\item \emph{Análisis exploratorio} (capítulo~\ref{cap:eda}): panel, calidad de los datos, variable objetivo y variables explicativas.
+\item \emph{Modelado clásico} (capítulo~\ref{cap:sarima}): un SARIMA por serie, con diagnóstico y evaluación.
+\item \emph{Modelado con aprendizaje automático} (capítulo~\ref{cap:ml}): variables, comparación en igualdad de condiciones, interpretación y robustez.
+\item \emph{Evaluación de las alertas} (dentro del capítulo~\ref{cap:ml}): precisión, exhaustividad, calibración y beneficio neto según los costos.
+\end{enumerate}
+Todas las decisiones de modelado se tomaron con datos hasta diciembre de 2024, y la evaluación final se realizó una única vez sobre el periodo comprendido entre enero de 2025 y septiembre de 2026. El capítulo~\ref{cap:marco} presenta el marco teórico, el capítulo~\ref{cap:discusion} discute los resultados y el capítulo~\ref{cap:conclusiones} presenta las conclusiones.
+
+\FloatBarrier
