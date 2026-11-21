@@ -24,14 +24,11 @@ DANE (SIPSA) ──► estudio de la tesis (datos, modelos guardados)
 
 | Carpeta | Contenido |
 |---|---|
-| `app/` | Páginas: consultar (`page.js`), panorama del país (`panorama/`), mi ciudad (`mi-ciudad/`), mi canasta (`mi-canasta/`), alertas del mes (`alertas/`), cómo funcionaría de forma automática (`arquitectura/`) y cómo funciona (`como-funciona/`) |
+| `app/` | Páginas: consultar (`page.js`), alertas del mes (`alertas/`), cómo funcionaría de forma automática (`arquitectura/`) y cómo funciona (`como-funciona/`) |
 | `components/` | Encabezado, tarjetas de precio y alerta, gráfica y razones |
 | `lib/datos.js` | Carga del JSON y formatos (pesos, meses) |
-| `lib/panorama.js`, `lib/panorama-html.js`, `lib/geo.json` | Mapas, mapa de calor, dispersión, red de centrales, calendario, orígenes y canasta (SVG hecho a mano, sin librerías); contorno de Colombia de Natural Earth (paquete `world-atlas`) |
-| `public/data/pronosticos.json` | Pronósticos del mes (lo genera `generar_pronosticos.py`) |
-| `public/data/extra.json`, `origen.json` | Calendario por alimento, red de centrales y orígenes del abastecimiento (los genera `generar_panorama.py`) |
+| `public/data/pronosticos.json` | Pronósticos del mes (lo genera el script) |
 | `scripts/generar_pronosticos.py` | Calcula los pronósticos con los modelos de la tesis |
-| `scripts/generar_panorama.py` | Calcula el calendario, la red de centrales y los orígenes |
 
 ## Probarla en el computador
 
@@ -48,7 +45,7 @@ y abrir <http://localhost:3000>.
 
 1. Suba esta carpeta a un repositorio de GitHub (por ejemplo, `precios-central`).
 2. En <https://vercel.com>, entre con su cuenta de GitHub, elija **Add New › Project** e importe el repositorio.
-3. Vercel reconoce que es Next.js. Si la página está dentro de un repositorio más grande, en **Root Directory** elija la carpeta `web-precios`. Presione **Deploy**.
+3. Vercel reconoce que es Next.js; no hay que cambiar nada. Presione **Deploy**.
 
 Cada vez que se suba un cambio a la rama principal, Vercel vuelve a publicar la página sola.
 
@@ -63,16 +60,10 @@ Cuando el DANE publique un boletín nuevo:
    ../entorno/bin/python scripts/generar_pronosticos.py ../estudio
    ```
 
-3. Actualice el calendario, la red y los orígenes con los microdatos de abastecimiento de los últimos 12 meses:
+3. Suba el JSON nuevo:
 
    ```bash
-   ../entorno/bin/python scripts/generar_panorama.py ../estudio --abastecimiento <archivos SIPSA-A .csv o .dta>
-   ```
-
-4. Suba los archivos nuevos:
-
-   ```bash
-   git add public/data/
+   git add public/data/pronosticos.json
    git commit -m "Pronósticos con el boletín de <mes>"
    git push
    ```

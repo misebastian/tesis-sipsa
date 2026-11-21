@@ -80,13 +80,15 @@ export function DiagramaArquitectura() {
       ))}
 
       {/* Fuentes */}
-      <Caja x={20} y={140} w={150} h={70} titulo="DANE · SIPSA" lineas={['Precios mayoristas', '(anexo mensual)']} />
-      <Caja x={20} y={240} w={150} h={70} titulo="DANE · SIPSA" lineas={['Abastecimiento', '(microdatos diarios)']} />
+      <Caja x={20} y={110} w={150} h={70} titulo="DANE · SIPSA" lineas={['Precios mayoristas', '(anexo mensual)']} />
+      <Caja x={20} y={200} w={150} h={70} titulo="DANE · SIPSA" lineas={['Abastecimiento', '(microdatos diarios)']} />
+      <Caja x={20} y={290} w={150} h={62} titulo="NOAA" lineas={['Índice ONI']} />
 
       {/* Ingesta */}
       <Caja x={205} y={170} w={150} h={110} tono="airflow" titulo="Descarga y" lineas={['validación', 'Python + Great', 'Expectations']} />
-      <Flecha d="M170 175 C188 175 188 205 203 208" color={gris} />
-      <Flecha d="M170 275 C188 275 188 248 203 245" color={gris} />
+      <Flecha d="M170 145 C188 145 188 200 203 205" color={gris} />
+      <Flecha d="M170 235 L203 228" color={gris} />
+      <Flecha d="M170 321 C188 321 188 260 203 255" color={gris} />
 
       {/* Almacenamiento */}
       <Caja x={375} y={110} w={170} h={92} tono="datos" etiqueta="Bronce" titulo="Data lake" lineas={['S3 / Cloud Storage', 'archivos originales', 'con huella SHA-256']} />
@@ -100,7 +102,7 @@ export function DiagramaArquitectura() {
       <text x="610" y="124" fontSize="11" style={{ fill: 'var(--texto-3)' }}>modelos SQL + pruebas</text>
       <Caja x={580} y={136} w={150} h={52} tono="dbt" titulo="staging" lineas={['limpieza y unidades']} r={8} />
       <Caja x={580} y={208} w={150} h={52} tono="dbt" titulo="intermedio" lineas={['variedad y base mensual']} r={8} />
-      <Caja x={580} y={280} w={150} h={58} tono="dbt" titulo="marts" lineas={['panel con 29 variables']} r={8} />
+      <Caja x={580} y={280} w={150} h={58} tono="dbt" titulo="marts" lineas={['panel con 52 variables']} r={8} />
       <Flecha d="M655 188 L655 206" color={gris} />
       <Flecha d="M655 260 L655 278" color={gris} />
       <Flecha d="M545 278 C555 278 560 165 578 162" color={gris} />
@@ -143,19 +145,22 @@ export function DiagramaDAG() {
   const N = (x, y, t, tono = 'airflow', w = 150, h = 46) => <Caja x={x} y={y} w={w} h={h} tono={tono} titulo={t} r={23} />;
   return (
     <Lienzo ancho={1160} alto={330} minimo={860}
-      etiqueta="DAG sipsa_mensual: esperar_boletin, luego dos descargas en paralelo, validar_archivos, dbt_run, dbt_test y decidir_reentreno; si toca reentrenar se ejecutan entrenar_candidatos, evaluar y elegir_campeon; en ambos casos se ejecuta pronosticar, después publicar y monitorear.">
+      etiqueta="DAG sipsa_mensual: esperar_boletin, luego tres descargas en paralelo, validar_archivos, dbt_run, dbt_test y decidir_reentreno; si toca reentrenar se ejecutan entrenar_candidatos, evaluar y elegir_campeon; en ambos casos se ejecuta pronosticar, después publicar y monitorear.">
       <Puntas colores={[gris, verde, azul]} />
       {N(15, 120, 'esperar_boletin')}
-      {N(200, 70, 'descargar_precios', 'datos', 165)}
-      {N(200, 170, 'descargar_abasto', 'datos', 165)}
+      {N(200, 40, 'descargar_precios', 'datos', 165)}
+      {N(200, 120, 'descargar_abasto', 'datos', 165)}
+      {N(200, 200, 'descargar_oni', 'datos', 165)}
       {N(400, 120, 'validar_archivos')}
       {N(585, 120, 'dbt_run', 'dbt', 120)}
       {N(740, 120, 'dbt_test', 'dbt', 120)}
       <Caja x={895} y={108} w={150} h={70} tono="decision" titulo="decidir_" lineas={['reentreno']} r={14} />
-      <Flecha d="M165 138 C182 138 182 93 198 93" color={gris} />
-      <Flecha d="M165 148 C182 148 182 193 198 193" color={gris} />
-      <Flecha d="M365 93 C382 93 382 138 398 138" color={gris} />
-      <Flecha d="M365 193 C382 193 382 148 398 148" color={gris} />
+      <Flecha d="M165 136 C182 136 182 63 198 63" color={gris} />
+      <Flecha d="M165 143 L198 143" color={gris} />
+      <Flecha d="M165 150 C182 150 182 223 198 223" color={gris} />
+      <Flecha d="M365 63 C382 63 382 136 398 136" color={gris} />
+      <Flecha d="M365 143 L398 143" color={gris} />
+      <Flecha d="M365 223 C382 223 382 150 398 150" color={gris} />
       <Flecha d="M550 143 L583 143" color={gris} />
       <Flecha d="M705 143 L738 143" color={gris} />
       <Flecha d="M860 143 L893 143" color={gris} />
@@ -183,25 +188,28 @@ export function DiagramaDAG() {
 export function DiagramaDbt() {
   return (
     <Lienzo ancho={840} alto={300} minimo={680}
-      etiqueta="Linaje de dbt: las tablas crudas de precios y abastecimiento pasan a modelos staging, luego a int_variedad_referencia e int_base_mensual, y terminan en mart_panel_variables y mart_pronosticos.">
+      etiqueta="Linaje de dbt: las tablas crudas de precios, abastecimiento y ONI pasan a modelos staging, luego a int_variedad_referencia e int_base_mensual, y terminan en mart_panel_variables y mart_pronosticos.">
       <Puntas colores={['#7d8a83']} />
       {[['CRUDAS', 10], ['STAGING', 185], ['INTERMEDIO', 385], ['MARTS', 625]].map(([t, x]) => (
         <text key={t} x={x} y={18} fontSize="11" fontWeight="700" letterSpacing="0.08em" style={{ fill: 'var(--texto-4)' }}>{t}</text>
       ))}
       <Caja x={10} y={34} w={140} h={50} tono="datos" titulo="precios" r={8} />
       <Caja x={10} y={120} w={140} h={50} tono="datos" titulo="abastecimiento" r={8} />
+      <Caja x={10} y={206} w={140} h={50} tono="datos" titulo="oni" r={8} />
       <Caja x={185} y={34} w={165} h={50} tono="dbt" titulo="stg_sipsa_precios" r={8} />
       <Caja x={185} y={120} w={165} h={50} tono="dbt" titulo="stg_sipsa_abasto" r={8} />
+      <Caja x={185} y={206} w={165} h={50} tono="dbt" titulo="stg_oni" r={8} />
       <Caja x={385} y={50} w={205} h={58} tono="dbt" titulo="int_variedad_referencia" lineas={['variedad por central']} r={8} />
       <Caja x={385} y={150} w={205} h={58} tono="dbt" titulo="int_base_mensual" lineas={['precio + abasto']} r={8} />
-      <Caja x={625} y={90} w={205} h={58} tono="modelo" titulo="mart_panel_variables" lineas={['29 variables del modelo']} r={8} />
+      <Caja x={625} y={90} w={205} h={58} tono="modelo" titulo="mart_panel_variables" lineas={['52 variables']} r={8} />
       <Caja x={625} y={210} w={205} h={58} tono="web" titulo="mart_pronosticos" lineas={['precio, rango y alerta']} r={8} />
-      {[59, 145].map((y) => <Flecha key={y} d={`M150 ${y} L183 ${y}`} />)}
+      {[59, 145, 231].map((y) => <Flecha key={y} d={`M150 ${y} L183 ${y}`} />)}
       <Flecha d="M350 59 L383 72" />
       <Flecha d="M350 59 C368 59 368 165 383 168" />
       <Flecha d="M487 108 L487 148" />
       <Flecha d="M350 145 L383 175" />
       <Flecha d="M590 179 C605 179 605 125 623 122" />
+      <Flecha d="M350 231 C580 262 600 150 623 138" />
       <Flecha d="M727 148 L727 208" />
       <text x={719} y={183} textAnchor="end" fontSize="10.5" style={{ fill: 'var(--texto-4)' }}>modelo campeón</text>
     </Lienzo>

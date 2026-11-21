@@ -1,5 +1,4 @@
 import './globals.css';
-import './panorama.css';
 import Encabezado from '../components/Encabezado';
 
 export const metadata = {

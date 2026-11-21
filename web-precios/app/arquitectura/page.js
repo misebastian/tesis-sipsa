@@ -5,7 +5,7 @@ export const metadata = { title: 'Arquitectura MLOps · Precios de la central' }
 const ETAPAS = [
   {
     n: 1, titulo: 'Ingesta', herramienta: 'Airflow',
-    texto: 'Un trabajo programado espera a que el DANE publique el boletín del mes y descarga los precios y el abastecimiento.',
+    texto: 'Un trabajo programado espera a que el DANE publique el boletín del mes y descarga los precios, el abastecimiento y el índice ONI de la NOAA.',
     icono: <><path d="M12 3v12" /><path d="M7 10l5 5 5-5" /><path d="M4 21h16" /></>,
   },
   {
@@ -15,7 +15,7 @@ const ETAPAS = [
   },
   {
     n: 3, titulo: 'Transformación', herramienta: 'dbt',
-    texto: 'Modelos SQL versionados limpian los datos, unen precio y abastecimiento, eligen la variedad de referencia y calculan las 29 variables del modelo, con pruebas de calidad.',
+    texto: 'Modelos SQL versionados limpian los datos, unen precio y abastecimiento, eligen la variedad de referencia y calculan las 52 variables, con pruebas de calidad.',
     icono: <><path d="M4 6h16" /><path d="M7 12h10" /><path d="M10 18h4" /></>,
   },
   {
@@ -37,7 +37,7 @@ const ETAPAS = [
 
 const TAREAS = [
   ['esperar_boletin', 'Sensor que revisa cada día si el DANE ya publicó el anexo del mes (unos ocho días después del cierre).'],
-  ['descargar_precios · descargar_abastecimiento', 'Descargan los archivos en paralelo y los guardan en la capa bronce con su huella SHA-256.'],
+  ['descargar_precios · descargar_abastecimiento · descargar_oni', 'Descargan los archivos en paralelo y los guardan en la capa bronce con su huella SHA-256.'],
   ['validar_archivos', 'Revisa columnas, unidades y número de registros frente a meses anteriores; si algo no cuadra, se detiene y avisa.'],
   ['dbt_run · dbt_test', 'Ejecuta los modelos de transformación y sus pruebas (sin duplicados, sin precios negativos, cobertura por central).'],
   ['decidir_reentreno', 'Rama: reentrena si toca el trimestre o si el monitoreo detectó deriva; si no, pasa directo al pronóstico.'],
@@ -89,7 +89,7 @@ with DAG("sipsa_mensual",
     esperar = PythonSensor(task_id="esperar_boletin", python_callable=boletin_nuevo,
                            mode="reschedule", poke_interval=6 * 3600)
     descargas = [PythonOperator(task_id=f"descargar_{f}", python_callable=descargar, op_args=[f])
-                 for f in ("precios", "abastecimiento")]
+                 for f in ("precios", "abastecimiento", "oni")]
     validar = PythonOperator(task_id="validar_archivos", python_callable=validar_archivos)
     dbt = DbtTaskGroup(group_id="dbt", project_config=proyecto_dbt)       # run + test
     decidir = BranchPythonOperator(task_id="decidir_reentreno", python_callable=toca_reentrenar)
